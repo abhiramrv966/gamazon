@@ -8,7 +8,7 @@ Supabase connected on 29 October 2026. Migrations 001–005 are applied, row-lev
 - [x] Host the existing GitHub repository on Vercel as `gamazon/gamazon` (`https://gamazon-one.vercel.app`).
 - [x] Attach apex and `www` to that project and configure the `www` → apex redirect.
 - [x] Configure Production with `https://gamazon.store`, demo mode off and the required Supabase/cron credentials. Keep production credentials out of Preview and the operator-only database password local.
-- [ ] Save and verify the GoDaddy DNS records and apex HTTPS/`www` redirect using `VERCEL-SETUP.md`.
+- [x] Save and verify the GoDaddy DNS records and apex HTTPS/`www` redirect using `VERCEL-SETUP.md`. Completed 30 October 2026; Vercel certificate issued and both redirects verified.
 - [x] Verify the production rebuild with the updated environment: public pages, desktop/phone sign-in screens, private API denial, canonical-origin checks, disabled demo access and authenticated maintenance passed.
 - [ ] Set Supabase's Site URL/allowed redirect configuration for the final domain before activating email.
 

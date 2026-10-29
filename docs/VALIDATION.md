@@ -1,5 +1,11 @@
 # Implementation verification
 
+## Custom domain and HTTPS — 30 October 2026
+
+Verified GoDaddy's two apex A records and Vercel's valid configuration for `gamazon.store` and `www.gamazon.store`. Issued the missing managed certificate for both names. Both Vercel edge addresses passed TLS certificate and hostname verification; verification was not disabled.
+
+Live checks passed: apex landing/sign-in pages return 200, the signed-out state endpoint returns 401, `www` redirects to the HTTPS apex with 308, and HTTP redirects to HTTPS with 308. Vercel reports automatic certificate renewal enabled. The actual `www` CNAME points to the apex, which Vercel accepts. Email delivery and verified owner/MFA setup remain pending.
+
 ## Existing Vercel production deployment — 29 October 2026
 
 Verified the user's existing `gamazon/gamazon` project, linked to `abhiramrv966/gamazon` on `main`, at `https://gamazon-one.vercel.app`. The production rebuild for commit `0d6fa73` reached Ready and received production traffic. No duplicate project was created.

@@ -2,7 +2,9 @@
 
 Verified on 29 October 2026. The existing Vercel project is `gamazon/gamazon`, linked to `abhiramrv966/gamazon` on the `main` branch. Its production alias is `https://gamazon-one.vercel.app`. No second project was created.
 
-The purchased domain is `gamazon.store`, registered through GoDaddy. Both `gamazon.store` and `www.gamazon.store` are attached to the existing Vercel project. The `www` address has a permanent 308 redirect to the apex domain. Custom-domain routing and HTTPS must be verified after the GoDaddy records are saved and propagated.
+The purchased domain is `gamazon.store`, registered through GoDaddy. Both `gamazon.store` and `www.gamazon.store` are attached to the existing Vercel project. The `www` address has a permanent 308 redirect to the apex domain.
+
+Verified on 30 October 2026: both domain configurations are valid, a Vercel-managed certificate covers both addresses, and HTTPS works. The landing/sign-in pages return 200, signed-out private data returns 401, and HTTP/`www` requests redirect to `https://gamazon.store/` with 308. Both recommended apex IPs passed certificate verification. Vercel reports automatic certificate renewal enabled.
 
 ## GoDaddy DNS records
 
@@ -15,6 +17,8 @@ Open My Products → Domains → gamazon.store → Manage DNS. Vercel recommende
 | CNAME | `www` | `c7bdf2d8d3bbde2e.vercel-dns-017.com` | Default |
 
 Replace the parked `@` addresses `3.33.130.190` and `15.197.148.33` with the two A records above. Replace the existing `www` CNAME target with the hostname above, without `https://`. Leave GoDaddy nameservers and existing MX/TXT records unchanged. Use the project's Vercel Domains settings for current recommendations if they change later.
+
+The verified live configuration uses those two apex A records and `www` as a CNAME to `gamazon.store`. Vercel accepts that alias chain too; no additional DNS change is required while this configuration remains valid.
 
 ## Application settings
 
