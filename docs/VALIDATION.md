@@ -1,5 +1,13 @@
 # Implementation verification
 
+## Existing Vercel production deployment — 29 October 2026
+
+Verified the user's existing `gamazon/gamazon` project, linked to `abhiramrv966/gamazon` on `main`, at `https://gamazon-one.vercel.app`. The production rebuild for commit `0d6fa73` reached Ready and received production traffic. No duplicate project was created.
+
+Production configuration was verified with `https://gamazon.store`, demo mode off and the supplied Supabase credentials. Live database credentials are scoped to Production, and the operator-only pooler password was removed from Vercel. Hosted checks passed for public landing/sign-in/sign-up pages, desktop/390px sign-in/access screens, signed-out private API denial, canonical-origin acceptance, other-origin rejection, disabled demo switching and cron authorization with no maintenance failures. No email was sent.
+
+Both custom domains are attached, and `www.gamazon.store` is configured to redirect to the apex with HTTP 308. GoDaddy DNS still returned parking records at the last check; apex HTTPS and the redirect are not yet verified publicly. The exact pending records and remaining Supabase URL/email/owner tasks are in `docs/VERCEL-SETUP.md` and `docs/TODO.md`.
+
 ## Live Supabase connection — 29 October 2026
 
 Connected the supplied project and applied migrations 001–005 atomically to its empty app schemas. The PostgreSQL connection verified Supabase's CA and hostname; certificate verification was not disabled. All 18 app tables have row-level security enabled, the single-admin unique index is present, and the private `post-images` bucket and realtime publication entries are configured.
