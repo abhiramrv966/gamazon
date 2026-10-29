@@ -5,7 +5,7 @@
 - Complete the city-specific permitted-use review and retain the written decision. Account access and paid rental solicitation remain disallowed. Publish the operator's identity and privacy/grievance contact.
 - Create staging and production with separate databases, keys, email settings, storage, and domains. Confirm provider region, plan suitability, backup availability, and costs. Use HTTPS in hosted environments.
 - Apply migrations in order. Bootstrap only the organiser; never seed fictional users into a live community.
-- Configure SMTP OTP templates, short verification expiry, auth rate limits, and MFA. Confirm the first invitation from issue through email verification and redemption using two real staging test accounts.
+- Configure Resend SMTP using `RESEND-SETUP.md`, OTP templates, short verification expiry, auth rate limits, and MFA. Confirm the first invitation from issue through email verification and redemption using two real staging test accounts.
 - Verify storage signing and actual Supabase realtime with two separate browser sessions; RLS tests in WASM do not validate the hosted websocket transport.
 - Enable database backups and choose an expiry of no more than 30 days. Encrypt exported dumps and restrict access. Rehearse restore and deletion replay before launch.
 - Schedule `/api/cron` with `Authorization: Bearer <CRON_SECRET>`; Vercel cron sets that header when `CRON_SECRET` is configured. Use platform alerts for non-2xx responses, failed runs, or no successful run within 26 hours. Do not log the bearer secret.
