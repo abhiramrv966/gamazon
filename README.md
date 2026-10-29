@@ -108,3 +108,5 @@ Listing commands now accept `exchange_modes` (`sale`, `swap`, `loan`), with an e
 ## Launch status
 
 This repository contains a runnable implementation, not proof of market demand or legal clearance. Real interviews, inventory commitments, independent policy review, live provider setup, staging load results, restore drill, and operator contact details remain launch prerequisites. See `docs/PILOT.md` and `docs/OPERATIONS.md` for concrete steps and acceptance criteria.
+
+The current setup progress and deferred domain, email and sole-owner onboarding tasks are tracked in `docs/TODO.md`. Verified local and live-provider results are recorded separately in `docs/VALIDATION.md`.

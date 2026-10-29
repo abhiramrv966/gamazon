@@ -1,5 +1,15 @@
 # Implementation verification
 
+## Live Supabase connection — 29 October 2026
+
+Connected the supplied project and applied migrations 001–005 atomically to its empty app schemas. The PostgreSQL connection verified Supabase's CA and hostname; certificate verification was not disabled. All 18 app tables have row-level security enabled, the single-admin unique index is present, and the private `post-images` bucket and realtime publication entries are configured.
+
+Live checks passed for server/public API keys, anonymous database denial, non-member reads and admin denial, prevention of direct membership role updates, and denial of the previous command RPC. A temporary image was uploaded, read through a signed URL, denied to the anonymous client and removed. No test image, member, owner or admin identity was retained. The cron secret was generated locally. Credential values and connection reports are excluded from Git.
+
+The production build with live Supabase settings passed. Live-mode phone sign-in/sign-up screens and the signed-out community/admin routes were checked without sending email. All private API reads returned 401 without a session, and the demo switch returned 404. The maintenance endpoint rejected missing authorization and completed with the configured secret without errors or pending cleanup. Browser assets were checked for the server key and database password; neither was present.
+
+At the user's request, domain purchase, custom SMTP and verified owner assignment are deferred in `docs/TODO.md`. Live email codes, authenticated member-to-member flows, owner MFA and websocket delivery have not been verified. Realtime publication configuration alone is not a transport test. The earlier fixture and concurrency results below remain separate from these live provider checks.
+
 ## Sole-administrator update — 29 October 2026
 
 The protected `/admin` entry point validates the signed-in identity and active admin membership on the server. Members see no Admin navigation or admin authenticator settings; direct admin commands remain guarded by database role checks and MFA. Migration `005_single_admin.sql` permits only one admin, including suspended accounts, and rejects existing multiple-admin data without silently changing it. Owner deletion remains disabled.
