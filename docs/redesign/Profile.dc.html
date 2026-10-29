@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Member profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input,.gz select{font:inherit;color:inherit}
+.gz button{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.5}
+.gz :is(a,button,input,select):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .hv:hover{background:#121611}
+.gz .tl:hover{text-decoration:underline}
+.gz input::placeholder{color:#8F948A}
+.gz .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px 0 20px; background: #0B0E0C; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="flex: 0 0 auto; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <div role="search" style="position: relative; flex: 1 1 auto; max-width: 620px; margin: 0 auto">
+    <label for="q" class="sr">Search game titles</label>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8F948A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 14px; top: 11px"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+    <input id="q" type="search" placeholder="Search game titles" style="width: 100%; height: 40px; padding: 0 16px 0 42px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.12); background: #141814; font-size: 14.5px">
+  </div>
+  <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 4px">
+    <a href="Submit.dc.html" class="hb" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 20px; color: #F0E9DC; text-decoration: none; font-weight: 500; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Create</a>
+    <a href="Messages.dc.html" class="hb" aria-label="Messages, 2 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">2</span></a>
+    <button class="hb" aria-label="Notifications, 3 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 20px; background: transparent; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">3</span></button>
+    <button class="hb" aria-label="Account menu for Aarav Menon" style="display: flex; align-items: center; height: 40px; padding: 0 4px; border: 0; border-radius: 20px; background: transparent"><span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; color: #F0E9DC; font-size: 12.5px; font-weight: 600">AM</span></button>
+  </div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Primary" style="flex: 0 0 248px; padding: 14px 12px 32px; border-right: 1px solid rgba(240,233,220,0.09)">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Main.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>Feed</a>
+      <a href="Profile.dc.html" aria-current="{{navMembers}}" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; background: {{membersBg}}; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Members</a>
+      <a href="Messages.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span style="flex: 1">Messages</span><span style="font-size: 12px; font-weight: 600; color: #1A150E; background: #CBB28C; border-radius: 9px; padding: 0 7px; line-height: 18px">2 new</span></a>
+      <a href="Profile.dc.html" aria-current="{{navMine}}" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; background: {{mineBg}}; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>My games</a>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 24px 80px">
+    <div style="max-width: 1112px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px">
+
+      <section style="flex: 999 1 520px; min-width: 0; max-width: 760px; display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: {{p.color}}; color: #F0E9DC; font-size: 24px; font-weight: 600">{{p.ini}}</span>
+          <div style="min-width: 0">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 600; line-height: 1.15">{{p.name}}</h1>
+            <div style="margin-top: 4px; font-size: 14px; color: #A9ADA2">{{p.meta}}</div>
+          </div>
+        </div>
+
+        <div role="tablist" aria-label="Profile sections" style="display: flex; flex-wrap: wrap; gap: 4px">
+          <sc-for list="{{tabs}}" as="t"><button role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 19px; background: {{t.bg}}; color: {{t.fg}}; font-size: 14.5px; font-weight: 500">{{t.label}} <span style="color: #8F948A">{{t.count}}</span></button></sc-for>
+        </div>
+        <p style="margin: -6px 4px 0; font-size: 13.5px; color: #A9ADA2">{{tabHelp}}</p>
+
+        <sc-if value="{{showAdd}}" hint-placeholder-val="{{false}}">
+          <form onSubmit="{{addGame}}" style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; padding: 14px; border-radius: 14px; background: #141814">
+            <div style="flex: 2 1 220px; display: flex; flex-direction: column; gap: 5px">
+              <label for="ag-title" style="font-size: 13px; font-weight: 500">Game title</label>
+              <input id="ag-title" type="text" maxlength="100" value="{{newTitle}}" onChange="{{onNewTitle}}" placeholder="e.g. Hollow Knight" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(240,233,220,0.16); background: #0F130F; font-size: 15px">
+            </div>
+            <div style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 5px">
+              <label for="ag-plat" style="font-size: 13px; font-weight: 500">Platform</label>
+              <select id="ag-plat" value="{{newPlat}}" onChange="{{onNewPlat}}" style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid rgba(240,233,220,0.16); background: #0F130F; font-size: 15px"><option value="PlayStation">PlayStation</option><option value="Xbox">Xbox</option><option value="Nintendo">Nintendo</option></select>
+            </div>
+            <div style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 5px">
+              <label for="ag-dest" style="font-size: 13px; font-weight: 500">Add to</label>
+              <select id="ag-dest" value="{{newDest}}" onChange="{{onNewDest}}" style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid rgba(240,233,220,0.16); background: #0F130F; font-size: 15px"><option value="shelf">My shelf (I own it)</option><option value="wish">Wishlist (I want it)</option></select>
+            </div>
+            <button type="submit" disabled="{{newEmpty}}" style="height: 44px; padding: 0 18px; border: 0; border-radius: 22px; background: #CBB28C; color: #1A150E; font-size: 14.5px; font-weight: 600">Add</button>
+          </form>
+        </sc-if>
+
+        <sc-if value="{{hasNotice}}" hint-placeholder-val="{{false}}">
+          <div role="status" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 14px; border-radius: 12px; background: #1B2019; font-size: 14px">
+            <span style="flex: 1 1 260px">{{noticeText}}</span>
+            <sc-if value="{{noticeUndo}}"><button class="tl" onClick="{{undo}}" style="padding: 4px; border: 0; background: none; color: #CBB28C; font-size: 14px; font-weight: 500">Undo</button></sc-if>
+            <sc-if value="{{noticeOffer}}"><a href="Submit.dc.html" style="font-size: 14px; font-weight: 500; text-decoration: none">Create an offer</a></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{tabPosts}}" hint-placeholder-val="{{true}}">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <sc-for list="{{posts}}" as="x">
+              <a href="Thread.dc.html" class="hv" style="display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 10px; color: #F0E9DC; text-decoration: none">
+                <span style="flex: 1; min-width: 0">
+                  <span style="display: block; font-size: 16px; font-weight: 600">{{x.title}}</span>
+                  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 3px; font-size: 13px">
+                    <sc-if value="{{x.isOffer}}"><span style="padding: 0 6px; border-radius: 4px; background: #3A3020; color: #EBD3A8; font-size: 11.5px; font-weight: 600; line-height: 19px">Offer</span></sc-if>
+                    <sc-if value="{{x.isWanted}}"><span style="padding: 0 5px; border-radius: 4px; border: 1px solid #71859A; color: #C6D3E0; font-size: 11.5px; font-weight: 600; line-height: 17px">Wanted</span></sc-if>
+                    <span style="color: #BDBFB5">{{x.spec}}</span>
+                    <span style="color: {{x.statusColor}}">{{x.status}}</span>
+                  </span>
+                </span>
+                <span style="flex: 0 0 auto; font-size: 13px; color: #8F948A">{{x.meta}}</span>
+              </a>
+            </sc-for>
+            <sc-if value="{{postsEmpty}}" hint-placeholder-val="{{false}}">
+              <div style="padding: 32px 20px; border-radius: 14px; background: #141814; text-align: center">
+                <p style="margin: 0 0 4px; font-weight: 600">{{postsEmptyTitle}}</p>
+                <p style="margin: 0 0 14px; font-size: 14px; color: #BDBFB5">{{postsEmptyBody}}</p>
+                <sc-if value="{{isOwn}}"><a href="Submit.dc.html" style="display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 20px; background: #CBB28C; color: #1A150E; text-decoration: none; font-size: 14px; font-weight: 600">Create a post</a></sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{tabList}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <sc-for list="{{items}}" as="g">
+              <div class="hv" style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 12px; border-radius: 10px">
+                <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: {{g.color}}; font-size: 9.5px; font-weight: 700">{{g.abbr}}</span>
+                <span style="flex: 1; min-width: 0">
+                  <span style="display: block; font-weight: 500; overflow-wrap: anywhere">{{g.title}}</span>
+                  <span style="font-size: 12.5px; color: #8F948A">{{g.platform}}</span>
+                </span>
+                <sc-if value="{{g.hasOffer}}"><a href="Thread.dc.html" class="tl" style="flex: 0 0 auto; font-size: 13px; text-decoration: none; color: {{g.offerColor}}">{{g.offer}}</a></sc-if>
+                <sc-if value="{{g.canRemove}}"><button class="hb" onClick="{{g.remove}}" aria-label="Remove {{g.title}}" style="flex: 0 0 auto; height: 34px; padding: 0 12px; border: 0; border-radius: 17px; background: transparent; color: #A9ADA2; font-size: 13px">Remove</button></sc-if>
+              </div>
+            </sc-for>
+            <sc-if value="{{canShowMore}}"><button class="hb" onClick="{{showMore}}" style="align-self: flex-start; height: 38px; margin-top: 6px; padding: 0 16px; border-radius: 19px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">{{moreLabel}}</button></sc-if>
+            <sc-if value="{{listEmpty}}" hint-placeholder-val="{{false}}">
+              <div style="padding: 32px 20px; border-radius: 14px; background: #141814; text-align: center">
+                <p style="margin: 0 0 4px; font-weight: 600">{{listEmptyTitle}}</p>
+                <p style="margin: 0 auto; max-width: 420px; font-size: 14px; color: #BDBFB5">{{listEmptyBody}}</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </section>
+
+      <aside aria-label="About {{p.name}}" style="flex: 1 1 300px; max-width: 340px; display: flex; flex-direction: column; gap: 16px">
+        <section style="position: relative; padding: 18px; border-radius: 14px; background: #141814">
+          <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #E5DED0; overflow-wrap: anywhere">{{p.bio}}</p>
+          <dl style="display: flex; flex-direction: column; gap: 12px; margin: 16px 0 0">
+            <div><dt style="font-size: 12.5px; color: #8F948A">Consoles</dt><dd style="display: flex; flex-wrap: wrap; gap: 6px; margin: 5px 0 0"><sc-for list="{{p.consoles}}" as="c"><span style="padding: 2px 9px; border-radius: 6px; background: #1B2019; font-size: 13px">{{c.v}}</span></sc-for></dd></div>
+            <div><dt style="font-size: 12.5px; color: #8F948A">Likes</dt><dd style="margin: 3px 0 0; font-size: 14px">{{p.genres}}</dd></div>
+            <sc-if value="{{p.hasHandle}}"><div><dt style="font-size: 12.5px; color: #8F948A">Gaming handle</dt><dd style="margin: 3px 0 0; font-size: 14px">{{p.handle}}</dd></div></sc-if>
+          </dl>
+
+          <sc-if value="{{isOwn}}">
+            <div style="display: flex; gap: 8px; margin-top: 18px">
+              <a href="#edit" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; background: #CBB28C; color: #1A150E; text-decoration: none; font-size: 14px; font-weight: 600">Edit profile</a>
+              <a href="#settings" class="hb" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Settings</a>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isOther}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 18px">
+              <sc-if value="{{relConnected}}">
+                <a href="Messages.dc.html" style="display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; background: #CBB28C; color: #1A150E; text-decoration: none; font-size: 14px; font-weight: 600">Message</a>
+                <p style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 0; font-size: 13.5px; color: #A9C59B">You're connected<button class="tl" onClick="{{askUnfriend}}" style="padding: 4px; border: 0; background: none; color: #A9ADA2; font-size: 13px">Remove connection</button></p>
+              </sc-if>
+              <sc-if value="{{relNone}}">
+                <button onClick="{{connect}}" style="height: 40px; border: 0; border-radius: 20px; background: #CBB28C; color: #1A150E; font-size: 14px; font-weight: 600">Connect</button>
+                <a href="Messages.dc.html" class="hb" style="display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Send one message</a>
+                <p style="margin: 0; font-size: 12.5px; color: #8F948A">Not connected? You can send one message; more once {{p.first}} accepts.</p>
+              </sc-if>
+              <sc-if value="{{relRequested}}">
+                <button disabled style="height: 40px; border: 1px solid rgba(240,233,220,0.2); border-radius: 20px; background: transparent; font-size: 14px; font-weight: 500">Request sent</button>
+                <button class="tl" onClick="{{cancelRequest}}" style="padding: 4px; border: 0; background: none; color: #CBB28C; font-size: 13.5px">Cancel request</button>
+              </sc-if>
+              <sc-if value="{{relIncoming}}">
+                <p style="margin: 0; font-size: 14px">{{p.first}} wants to connect.</p>
+                <div style="display: flex; gap: 8px">
+                  <button onClick="{{accept}}" style="flex: 1; height: 40px; border: 0; border-radius: 20px; background: #CBB28C; color: #1A150E; font-size: 14px; font-weight: 600">Accept</button>
+                  <button onClick="{{decline}}" class="hb" style="flex: 1; height: 40px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Decline</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{confirmUnfriend}}" hint-placeholder-val="{{false}}">
+                <div role="alertdialog" aria-label="Remove connection" style="padding: 12px; border-radius: 10px; background: #2A1A16; font-size: 13.5px">
+                  <p style="margin: 0 0 10px">Remove {{p.first}} as a connection? You can still see each other's posts.</p>
+                  <div style="display: flex; gap: 8px"><button onClick="{{keep}}" class="hb" style="height: 34px; padding: 0 12px; border-radius: 17px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 13px">Keep</button><button onClick="{{unfriend}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 17px; background: #C4563F; color: #FFF6EE; font-size: 13px; font-weight: 600">Remove</button></div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </section>
+
+        <sc-if value="{{isOther}}" hint-placeholder-val="{{true}}">
+          <section style="padding: 6px; border-radius: 14px; background: #141814">
+            <button class="hb" onClick="{{askReport}}" style="display: flex; align-items: center; gap: 10px; width: 100%; height: 40px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #E5DED0; font-size: 14px; text-align: left"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 1-1h12l-2 5 2 5H5"></path></svg>{{reportLabel}}</button>
+            <button class="hb" onClick="{{askBlock}}" style="display: flex; align-items: center; gap: 10px; width: 100%; height: 40px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #E5DED0; font-size: 14px; text-align: left"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>Block {{p.first}}</button>
+            <sc-if value="{{reporting}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; flex-direction: column; gap: 8px; margin: 6px; padding: 12px; border-radius: 10px; background: #1B2019">
+                <label for="rp-profile" style="font-size: 13.5px; font-weight: 500">What happened?</label>
+                <textarea id="rp-profile" rows="3" maxlength="1000" onChange="{{onReportDraft}}" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font: inherit; font-size: 14.5px; color: inherit"></textarea>
+                <span style="font-size: 12.5px; color: #A9ADA2">Moderators get {{p.first}}'s profile and your note.</span>
+                <div style="display: flex; justify-content: flex-end; gap: 6px"><button onClick="{{cancelReport}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: transparent; font-size: 13px">Cancel</button><button onClick="{{sendReport}}" disabled="{{reportEmpty}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Send report</button></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{confirmBlock}}" hint-placeholder-val="{{false}}">
+              <div role="alertdialog" aria-label="Block member" style="margin: 6px; padding: 12px; border-radius: 10px; background: #2A1A16; font-size: 13.5px">
+                <p style="margin: 0 0 10px">Block {{p.first}}? They can't message you and their posts are hidden from you. Past messages aren't deleted.</p>
+                <div style="display: flex; gap: 8px"><button onClick="{{cancelBlock}}" class="hb" style="height: 34px; padding: 0 12px; border-radius: 17px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 13px">Cancel</button><a href="Main.dc.html" style="display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border-radius: 17px; background: #C4563F; color: #FFF6EE; text-decoration: none; font-size: 13px; font-weight: 600">Block</a></div>
+              </div>
+            </sc-if>
+          </section>
+        </sc-if>
+      </aside>
+    </div>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"whose":{"editor":"enum","options":["other","own"],"default":"other"},"relationship":{"editor":"enum","options":["connected","none","requested","incoming"],"default":"connected"},"$preview":{"width":1440,"height":1500}}'>
+const PF = { PlayStation: { abbr: 'PS', color: '#2F4A7E' }, Xbox: { abbr: 'XB', color: '#3B5F33' }, Nintendo: { abbr: 'NS', color: '#873A32' } };
+const PEOPLE = {
+  other: { name: 'Asha Rao', first: 'Asha', ini: 'AR', color: '#6B4E2E', meta: 'Indiranagar · PSN: asha_plays_slow',
+    bio: 'Mostly story games — the longer and sadder the better. I keep the ones I love and pass the rest on. Happy to lend to people I’ve met before; for everyone else I’d rather sell or swap. I usually reply in the evenings.',
+    consoles: ['PS4', 'PS5', 'Nintendo Switch'], genres: 'Story, open world, platformers', handle: 'PSN: asha_plays_slow',
+    posts: [
+      { title: 'Red Dead Redemption 2', type: 'offer', spec: 'PS4 · Disc · ₹1,800', status: 'Open', meta: '6 comments · 3h' },
+      { title: 'Marvel’s Spider-Man', type: 'offer', spec: 'PS4 · Disc · ₹1,100', status: 'Open', meta: '1 comment · 2d' },
+      { title: 'The Last of Us Part II', type: 'offer', spec: 'PS4 · Disc · ₹1,200', status: 'Paused', meta: '2 comments · 1d' },
+      { title: 'Elden Ring', type: 'wanted', spec: 'PS5 · Disc · Any condition', status: 'Open', meta: 'No comments · 4d' },
+      { title: 'Uncharted 4: A Thief’s End', type: 'offer', spec: 'PS4 · Disc · ₹600', status: 'Closed', meta: '5 comments · 3w' }
+    ],
+    shelf: [
+      ['Red Dead Redemption 2', 'PlayStation', 'Offered · Open'], ['Marvel’s Spider-Man', 'PlayStation', 'Offered · Open'], ['The Last of Us Part II', 'PlayStation', 'Offered · Paused'],
+      ['God of War Ragnarök', 'PlayStation'], ['Horizon Forbidden West', 'PlayStation'], ['Astro Bot', 'PlayStation'], ['Death Stranding Director’s Cut', 'PlayStation'],
+      ['Hades', 'Nintendo'], ['Celeste', 'Nintendo'], ['Super Mario Odyssey', 'Nintendo'], ['Metroid Dread', 'Nintendo'],
+      ['Final Fantasy VII Remake Intergrade', 'PlayStation'], ['Ratchet & Clank: Rift Apart', 'PlayStation'], ['Kirby and the Forgotten Land', 'Nintendo']
+    ],
+    wish: [['Elden Ring', 'PlayStation'], ['Animal Crossing: New Horizons', 'Nintendo'], ['Final Fantasy XVI', 'PlayStation']] },
+  own: { name: 'Aarav Menon', first: 'Aarav', ini: 'AM', color: '#7A5A36', meta: 'Indiranagar · Your profile',
+    bio: 'Switch first, PS5 when there’s time.', consoles: ['PS5', 'Nintendo Switch'], genres: 'Racing, Zelda-likes', handle: '',
+    posts: [],
+    shelf: [['The Legend of Zelda: Breath of the Wild', 'Nintendo'], ['Super Mario Odyssey', 'Nintendo'], ['Marvel’s Spider-Man 2', 'PlayStation']],
+    wish: [] }
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'shelf', more: false, rel: null, confirmUnfriend: false, reporting: false, reported: false, reportDraft: '', confirmBlock: false,
+      added: { shelf: [], wish: [] }, removed: {}, notice: null, lastRemoved: null, newTitle: '', newPlat: 'PlayStation', newDest: 'shelf' };
+  }
+  componentDidUpdate(prev) {
+    if (prev.whose !== this.props.whose || prev.relationship !== this.props.relationship) this.setState({ rel: null, notice: null, tab: 'shelf' });
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const whose = this.props.whose ?? 'other';
+    const own = whose === 'own';
+    const P = PEOPLE[whose];
+    const rel = s.rel || (this.props.relationship ?? 'connected');
+    const listOf = (key) => P[key].concat(s.added[key]).filter((g) => !s.removed[whose + key + g[0]]);
+    const shelf = listOf('shelf'), wish = listOf('wish');
+    const counts = { posts: P.posts.length, shelf: shelf.length, wish: wish.length };
+    const TABS = [['posts', 'Posts'], ['shelf', 'Shelf'], ['wish', 'Wishlist']];
+    const cur = s.tab === 'wish' ? wish : shelf;
+    const limit = s.more ? 999 : 10;
+    const help = {
+      posts: own ? 'Your offers and wanted posts.' : 'Offers and wanted posts by ' + P.first + '. Only open offers are available.',
+      shelf: own ? 'Games you own. Adding one here doesn’t offer it to anyone.' : 'Games ' + P.first + ' owns. Owning isn’t the same as offering — look for an open post.',
+      wish: own ? 'Games you’re hoping to find. Members can see this list.' : 'Games ' + P.first + ' is hoping to find.'
+    }[s.tab];
+    const active = (x) => x === 'Open' ? '#A9C59B' : x === 'Paused' ? '#D8B46A' : '#A9ADA2';
+
+    return {
+      p: { name: P.name, first: P.first, ini: P.ini, color: P.color, meta: P.meta, bio: P.bio, genres: P.genres, handle: P.handle, hasHandle: !!P.handle,
+        consoles: P.consoles.map((v) => ({ v })) },
+      isOwn: own, isOther: !own,
+      navMembers: own ? 'false' : 'page', navMine: own ? 'page' : 'false',
+      membersBg: own ? 'transparent' : '#1B2019', mineBg: own ? '#1B2019' : 'transparent',
+      tabs: TABS.map(([k, label]) => ({ label, count: counts[k], sel: s.tab === k, bg: s.tab === k ? '#1B2019' : 'transparent', fg: s.tab === k ? '#F0E9DC' : '#A9ADA2',
+        pick: () => this.setState({ tab: k, more: false, notice: null }) })),
+      tabHelp: help, tabPosts: s.tab === 'posts', tabList: s.tab !== 'posts',
+      posts: P.posts.map((x) => ({ title: x.title, isOffer: x.type === 'offer', isWanted: x.type === 'wanted', spec: x.spec, status: x.status, statusColor: active(x.status), meta: x.meta })),
+      postsEmpty: P.posts.length === 0,
+      postsEmptyTitle: own ? 'You haven’t posted yet' : P.first + ' hasn’t posted yet',
+      postsEmptyBody: own ? 'Offer a game from your shelf, or ask for one you’re after.' : 'Their shelf and wishlist are still worth a look.',
+      items: cur.slice(0, limit).map((g) => {
+        const pf = PF[g[1]];
+        const offer = g[2] || '';
+        return { title: g[0], platform: g[1], abbr: pf.abbr, color: pf.color, hasOffer: !!offer, offer, offerColor: offer.indexOf('Paused') > -1 ? '#D8B46A' : '#A9C59B',
+          canRemove: own, remove: () => this.setState({ removed: Object.assign({}, s.removed, { [whose + s.tab + g[0]]: true }), lastRemoved: whose + s.tab + g[0], notice: 'removed:' + g[0] }) };
+      }),
+      canShowMore: cur.length > 10, moreLabel: s.more ? 'Show fewer' : 'Show all ' + cur.length, showMore: set({ more: !s.more }),
+      listEmpty: cur.length === 0,
+      listEmptyTitle: s.tab === 'wish' ? (own ? 'Your wishlist is empty' : 'Nothing on ' + P.first + '’s wishlist') : (own ? 'Your shelf is empty' : 'Nothing on ' + P.first + '’s shelf yet'),
+      listEmptyBody: own ? (s.tab === 'wish' ? 'Add games you’re hunting for. Owners nearby can spot them on your profile.' : 'Add the games you own — it helps people know what to ask about.') : 'Check back later, or look at their posts.',
+      showAdd: own && s.tab !== 'posts',
+      newTitle: s.newTitle, onNewTitle: (e) => this.setState({ newTitle: e.target.value }), newEmpty: !s.newTitle.trim(),
+      newPlat: s.newPlat, onNewPlat: (e) => this.setState({ newPlat: e.target.value }),
+      newDest: s.newDest, onNewDest: (e) => this.setState({ newDest: e.target.value }),
+      addGame: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const t = s.newTitle.trim();
+        if (!t) return;
+        const dest = s.newDest;
+        this.setState({ newTitle: '', tab: dest, added: Object.assign({}, s.added, { [dest]: s.added[dest].concat([[t, s.newPlat]]) }), notice: (dest === 'shelf' ? 'shelf:' : 'wish:') + t });
+      },
+      hasNotice: !!s.notice,
+      noticeText: !s.notice ? '' : s.notice.indexOf('removed:') === 0 ? 'Removed ' + s.notice.slice(8) + '.'
+        : s.notice.indexOf('shelf:') === 0 ? 'Added ' + s.notice.slice(6) + ' to your shelf. It isn’t offered to anyone until you create a post.'
+        : 'Added ' + s.notice.slice(5) + ' to your wishlist.',
+      noticeUndo: !!s.notice && s.notice.indexOf('removed:') === 0,
+      noticeOffer: !!s.notice && s.notice.indexOf('shelf:') === 0,
+      undo: () => { const r = Object.assign({}, s.removed); delete r[s.lastRemoved]; this.setState({ removed: r, notice: null }); },
+      relConnected: rel === 'connected', relNone: rel === 'none', relRequested: rel === 'requested', relIncoming: rel === 'incoming',
+      connect: set({ rel: 'requested' }), cancelRequest: set({ rel: 'none' }), accept: set({ rel: 'connected' }), decline: set({ rel: 'none' }),
+      askUnfriend: set({ confirmUnfriend: true }), keep: set({ confirmUnfriend: false }), unfriend: set({ rel: 'none', confirmUnfriend: false }),
+      confirmUnfriend: s.confirmUnfriend,
+      reportLabel: s.reported ? 'Report sent' : 'Report ' + P.first,
+      askReport: () => { if (!s.reported) this.setState({ reporting: !s.reporting, confirmBlock: false }); },
+      reporting: s.reporting, cancelReport: set({ reporting: false }), onReportDraft: (e) => this.setState({ reportDraft: e.target.value }),
+      reportEmpty: !s.reportDraft.trim(), sendReport: set({ reporting: false, reported: true }),
+      askBlock: set({ confirmBlock: true, reporting: false }), cancelBlock: set({ confirmBlock: false }), confirmBlock: s.confirmBlock
+    };
+  }
+}
+</script>
+</body>
+</html>

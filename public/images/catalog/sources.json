@@ -1,0 +1,47 @@
+[
+  {
+    "file": "zelda.webp",
+    "banner": "zelda-banner.webp",
+    "source": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_4/2x1_NSwitch_TloZTearsOfTheKingdom_Gamepage_image1280w.jpg",
+    "page": "https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/The-Legend-of-Zelda-Tears-of-the-Kingdom-1576884.html",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  },
+  {
+    "file": "god-of-war.webp",
+    "banner": "god-of-war-banner.webp",
+    "source": "https://gmedia.playstation.com/is/image/SIEPDC/god-of-war-raganok-clean-keyart-01-en-10mar22?wid=1600",
+    "page": "https://www.playstation.com/en-us/games/god-of-war-ragnarok/",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  },
+  {
+    "file": "forza.webp",
+    "banner": "forza-banner.webp",
+    "source": "https://assets.xboxservices.com/assets/2b/f5/2bf5baad-9c29-4d08-a0a6-ca22d276c31e.jpg?n=Forza-Horizon-5_Super-Hero-1400_Social_1920x1080.jpg",
+    "page": "https://www.xbox.com/en-US/games/forza-horizon-5",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  },
+  {
+    "file": "elden-ring.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_943bf6fe62352757d9070c1d33e50b92fe8539f1.1920x1080.jpg?t=1790290043",
+    "page": "https://store.steampowered.com/app/1245620/ELDEN_RING/",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  },
+  {
+    "file": "animal-crossing.webp",
+    "source": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_AnimalCrossingNewHorizons_image1280w.jpg",
+    "page": "https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/Animal-Crossing-New-Horizons-1438623.html",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  },
+  {
+    "file": "spider-man.webp",
+    "source": "https://gmedia.playstation.com/is/image/SIEPDC/spider-man-2-hero-banner-desktop-01-en-31may23?wid=1600",
+    "page": "https://www.playstation.com/en-us/games/marvels-spider-man-2/",
+    "retrieved": "2026-10-11",
+    "kind": "official promotional artwork"
+  }
+]

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input{font:inherit;color:inherit}
+.gz button{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.45}
+.gz :is(a,button,input):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .tl:hover{text-decoration:underline}
+.gz .fld:focus{border-color:#CBB28C;outline:none}
+.gz input::placeholder{color:#8F948A}
+.gz .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes gzspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.gz .spin{animation-duration:3s!important}}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px 0 20px; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="flex: 0 0 auto; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <span style="flex: 1"></span>
+  <a href="Messages.dc.html" class="hb" aria-label="Messages" style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
+  <a href="Notifications.dc.html" class="hb" aria-label="Notifications" style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></a>
+  <span aria-hidden="true" style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; font-size: 12.5px; font-weight: 600">AM</span>
+</header>
+
+<main style="padding: 28px 24px 96px">
+  <div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+
+    <sc-if value="{{deleted}}" hint-placeholder-val="{{false}}">
+      <section style="padding: 48px 32px; border-radius: 16px; background: #141814; text-align: center">
+        <h1 style="margin: 0 0 8px; font-size: 24px; font-weight: 600">Your account has been deleted</h1>
+        <p style="margin: 0 auto 20px; max-width: 440px; color: #BDBFB5">You've been signed out. Your profile, posts and the messages you wrote have been removed.</p>
+        <a href="Main.dc.html" style="display: inline-flex; align-items: center; height: 42px; padding: 0 20px; border-radius: 21px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-weight: 500">Go to the Gamazon home page</a>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{notDeleted}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <a href="Main.dc.html" class="hb" aria-label="Back to feed" style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #141814; color: #E5DED0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></a>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 600">Settings</h1>
+      </div>
+
+      <div role="tablist" aria-label="Settings sections" style="display: flex; flex-wrap: wrap; gap: 4px">
+        <sc-for list="{{tabs}}" as="t"><button role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="height: 44px; padding: 0 16px; border: 0; border-bottom: 2px solid {{t.line}}; background: transparent; color: {{t.fg}}; font-size: 15px; font-weight: 500">{{t.label}}</button></sc-for>
+      </div>
+
+      <sc-if value="{{tabAccount}}" hint-placeholder-val="{{true}}">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 0">
+            <div style="flex: 1 1 320px"><div style="font-weight: 500">Email</div><div style="font-size: 14px; color: #A9ADA2">aarav.menon@example.com · Sign-in codes are sent here. There's no password.</div></div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 0">
+            <div style="flex: 1 1 320px"><div style="font-weight: 500">Profile</div><div style="font-size: 14px; color: #A9ADA2">Name, area, bio, consoles and profile colour.</div></div>
+            <a href="Profile.dc.html" class="hb" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Edit profile</a>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 0">
+            <div style="flex: 1 1 320px"><div style="font-weight: 500">Community guidelines</div><div style="font-size: 14px; color: #A9ADA2">What's allowed, meeting safely, and how reports work.</div></div>
+            <a href="#guidelines" class="hb" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Read</a>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 0">
+            <div style="flex: 1 1 320px"><div style="font-weight: 500">Sign out</div><div style="font-size: 14px; color: #A9ADA2">Signs you out on this device.</div></div>
+            <a href="Main.dc.html" class="hb" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Sign out</a>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{tabPrivacy}}" hint-placeholder-val="{{false}}">
+        <section aria-labelledby="pv" style="padding: 18px 20px; border-radius: 14px; background: #141814">
+          <h2 id="pv" style="margin: 0 0 10px; font-size: 16px; font-weight: 600">Who sees what</h2>
+          <ul style="margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 6px; color: #D9D3C6; font-size: 14.5px">
+            <li>Only active members can see your profile, posts, photos and comments.</li>
+            <li>Your neighbourhood is shown; your address and exact location never are.</li>
+            <li>Messages are private to the people in them. Moderators only see a message if someone reports it.</li>
+          </ul>
+          <a href="#privacy" style="display: inline-block; margin-top: 12px; font-size: 14px; text-decoration: none">Privacy and guidelines</a>
+        </section>
+        <section aria-labelledby="bl" style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="bl" style="margin: 6px 0 2px; font-size: 16px; font-weight: 600">Blocked members</h2>
+          <p style="margin: 0 0 8px; font-size: 14px; color: #A9ADA2">Blocked members can't message you, and their posts are hidden from you. Past messages aren't deleted.</p>
+          <sc-for list="{{blocked}}" as="b">
+            <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 8px 0">
+              <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: {{b.color}}; font-size: 13px; font-weight: 600">{{b.ini}}</span>
+              <div style="flex: 1; min-width: 0"><div style="font-weight: 500; color: {{b.nameColor}}">{{b.name}}</div><div style="font-size: 13px; color: #8F948A">{{b.meta}}</div></div>
+              <sc-if value="{{b.isBlocked}}"><button class="hb" onClick="{{b.unblock}}" style="height: 38px; padding: 0 16px; border-radius: 19px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">Unblock</button></sc-if>
+              <sc-if value="{{b.isUnblocked}}"><span style="font-size: 13.5px; color: #A9C59B">Unblocked</span><button class="tl" onClick="{{b.undo}}" style="padding: 4px; border: 0; background: none; color: #CBB28C; font-size: 13.5px">Undo</button></sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{noBlocked}}" hint-placeholder-val="{{false}}"><p style="margin: 0; padding: 16px; border-radius: 12px; background: #141814; color: #BDBFB5; font-size: 14px">You haven't blocked anyone. You can block someone from their profile or a conversation.</p></sc-if>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{tabAuth}}" hint-placeholder-val="{{false}}">
+        <section style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0; color: #D9D3C6">Admins confirm sensitive actions — suspending a member, creating invitations — with a code from an authenticator app.</p>
+          <sc-if value="{{authOff}}">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 18px 20px; border-radius: 14px; background: #141814">
+              <div style="flex: 1 1 300px"><div style="font-weight: 500">Authenticator is off</div><div style="font-size: 14px; color: #A9ADA2">You'll need it before using admin tools.</div></div>
+              <button onClick="{{startSetup}}" style="height: 42px; padding: 0 18px; border: 0; border-radius: 21px; background: #CBB28C; color: #1A150E; font-size: 14.5px; font-weight: 600">Set up</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{authSetup}}">
+            <form onSubmit="{{verify}}" style="display: flex; flex-wrap: wrap; gap: 24px; padding: 20px; border-radius: 14px; background: #141814">
+              <div style="flex: 0 0 auto; padding: 12px; border-radius: 10px; background: #F4EFE6">
+                <div role="img" aria-label="QR code for your authenticator app" style="display: grid; grid-template-columns: repeat(25, 6px); grid-auto-rows: 6px">
+                  <sc-for list="{{qr}}" as="c"><span style="background: {{c.bg}}"></span></sc-for>
+                </div>
+              </div>
+              <div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 10px">
+                <div style="font-weight: 600">1. Scan this with your authenticator app</div>
+                <div style="font-size: 14px; color: #A9ADA2">Can't scan? Enter this key instead:</div>
+                <code style="align-self: flex-start; padding: 6px 10px; border-radius: 6px; background: #0F130F; font: 500 14px/1.4 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.06em">JBSW Y3DP EHPK 3PXP</code>
+                <label for="otp" style="margin-top: 6px; font-weight: 600">2. Enter the 6-digit code it shows</label>
+                <input id="otp" class="fld" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="{{code}}" onChange="{{onCode}}" aria-invalid="{{codeErr}}" aria-describedby="otp-msg" style="width: 180px; height: 48px; padding: 0 14px; border-radius: 10px; border: 1px solid {{codeBorder}}; background: #0F130F; font: 500 20px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.3em">
+                <span id="otp-msg" style="font-size: 13.5px; color: #F0A18C">{{codeMsg}}</span>
+                <div style="display: flex; gap: 8px">
+                  <button type="submit" style="height: 42px; padding: 0 18px; border: 0; border-radius: 21px; background: #CBB28C; color: #1A150E; font-size: 14.5px; font-weight: 600">Verify and turn on</button>
+                  <button type="button" class="hb" onClick="{{cancelSetup}}" style="height: 42px; padding: 0 16px; border: 0; border-radius: 21px; background: transparent; font-size: 14.5px">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </sc-if>
+          <sc-if value="{{authOn}}">
+            <div role="status" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 18px 20px; border-radius: 14px; background: #141814">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A9C59B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 5-5"></path></svg>
+              <div style="flex: 1 1 280px"><div style="font-weight: 500">Authenticator is on</div><div style="font-size: 14px; color: #A9ADA2">You'll be asked for a code before admin actions.</div></div>
+              <a href="Admin.dc.html" style="font-size: 14px; font-weight: 500; text-decoration: none">Go to admin</a>
+            </div>
+          </sc-if>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{tabDelete}}" hint-placeholder-val="{{false}}">
+        <section style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 14px; background: #1A1311">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 600">Delete your account</h2>
+          <p style="margin: 0; color: #E5DED0">Your profile, posts and the messages you wrote are removed. Reports that involve you may be kept for up to 90 days so moderators can finish reviewing them.</p>
+          <sc-if value="{{soleAdmin}}">
+            <p role="note" style="margin: 0; padding: 12px 14px; border-radius: 10px; background: #2B2417; color: #EBD3A8; font-size: 14px">You're the only admin. Another member needs to be made an admin before you can delete your account.</p>
+          </sc-if>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="del" style="font-size: 14px; font-weight: 500">Type DELETE to confirm</label>
+            <input id="del" class="fld" type="text" autocomplete="off" value="{{confirmText}}" onChange="{{onConfirm}}" disabled="{{delLocked}}" style="width: 240px; max-width: 100%; height: 46px; padding: 0 14px; border-radius: 10px; border: 1px solid rgba(240,233,220,0.18); background: #0F130F; font-size: 16px; letter-spacing: 0.06em">
+          </div>
+          <sc-if value="{{delError}}" hint-placeholder-val="{{false}}"><p role="alert" style="margin: 0; font-size: 14px; color: #F0A18C">Something went wrong and your account wasn't deleted. Check your connection and try again.</p></sc-if>
+          <div>
+            <button onClick="{{doDelete}}" disabled="{{delDisabled}}" aria-busy="{{deleting}}" style="display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: 22px; background: #C4563F; color: #FFF6EE; font-size: 15px; font-weight: 600"><sc-if value="{{deleting}}"><span class="spin" aria-hidden="true" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,246,238,0.35); border-top-color: #FFF6EE; animation: gzspin 0.8s linear infinite"></span></sc-if>{{deleteLabel}}</button>
+          </div>
+        </section>
+      </sc-if>
+    </sc-if>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"role":{"editor":"enum","options":["member","admin","sole-admin"],"default":"admin"},"deleteResult":{"editor":"enum","options":["success","error"],"default":"success"},"$preview":{"width":1440,"height":1500}}'>
+const BLOCKED = [
+  { id: 'sk', name: 'Sameer K', ini: 'SK', color: '#4E4A3A', meta: 'Blocked 12 September' },
+  { id: 'fm', name: 'Former member', ini: '?', color: '#2A2F27', meta: 'Blocked 2 August · account closed', gone: true }
+];
+
+function buildQr() {
+  const n = 25, cells = [];
+  let seed = 7;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+  const finder = (r, c, r0, c0) => {
+    const y = r - r0, x = c - c0;
+    if (y < 0 || x < 0 || y > 6 || x > 6) return null;
+    return y === 0 || y === 6 || x === 0 || x === 6 || (y >= 2 && y <= 4 && x >= 2 && x <= 4);
+  };
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    let on = finder(r, c, 0, 0);
+    if (on === null) on = finder(r, c, 0, n - 7);
+    if (on === null) on = finder(r, c, n - 7, 0);
+    const nearFinder = (r < 8 && c < 8) || (r < 8 && c >= n - 8) || (r >= n - 8 && c < 8);
+    if (on === null) on = nearFinder ? false : (r === 6 || c === 6) ? (r + c) % 2 === 0 : rnd() > 0.52;
+    cells.push({ bg: on ? '#0B0E0C' : 'transparent' });
+  }
+  return cells;
+}
+const QR = buildQr();
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'account', unblocked: {}, auth: 'off', code: '', codeErr: '', confirmText: '', phase: 'idle' };
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const role = this.props.role ?? 'admin';
+    const admin = role !== 'member';
+    const TABS = [['account', 'Account'], ['privacy', 'Privacy and safety']].concat(admin ? [['auth', 'Authenticator']] : []).concat([['delete', 'Delete account']]);
+    const tab = !admin && s.tab === 'auth' ? 'account' : s.tab;
+    const blocked = BLOCKED.map((b) => ({ name: b.name, ini: b.ini, color: b.color, meta: b.meta, nameColor: b.gone ? '#A9ADA2' : '#F0E9DC',
+      isBlocked: !s.unblocked[b.id], isUnblocked: !!s.unblocked[b.id],
+      unblock: () => this.setState({ unblocked: Object.assign({}, s.unblocked, { [b.id]: true }) }),
+      undo: () => { const u = Object.assign({}, s.unblocked); delete u[b.id]; this.setState({ unblocked: u }); } }));
+    const sole = role === 'sole-admin';
+    const deleting = s.phase === 'deleting';
+    return {
+      deleted: s.phase === 'deleted', notDeleted: s.phase !== 'deleted',
+      tabs: TABS.map(([k, label]) => ({ label, sel: tab === k, line: tab === k ? '#CBB28C' : 'transparent', fg: tab === k ? '#F0E9DC' : '#A9ADA2', pick: set({ tab: k }) })),
+      tabAccount: tab === 'account', tabPrivacy: tab === 'privacy', tabAuth: tab === 'auth', tabDelete: tab === 'delete',
+      blocked, noBlocked: false,
+      authOff: s.auth === 'off', authSetup: s.auth === 'setup', authOn: s.auth === 'on',
+      startSetup: set({ auth: 'setup', code: '', codeErr: '' }), cancelSetup: set({ auth: 'off', code: '', codeErr: '' }),
+      qr: QR, code: s.code, onCode: (e) => this.setState({ code: e.target.value.replace(/\D/g, '').slice(0, 6), codeErr: '' }),
+      codeErr: !!s.codeErr, codeMsg: s.codeErr, codeBorder: s.codeErr ? '#E07A62' : 'rgba(240,233,220,0.18)',
+      verify: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        if (s.code.length !== 6) return this.setState({ codeErr: 'Enter the 6-digit code from your app.' });
+        if (s.code === '000000') return this.setState({ codeErr: 'That code didn’t match. Codes change every 30 seconds — try the newest one.' });
+        this.setState({ auth: 'on', code: '' });
+      },
+      soleAdmin: sole, delLocked: sole || deleting,
+      confirmText: s.confirmText, onConfirm: (e) => this.setState({ confirmText: e.target.value, phase: s.phase === 'error' ? 'idle' : s.phase }),
+      delDisabled: sole || deleting || s.confirmText !== 'DELETE',
+      delError: s.phase === 'error', deleting, deleteLabel: deleting ? 'Deleting…' : 'Delete my account',
+      doDelete: () => {
+        this.setState({ phase: 'deleting' });
+        setTimeout(() => this.setState({ phase: (this.props.deleteResult ?? 'success') === 'error' ? 'error' : 'deleted' }), 1000);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Listing thread</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input,.gz textarea,.gz select{font:inherit;color:inherit}
+.gz button{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.45}
+.gz :is(a,button,input,textarea,select,label):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .tl:hover{text-decoration:underline}
+.gz .line:hover span{background:#CBB28C}
+.gz input::placeholder,.gz textarea::placeholder{color:#8F948A}
+.gz textarea{resize:vertical}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px 0 20px; background: #0B0E0C; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="flex: 0 0 auto; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <div role="search" style="position: relative; flex: 1 1 auto; max-width: 620px; margin: 0 auto">
+    <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search game titles</label>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8F948A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 14px; top: 11px"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+    <input id="q" type="search" placeholder="Search game titles" style="width: 100%; height: 40px; padding: 0 44px 0 42px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.12); background: #141814; font-size: 14.5px">
+    <kbd style="position: absolute; right: 12px; top: 10px; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 5px; border: 1px solid rgba(240,233,220,0.18); color: #8F948A; font: 500 12px/18px Outfit, sans-serif; text-align: center">/</kbd>
+  </div>
+  <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 4px">
+    <a href="Submit.dc.html" class="hb" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 20px; color: #F0E9DC; text-decoration: none; font-weight: 500; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Create</a>
+    <a href="Messages.dc.html" class="hb" aria-label="Messages, 2 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">2</span></a>
+    <button class="hb" aria-label="Notifications, 3 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 20px; background: transparent; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">3</span></button>
+    <button class="hb" aria-label="Account menu for Aarav Menon" style="display: flex; align-items: center; gap: 4px; height: 40px; padding: 0 6px 0 4px; border: 0; border-radius: 20px; background: transparent; color: #BDBFB5"><span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; color: #F0E9DC; font-size: 12.5px; font-weight: 600">AM</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+  </div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Primary" style="flex: 0 0 248px; padding: 14px 12px 32px; border-right: 1px solid rgba(240,233,220,0.09)">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Main.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>Feed</a>
+      <a href="Profile.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Members</a>
+      <a href="Messages.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span style="flex: 1">Messages</span><span style="font-size: 12px; font-weight: 600; color: #1A150E; background: #CBB28C; border-radius: 9px; padding: 0 7px; line-height: 18px">2 new</span></a>
+      <a href="Profile.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m16 6 4 14"></path><path d="M12 6v14"></path><path d="M8 8v12"></path><path d="M4 4v16"></path></svg>My games</a>
+    </div>
+    <div style="margin: 22px 12px 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8F948A">Platforms</div>
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Main.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #4A3F2E; font-size: 9.5px; font-weight: 700">g.</span>All platforms</a>
+      <a href="Main.dc.html" aria-current="true" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; background: #1B2019; color: #F0E9DC; text-decoration: none; font-size: 14.5px; font-weight: 500"><span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #2F4A7E; font-size: 9.5px; font-weight: 700">PS</span>PlayStation</a>
+      <a href="Main.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #3B5F33; font-size: 9.5px; font-weight: 700">XB</span>Xbox</a>
+      <a href="Main.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: #E5DED0; text-decoration: none; font-size: 14.5px"><span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #873A32; font-size: 9.5px; font-weight: 700">NS</span>Nintendo</a>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; padding: 20px 24px 80px">
+    <div style="max-width: 1112px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px">
+
+      <sc-if value="{{isRemoved}}" hint-placeholder-val="{{false}}">
+        <section style="flex: 999 1 520px; max-width: 760px; padding: 48px 28px; border-radius: 14px; background: #141814; text-align: center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8F948A" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>
+          <h1 style="margin: 10px 0 6px; font-size: 20px; font-weight: 600">This post isn't available</h1>
+          <p style="margin: 0 auto 18px; max-width: 420px; color: #BDBFB5">It was deleted by its owner or removed by a moderator. Messages you already exchanged about it stay in your inbox.</p>
+          <a href="Main.dc.html" style="display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 20px; background: #CBB28C; color: #1A150E; text-decoration: none; font-weight: 600; font-size: 14px">Back to the feed</a>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{isPresent}}" hint-placeholder-val="{{true}}">
+      <article style="flex: 999 1 520px; min-width: 0; max-width: 760px; display: flex; flex-direction: column; gap: 14px">
+
+        <div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #8F948A">
+          <a href="Main.dc.html" class="hb" aria-label="Back to feed" style="flex: 0 0 auto; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #141814; color: #E5DED0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></a>
+          <span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #2F4A7E; color: #F0E9DC; font-size: 9.5px; font-weight: 700">PS</span>
+          <span style="color: #E5DED0; font-weight: 600">PlayStation</span><span aria-hidden="true">·</span>
+          <a href="Profile.dc.html" class="tl" style="color: #BDBFB5; text-decoration: none">Asha Rao</a><span aria-hidden="true">·</span>
+          <span>Indiranagar</span><span aria-hidden="true">·</span><span>3h</span>
+        </div>
+
+        <h1 style="margin: 0; font-size: 27px; font-weight: 600; line-height: 1.25">Red Dead Redemption 2</h1>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 14px">
+          <span style="padding: 2px 8px; border-radius: 5px; background: #3A3020; color: #EBD3A8; font-size: 12px; font-weight: 600; letter-spacing: 0.02em">Offer</span>
+          <span style="font-size: 17px; font-weight: 600">₹1,800</span>
+          <sc-if value="{{isOpen}}"><span style="display: inline-flex; align-items: center; gap: 5px; color: #A9C59B"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 5-5"></path></svg>Open</span></sc-if>
+          <sc-if value="{{isPaused}}"><span style="display: inline-flex; align-items: center; gap: 5px; color: #D8B46A"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>Paused</span></sc-if>
+          <sc-if value="{{isClosed}}"><span style="display: inline-flex; align-items: center; gap: 5px; color: #A9ADA2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Closed</span></sc-if>
+        </div>
+
+        <sc-if value="{{notOpen}}" hint-placeholder-val="{{false}}">
+          <p style="margin: 0; padding: 12px 14px; border-radius: 10px; background: #1B2019; color: #E5DED0; font-size: 14px">{{statusNote}}</p>
+        </sc-if>
+
+        <div style="position: relative; height: 440px; border-radius: 14px; overflow: hidden; background: #15110D">
+          <sc-if value="{{photo0}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; justify-content: center; height: 100%">
+              <div role="img" aria-label="Owner's photo: front of the PS4 case" style="display: flex; align-items: center; justify-content: center; height: 100%; aspect-ratio: 4 / 5; background: linear-gradient(160deg, #5A452F 0%, #3A2C1F 55%, #271E15 100%)">
+                <div style="display: flex; flex-direction: column; width: 46%; aspect-ratio: 13 / 17; border-radius: 4px; overflow: hidden; transform: rotate(-5deg); box-shadow: 0 22px 34px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)">
+                  <span style="display: flex; align-items: center; height: 9%; padding: 0 10px; background: #1E4FA3; color: #FFFFFF; font-size: 12px; font-weight: 700; letter-spacing: 0.12em">PS4</span>
+                  <span style="flex: 1; display: flex; align-items: flex-end; padding: 14px; background: linear-gradient(180deg, #9A3622 0%, #521A10 100%); color: #F3E6CF; font-size: 15px; font-weight: 700; letter-spacing: 0.08em; line-height: 1.15; text-transform: uppercase">Red Dead Redemption II</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{photo1}}" hint-placeholder-val="{{false}}">
+            <div role="img" aria-label="Owner's photo: both discs and the map" style="position: absolute; inset: 0; background: linear-gradient(170deg, #5A452F 0%, #3A2C1F 60%, #271E15 100%)">
+              <span style="position: absolute; left: 12%; top: 18%; width: 34%; aspect-ratio: 1.4; background: #D9CBB0; transform: rotate(-8deg); box-shadow: 0 12px 20px rgba(0,0,0,0.4)"></span>
+              <span style="position: absolute; left: 40%; top: 22%; width: 26%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #1E1F1C 0 8%, #C9CED2 9% 14%, #9AA1A8 15%, #E3E6E8 45%, #8A9198 75%, #CDD2D6 100%); box-shadow: 0 14px 22px rgba(0,0,0,0.45)"></span>
+              <span style="position: absolute; left: 60%; top: 34%; width: 26%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #1E1F1C 0 8%, #C9CED2 9% 14%, #A3AAB0 15%, #ECEEF0 50%, #8A9198 80%, #CDD2D6 100%); box-shadow: 0 14px 22px rgba(0,0,0,0.45)"></span>
+            </div>
+          </sc-if>
+          <button class="hb" onClick="{{prevPhoto}}" aria-label="Previous photo" style="position: absolute; left: 12px; top: 50%; margin-top: -20px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(11,14,12,0.78); color: #F0E9DC"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+          <button class="hb" onClick="{{nextPhoto}}" aria-label="Next photo" style="position: absolute; right: 12px; top: 50%; margin-top: -20px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(11,14,12,0.78); color: #F0E9DC"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+          <span aria-live="polite" style="position: absolute; right: 12px; bottom: 12px; padding: 3px 9px; border-radius: 6px; background: rgba(11,14,12,0.82); font-size: 12.5px">{{photoLabel}}</span>
+          <span style="position: absolute; left: 12px; bottom: 12px; padding: 3px 9px; border-radius: 6px; background: rgba(11,14,12,0.82); font-size: 12.5px; color: #BDBFB5">Owner's photo</span>
+        </div>
+
+        <dl style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 20px; margin: 0; padding: 16px 18px; border-radius: 14px; background: #141814">
+          <div><dt style="font-size: 12.5px; color: #8F948A">Platform</dt><dd style="margin: 2px 0 0; font-weight: 500">PlayStation</dd></div>
+          <div><dt style="font-size: 12.5px; color: #8F948A">Console</dt><dd style="margin: 2px 0 0; font-weight: 500">PS4</dd></div>
+          <div><dt style="font-size: 12.5px; color: #8F948A">Format</dt><dd style="margin: 2px 0 0; font-weight: 500">Disc</dd></div>
+          <div><dt style="font-size: 12.5px; color: #8F948A">Condition</dt><dd style="margin: 2px 0 0; font-weight: 500">Good</dd></div>
+          <div><dt style="font-size: 12.5px; color: #8F948A">Asking price</dt><dd style="margin: 2px 0 0; font-weight: 500">₹1,800</dd></div>
+          <div><dt style="font-size: 12.5px; color: #8F948A">Area</dt><dd style="margin: 2px 0 0; font-weight: 500">Indiranagar</dd></div>
+        </dl>
+
+        <section aria-labelledby="compat" style="display: flex; flex-direction: column; gap: 10px; padding: 2px 4px">
+          <h2 id="compat" style="margin: 0; font-size: 15px; font-weight: 600">Will it work for you?</h2>
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CBB28C" stroke-width="1.7" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.2"></circle></svg>
+            <p style="margin: 0; color: #E5DED0; font-size: 14.5px">Needs a disc drive. Plays on PS4 and on PS5 with a drive — <strong style="font-weight: 600">not on PS5 Digital Edition</strong> without the add-on drive.</p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CBB28C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"></path></svg>
+            <p style="margin: 0; color: #E5DED0; font-size: 14.5px">Owner says no download is needed to start playing. Online modes need an internet connection.</p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CBB28C" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4z"></path></svg>
+            <p style="margin: 0; color: #E5DED0; font-size: 14.5px">Nothing in this copy depends on a redemption code.</p>
+          </div>
+        </section>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 0 4px; font-size: 15.5px; line-height: 1.65; color: #E5DED0">
+          <p style="margin: 0">Standard 2-disc PS4 release with the original case and the paper map. Disc 1 has a light hairline mark that doesn't affect play — it's visible in the second photo.</p>
+          <p style="margin: 0">I'd prefer to sell, but I'll consider a swap for Ghost of Tsushima or Spider-Man (PS4 disc). Weekday evenings near Indiranagar metro work best.</p>
+        </div>
+
+        <div style="position: relative; display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px">
+          <a href="#comments" class="hb" style="display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border-radius: 18px; background: #171C16; color: #E5DED0; text-decoration: none; font-size: 14px; font-weight: 500"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>{{countLabel}}</a>
+
+          <sc-if value="{{isMember}}" hint-placeholder-val="{{true}}">
+            <sc-if value="{{canMessage}}" hint-placeholder-val="{{true}}"><a href="Messages.dc.html" style="display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px; border-radius: 18px; background: #CBB28C; color: #1A150E; text-decoration: none; font-size: 14px; font-weight: 600"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg>Message Asha</a></sc-if>
+            <sc-if value="{{postReportSent}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 36px; padding: 0 6px; color: #A9C59B; font-size: 14px">Reported — thanks</span></sc-if>
+            <sc-if value="{{canReportPost}}" hint-placeholder-val="{{true}}"><button class="hb" onClick="{{reportPost}}" aria-expanded="{{reportingPost}}" style="display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border: 0; border-radius: 18px; background: #171C16; color: #E5DED0; font-size: 14px; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 1-1h12l-2 5 2 5H5"></path></svg>Report</button></sc-if>
+          </sc-if>
+
+          <sc-if value="{{isOwner}}" hint-placeholder-val="{{false}}">
+            <div style="position: relative">
+              <button class="hb" onClick="{{toggleStatusMenu}}" aria-haspopup="menu" aria-expanded="{{statusMenu}}" style="display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 10px 0 14px; border: 1px solid rgba(240,233,220,0.2); border-radius: 18px; background: transparent; font-size: 14px; font-weight: 500">Status: {{statusName}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+              <sc-if value="{{statusMenu}}" hint-placeholder-val="{{false}}">
+                <div role="menu" aria-label="Post status" style="position: absolute; top: 42px; left: 0; z-index: 6; width: 300px; padding: 6px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12); box-shadow: 0 14px 36px rgba(0,0,0,0.55)">
+                  <sc-for list="{{statusOpts}}" as="o"><button role="menuitemradio" aria-checked="{{o.sel}}" class="hb" onClick="{{o.pick}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px; width: 100%; padding: 9px 10px; border: 0; border-radius: 8px; background: {{o.bg}}; text-align: left"><span style="font-size: 14px; font-weight: 500">{{o.label}}</span><span style="font-size: 12.5px; color: #A9ADA2">{{o.help}}</span></button></sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <label class="hb" style="display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border-radius: 18px; background: #171C16; color: #E5DED0; font-size: 14px; font-weight: 500; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>Add photos<input type="file" accept="image/jpeg,image/png,image/webp" multiple style="position: absolute; width: 1px; height: 1px; opacity: 0"></label>
+            <button class="hb" onClick="{{askDeletePost}}" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 0; border-radius: 18px; background: transparent; color: #E89A86; font-size: 14px; font-weight: 500">Delete post</button>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{confirmDeletePost}}" hint-placeholder-val="{{false}}">
+          <div role="alertdialog" aria-label="Delete post" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-radius: 12px; background: #2A1A16">
+            <p style="flex: 1 1 260px; margin: 0; font-size: 14px; color: #F0E9DC">Delete this post and its discussion? Commenters will see it as removed. This can't be undone.</p>
+            <button onClick="{{keepPost}}" class="hb" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Keep it</button>
+            <button onClick="{{deletePost}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: #C4563F; color: #FFF6EE; font-size: 14px; font-weight: 600">Delete post</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{reportingPost}}" hint-placeholder-val="{{false}}">
+          <div role="group" aria-label="Report this post" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12)">
+            <div style="font-size: 14px; font-weight: 600">Report this post</div>
+            <div style="padding: 8px 12px; border-radius: 8px; background: #121611; font-size: 13.5px; color: #BDBFB5">Red Dead Redemption 2 · Offer by Asha Rao</div>
+            <label for="rp-post" style="font-size: 13.5px; color: #E5DED0">What happened?</label>
+            <textarea id="rp-post" rows="3" maxlength="1000" onChange="{{onReportDraft}}" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font-size: 14.5px"></textarea>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+              <span style="flex: 1 1 220px; font-size: 12.5px; color: #A9ADA2">Moderators get this post, your note and the time. {{reportCount}}/1,000</span>
+              <button onClick="{{cancelReport}}" class="hb" style="height: 36px; padding: 0 14px; border: 0; border-radius: 18px; background: transparent; font-size: 14px">Cancel</button>
+              <button onClick="{{sendPostReport}}" disabled="{{reportEmpty}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: #CBB28C; color: #1A150E; font-size: 14px; font-weight: 600">Send report</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <section id="comments" aria-label="Discussion" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px">
+          <sc-if value="{{canComment}}" hint-placeholder-val="{{true}}">
+            <sc-if value="{{composerClosed}}" hint-placeholder-val="{{true}}">
+              <button onClick="{{openComposer}}" style="display: flex; align-items: center; width: 100%; height: 46px; padding: 0 18px; border-radius: 23px; border: 1px solid rgba(240,233,220,0.16); background: #0F130F; color: #8F948A; font-size: 14.5px; text-align: left; cursor: text">Add a comment</button>
+            </sc-if>
+            <sc-if value="{{composerOpen}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; flex-direction: column; border-radius: 18px; border: 1px solid #CBB28C; background: #0F130F; overflow: hidden">
+                <label for="new-c" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Add a comment</label>
+                <textarea id="new-c" rows="3" maxlength="2000" onChange="{{onDraft}}" placeholder="Ask about the copy, or suggest a swap" style="width: 100%; padding: 14px 18px 6px; border: 0; outline: 0; background: transparent; font-size: 15px; line-height: 1.5"></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 6px; padding: 6px 8px 8px">
+                  <button onClick="{{closeComposer}}" class="hb" style="height: 34px; padding: 0 14px; border: 0; border-radius: 17px; background: #1B2019; font-size: 13.5px; font-weight: 500">Cancel</button>
+                  <button onClick="{{postComment}}" disabled="{{draftEmpty}}" style="height: 34px; padding: 0 16px; border: 0; border-radius: 17px; background: #CBB28C; color: #1A150E; font-size: 13.5px; font-weight: 600">Comment</button>
+                </div>
+              </div>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{commentsLocked}}" hint-placeholder-val="{{false}}">
+            <p style="display: flex; align-items: center; gap: 8px; margin: 0; padding: 12px 16px; border-radius: 12px; background: #141814; color: #BDBFB5; font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>{{lockedLabel}}</p>
+          </sc-if>
+
+          <div style="display: flex; align-items: baseline; gap: 8px; padding: 0 4px">
+            <h2 style="margin: 0; font-size: 15px; font-weight: 600">{{countLabel}}</h2>
+            <span style="font-size: 13px; color: #8F948A">Oldest first</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 18px">
+            <sc-for list="{{comments}}" as="c" hint-placeholder-count="4">
+              <div style="display: flex; gap: 10px">
+                <div style="flex: 0 0 32px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+                  <sc-if value="{{c.isRemoved}}"><span aria-hidden="true" style="display: block; width: 32px; height: 32px; border-radius: 50%; border: 1px dashed #4A5046"></span></sc-if>
+                  <sc-if value="{{c.hasAuthor}}"><span aria-hidden="true" style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: {{c.color}}; color: #F0E9DC; font-size: 11.5px; font-weight: 600">{{c.ini}}</span></sc-if>
+                  <sc-if value="{{c.showLine}}"><button class="line" onClick="{{c.toggle}}" aria-label="Collapse replies to {{c.who}}" style="flex: 1; display: flex; justify-content: center; width: 20px; padding: 0; border: 0; background: none"><span style="display: block; width: 2px; height: 100%; border-radius: 1px; background: #2A3128"></span></button></sc-if>
+                </div>
+                <div style="flex: 1 1 auto; min-width: 0; padding-top: 5px">
+                  <sc-if value="{{c.isRemoved}}"><p style="margin: 0; color: #8F948A; font-size: 14px; font-style: italic">Comment removed by a moderator · {{c.age}}</p></sc-if>
+                  <sc-if value="{{c.isDeleted}}"><p style="margin: 0; color: #8F948A; font-size: 14px; font-style: italic">You deleted this comment.</p></sc-if>
+                  <sc-if value="{{c.isNormal}}">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13.5px; color: #8F948A">
+                      <a href="Profile.dc.html" class="tl" style="color: #F0E9DC; font-weight: 600; text-decoration: none">{{c.who}}</a>
+                      <sc-if value="{{c.isOwnerTag}}"><span style="padding: 0 6px; border-radius: 4px; background: #3A3020; color: #EBD3A8; font-size: 11.5px; font-weight: 600; line-height: 18px">Owner</span></sc-if>
+                      <sc-if value="{{c.isYouTag}}"><span style="padding: 0 5px; border-radius: 4px; border: 1px solid #5B6157; color: #BDBFB5; font-size: 11.5px; font-weight: 600; line-height: 16px">You</span></sc-if>
+                      <span aria-hidden="true">·</span><span>{{c.age}}</span>
+                      <sc-if value="{{c.isEdited}}"><span>· edited</span></sc-if>
+                    </div>
+                    <sc-if value="{{c.notEditing}}"><p style="margin: 4px 0 0; color: #E5DED0; font-size: 15px; line-height: 1.55; overflow-wrap: anywhere">{{c.text}}</p></sc-if>
+                    <sc-if value="{{c.editing}}">
+                      <div style="margin-top: 6px; border-radius: 12px; border: 1px solid #CBB28C; background: #0F130F; overflow: hidden">
+                        <label for="edit-{{c.id}}" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Edit your comment</label>
+                        <textarea id="edit-{{c.id}}" rows="3" maxlength="2000" value="{{c.editValue}}" onChange="{{onEditDraft}}" style="width: 100%; padding: 10px 14px 4px; border: 0; outline: 0; background: transparent; font-size: 15px; line-height: 1.5"></textarea>
+                        <div style="display: flex; justify-content: flex-end; gap: 6px; padding: 4px 8px 8px">
+                          <button onClick="{{c.onCancelEdit}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: #1B2019; font-size: 13px">Cancel</button>
+                          <button onClick="{{c.onSaveEdit}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Save</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <div style="display: flex; flex-wrap: wrap; gap: 2px; margin: 4px 0 0 -8px">
+                      <sc-if value="{{c.canReply}}"><button class="hb" onClick="{{c.onReply}}" style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Reply</button></sc-if>
+                      <sc-if value="{{c.canEdit}}"><button class="hb" onClick="{{c.onEdit}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Edit</button><button class="hb" onClick="{{c.onDelete}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Delete</button></sc-if>
+                      <sc-if value="{{c.canReport}}"><button class="hb" onClick="{{c.onReport}}" aria-expanded="{{c.reporting}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Report</button></sc-if>
+                      <sc-if value="{{c.reportSent}}"><span style="display: inline-flex; align-items: center; height: 32px; padding: 0 9px; color: #A9C59B; font-size: 13px">Reported</span></sc-if>
+                    </div>
+                    <sc-if value="{{c.confirmingDelete}}">
+                      <div role="alertdialog" aria-label="Delete comment" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: #2A1A16; font-size: 13.5px">
+                        <span style="flex: 1 1 200px">Delete your comment? Replies stay visible.</span>
+                        <button onClick="{{c.onKeep}}" class="hb" style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 13px">Keep</button>
+                        <button onClick="{{c.onConfirmDelete}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #C4563F; color: #FFF6EE; font-size: 13px; font-weight: 600">Delete</button>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{c.reporting}}">
+                      <div role="group" aria-label="Report comment" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px; padding: 14px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12)">
+                        <div style="font-size: 13.5px; font-weight: 600">{{c.reportTitle}}</div>
+                        <div style="padding: 8px 12px; border-radius: 8px; background: #121611; font-size: 13.5px; color: #BDBFB5">“{{c.excerpt}}”</div>
+                        <label for="rp-{{c.id}}" style="font-size: 13.5px">What happened?</label>
+                        <textarea id="rp-{{c.id}}" rows="2" maxlength="1000" onChange="{{onReportDraft}}" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font-size: 14.5px"></textarea>
+                        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+                          <span style="flex: 1 1 200px; font-size: 12.5px; color: #A9ADA2">Moderators get this comment and your note. {{reportCount}}/1,000</span>
+                          <button onClick="{{cancelReport}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: transparent; font-size: 13px">Cancel</button>
+                          <button onClick="{{c.onSendReport}}" disabled="{{reportEmpty}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Send report</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </sc-if>
+
+                  <sc-if value="{{c.isCollapsed}}">
+                    <button class="hb" onClick="{{c.toggle}}" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; margin-top: 6px; padding: 0 12px; border: 1px solid rgba(240,233,220,0.14); border-radius: 15px; background: transparent; color: #BDBFB5; font-size: 13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>{{c.hiddenLabel}}</button>
+                  </sc-if>
+
+                  <sc-if value="{{c.showReplies}}">
+                    <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 12px">
+                      <sc-for list="{{c.replies}}" as="r">
+                        <div style="display: flex; gap: 10px">
+                          <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: {{r.color}}; color: #F0E9DC; font-size: 10.5px; font-weight: 600">{{r.ini}}</span>
+                          <div style="flex: 1 1 auto; min-width: 0; padding-top: 3px">
+                            <sc-if value="{{r.isDeleted}}"><p style="margin: 0; color: #8F948A; font-size: 14px; font-style: italic">You deleted this reply.</p></sc-if>
+                            <sc-if value="{{r.isNormal}}">
+                              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13.5px; color: #8F948A">
+                                <a href="Profile.dc.html" class="tl" style="color: #F0E9DC; font-weight: 600; text-decoration: none">{{r.who}}</a>
+                                <sc-if value="{{r.isOwnerTag}}"><span style="padding: 0 6px; border-radius: 4px; background: #3A3020; color: #EBD3A8; font-size: 11.5px; font-weight: 600; line-height: 18px">Owner</span></sc-if>
+                                <sc-if value="{{r.isYouTag}}"><span style="padding: 0 5px; border-radius: 4px; border: 1px solid #5B6157; color: #BDBFB5; font-size: 11.5px; font-weight: 600; line-height: 16px">You</span></sc-if>
+                                <span aria-hidden="true">·</span><span>{{r.age}}</span>
+                                <sc-if value="{{r.isEdited}}"><span>· edited</span></sc-if>
+                              </div>
+                              <sc-if value="{{r.notEditing}}"><p style="margin: 4px 0 0; color: #E5DED0; font-size: 15px; line-height: 1.55; overflow-wrap: anywhere">{{r.text}}</p></sc-if>
+                              <sc-if value="{{r.editing}}">
+                                <div style="margin-top: 6px; border-radius: 12px; border: 1px solid #CBB28C; background: #0F130F; overflow: hidden">
+                                  <label for="edit-{{r.id}}" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Edit your reply</label>
+                                  <textarea id="edit-{{r.id}}" rows="3" maxlength="2000" value="{{r.editValue}}" onChange="{{onEditDraft}}" style="width: 100%; padding: 10px 14px 4px; border: 0; outline: 0; background: transparent; font-size: 15px; line-height: 1.5"></textarea>
+                                  <div style="display: flex; justify-content: flex-end; gap: 6px; padding: 4px 8px 8px">
+                                    <button onClick="{{r.onCancelEdit}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: #1B2019; font-size: 13px">Cancel</button>
+                                    <button onClick="{{r.onSaveEdit}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Save</button>
+                                  </div>
+                                </div>
+                              </sc-if>
+                              <div style="display: flex; flex-wrap: wrap; gap: 2px; margin: 4px 0 0 -8px">
+                                <sc-if value="{{r.canReply}}"><button class="hb" onClick="{{r.onReply}}" style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Reply</button></sc-if>
+                                <sc-if value="{{r.canEdit}}"><button class="hb" onClick="{{r.onEdit}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Edit</button><button class="hb" onClick="{{r.onDelete}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Delete</button></sc-if>
+                                <sc-if value="{{r.canReport}}"><button class="hb" onClick="{{r.onReport}}" aria-expanded="{{r.reporting}}" style="height: 32px; padding: 0 9px; border: 0; border-radius: 16px; background: transparent; color: #A9ADA2; font-size: 13px; font-weight: 500">Report</button></sc-if>
+                                <sc-if value="{{r.reportSent}}"><span style="display: inline-flex; align-items: center; height: 32px; padding: 0 9px; color: #A9C59B; font-size: 13px">Reported</span></sc-if>
+                              </div>
+                              <sc-if value="{{r.confirmingDelete}}">
+                                <div role="alertdialog" aria-label="Delete reply" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: #2A1A16; font-size: 13.5px">
+                                  <span style="flex: 1 1 200px">Delete your reply?</span>
+                                  <button onClick="{{r.onKeep}}" class="hb" style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 13px">Keep</button>
+                                  <button onClick="{{r.onConfirmDelete}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #C4563F; color: #FFF6EE; font-size: 13px; font-weight: 600">Delete</button>
+                                </div>
+                              </sc-if>
+                              <sc-if value="{{r.reporting}}">
+                                <div role="group" aria-label="Report reply" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px; padding: 14px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12)">
+                                  <div style="font-size: 13.5px; font-weight: 600">{{r.reportTitle}}</div>
+                                  <div style="padding: 8px 12px; border-radius: 8px; background: #121611; font-size: 13.5px; color: #BDBFB5">“{{r.excerpt}}”</div>
+                                  <label for="rp-{{r.id}}" style="font-size: 13.5px">What happened?</label>
+                                  <textarea id="rp-{{r.id}}" rows="2" maxlength="1000" onChange="{{onReportDraft}}" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font-size: 14.5px"></textarea>
+                                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+                                    <span style="flex: 1 1 200px; font-size: 12.5px; color: #A9ADA2">Moderators get this reply and your note. {{reportCount}}/1,000</span>
+                                    <button onClick="{{cancelReport}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: transparent; font-size: 13px">Cancel</button>
+                                    <button onClick="{{r.onSendReport}}" disabled="{{reportEmpty}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Send report</button>
+                                  </div>
+                                </div>
+                              </sc-if>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{c.showReplyBox}}">
+                    <div style="margin-top: 12px; border-radius: 14px; border: 1px solid #CBB28C; background: #0F130F; overflow: hidden">
+                      <div style="padding: 10px 14px 0; font-size: 12.5px; color: #A9ADA2">Replying to {{c.replyName}}</div>
+                      <label for="reply-{{c.id}}" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Your reply</label>
+                      <textarea id="reply-{{c.id}}" rows="2" maxlength="2000" onChange="{{onReplyDraft}}" placeholder="Write a reply" style="width: 100%; padding: 6px 14px 4px; border: 0; outline: 0; background: transparent; font-size: 15px; line-height: 1.5"></textarea>
+                      <div style="display: flex; justify-content: flex-end; gap: 6px; padding: 4px 8px 8px">
+                        <button onClick="{{cancelReply}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: #1B2019; font-size: 13px; font-weight: 500">Cancel</button>
+                        <button onClick="{{c.onPostReply}}" disabled="{{replyEmpty}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Reply</button>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </article>
+      </sc-if>
+
+      <aside aria-label="About this post" style="flex: 1 1 300px; max-width: 340px; display: flex; flex-direction: column; gap: 16px">
+        <sc-if value="{{isMember}}" hint-placeholder-val="{{true}}">
+          <section style="padding: 18px; border-radius: 14px; background: #141814">
+            <div style="display: flex; gap: 12px; align-items: center">
+              <span aria-hidden="true" style="display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #6B4E2E; color: #F0E9DC; font-size: 16px; font-weight: 600">AR</span>
+              <div style="min-width: 0">
+                <a href="Profile.dc.html" class="tl" style="display: block; color: #F0E9DC; text-decoration: none; font-size: 16px; font-weight: 600">Asha Rao</a>
+                <div style="font-size: 13px; color: #8F948A">Indiranagar · PS4, PS5</div>
+              </div>
+            </div>
+            <p style="margin: 12px 0 0; font-size: 14px; line-height: 1.55; color: #C9C6BB">Mostly story games. Happy to lend to people I've met before.</p>
+            <p style="display: flex; align-items: center; gap: 6px; margin: 10px 0 0; font-size: 13px; color: #A9C59B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>You're connected</p>
+            <div style="display: flex; gap: 8px; margin-top: 14px">
+              <a href="Messages.dc.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; background: #CBB28C; color: #1A150E; text-decoration: none; font-size: 14px; font-weight: 600">Message</a>
+              <a href="Profile.dc.html" class="hb" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">Profile</a>
+            </div>
+          </section>
+        </sc-if>
+        <sc-if value="{{isOwner}}" hint-placeholder-val="{{false}}">
+          <section style="padding: 18px; border-radius: 14px; background: #141814">
+            <h2 style="margin: 0 0 6px; font-size: 15px; font-weight: 600">Your post</h2>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #C9C6BB">Pause it while you're talking to someone. Close it once the game has changed hands — the discussion stays readable.</p>
+            <p style="margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: #A9ADA2">Details can't be edited after posting yet. To change them, close this post and create a new one.</p>
+          </section>
+        </sc-if>
+
+        <section style="padding: 16px 18px; border-radius: 14px; background: #141814">
+          <h2 style="margin: 0 0 10px; font-size: 15px; font-weight: 600">More from Asha</h2>
+          <a href="Thread.dc.html" class="tl" style="display: block; color: #F0E9DC; text-decoration: none; font-weight: 500">The Last of Us Part II</a>
+          <div style="margin: 2px 0 12px; font-size: 13px; color: #8F948A">PS4 · Disc · ₹1,200 · <span style="color: #D8B46A">Paused</span></div>
+          <a href="Thread.dc.html" class="tl" style="display: block; color: #F0E9DC; text-decoration: none; font-weight: 500">Marvel's Spider-Man</a>
+          <div style="margin: 2px 0 0; font-size: 13px; color: #8F948A">PS4 · Disc · ₹1,100 · <span style="color: #A9C59B">Open</span></div>
+        </section>
+
+        <section style="padding: 16px 18px; border-radius: 14px; background: #141814">
+          <h2 style="margin: 0 0 8px; font-size: 15px; font-weight: 600">Before you meet</h2>
+          <ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; line-height: 1.5; color: #C9C6BB">
+            <li>Check the console model and disc drive first.</li>
+            <li>Meet somewhere busy, in daylight.</li>
+            <li>Inspect the disc before anything changes hands.</li>
+          </ul>
+          <a href="Main.dc.html#guidelines" style="display: inline-block; margin-top: 10px; font-size: 13.5px; text-decoration: none">Community guidelines</a>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"viewer":{"editor":"enum","options":["member","owner"],"default":"member"},"status":{"editor":"enum","options":["open","paused","closed","removed"],"default":"open"},"$preview":{"width":1440,"height":2450}}'>
+const ME = { who: 'Aarav Menon', ini: 'AM', color: '#7A5A36', you: true };
+const ASHA = { who: 'Asha Rao', ini: 'AR', color: '#6B4E2E', owner: true };
+const BASE = [
+  Object.assign({ id: 'c1', age: '2h', text: 'Does this run on a PS5 with the add-on disc drive? I have the slim model.' }, ME, { replies: [
+    Object.assign({ id: 'c1a', age: '2h', text: 'Yes — PS4 discs play on a PS5 once the drive is attached. I tried this copy on a friend’s slim last month.' }, ASHA)
+  ] }),
+  { id: 'c2', who: 'Neha Kapoor', ini: 'NK', color: '#6A3B4E', age: '2h', text: 'Would you swap for Ghost of Tsushima? Mine is a PS4 disc, like new, with the paper map.', replies: [
+    Object.assign({ id: 'c2a', age: '1h', edited: true, text: 'Possibly! Someone asked about buying first, so give me a day and I’ll reply here.' }, ASHA)
+  ] },
+  { id: 'c3', removed: true, age: '1h', replies: [] },
+  { id: 'c4', who: 'Rohan Mehta', ini: 'RM', color: '#2F4A5E', age: '48m', text: 'Is the map still in the box? And is this the 2-disc release?', replies: [] }
+];
+const STATUS = [
+  ['open', 'Open', 'Members can comment and message you.'],
+  ['paused', 'Paused', 'Hidden from the default feed. Discussion is read-only.'],
+  ['closed', 'Closed', 'No longer available. Comments are locked.']
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { photo: 0, statusOverride: null, statusMenu: false, confirmDeletePost: false, deletedPost: false,
+      composer: false, draft: '', added: [], replyTo: 'c4', replyDraft: '', addedReplies: {},
+      collapsed: {}, editing: null, editDraft: '', edits: {}, confirmDel: null, deleted: {},
+      reportFor: null, reportDraft: '', reported: {} };
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const viewer = this.props.viewer ?? 'member';
+    const status = s.deletedPost ? 'removed' : (s.statusOverride || (this.props.status ?? 'open'));
+    const open = status === 'open';
+
+    const dec = (c, parentId) => {
+      const id = c.id;
+      const isDeleted = !!s.deleted[id];
+      const isNormal = !c.removed && !isDeleted;
+      const text = s.edits[id] != null ? s.edits[id] : (c.text || '');
+      return Object.assign({}, c, {
+        text, isDeleted, isNormal, isRemoved: !!c.removed, hasAuthor: !c.removed,
+        isOwnerTag: !!c.owner, isYouTag: !!c.you, isEdited: !!c.edited || s.edits[id] != null,
+        canReply: open && isNormal, canEdit: !!c.you && isNormal && open,
+        canReport: !c.you && isNormal && !s.reported[id], reportSent: !!s.reported[id],
+        editValue: s.editDraft, editing: s.editing === id, notEditing: s.editing !== id,
+        confirmingDelete: s.confirmDel === id, reporting: s.reportFor === id,
+        reportTitle: 'Report ' + (c.who || '') + '’s ' + (parentId ? 'reply' : 'comment'),
+        excerpt: text.length > 110 ? text.slice(0, 110) + '…' : text,
+        onReply: () => this.setState({ replyTo: parentId || id, replyName: c.who, replyDraft: '' }),
+        onEdit: () => this.setState({ editing: id, editDraft: text }),
+        onCancelEdit: set({ editing: null }),
+        onSaveEdit: () => this.setState({ editing: null, edits: Object.assign({}, s.edits, { [id]: s.editDraft.trim() || text }) }),
+        onDelete: set({ confirmDel: id }), onKeep: set({ confirmDel: null }),
+        onConfirmDelete: () => this.setState({ confirmDel: null, deleted: Object.assign({}, s.deleted, { [id]: true }) }),
+        onReport: () => this.setState({ reportFor: id, reportDraft: '' }),
+        onSendReport: () => this.setState({ reportFor: null, reported: Object.assign({}, s.reported, { [id]: true }) })
+      });
+    };
+
+    const all = BASE.concat(s.added);
+    let total = 0;
+    const comments = all.map((c) => {
+      const replies = (c.replies || []).concat(s.addedReplies[c.id] || []).map((r) => dec(r, c.id));
+      const d = dec(c, null);
+      total += 1 + replies.length;
+      const collapsed = !!s.collapsed[c.id];
+      return Object.assign(d, {
+        replies,
+        showLine: replies.length > 0 && !collapsed,
+        isCollapsed: replies.length > 0 && collapsed,
+        showReplies: replies.length > 0 && !collapsed,
+        hiddenLabel: replies.length + (replies.length === 1 ? ' reply hidden' : ' replies hidden'),
+        toggle: () => this.setState({ collapsed: Object.assign({}, s.collapsed, { [c.id]: !collapsed }) }),
+        showReplyBox: open && s.replyTo === c.id,
+        replyName: s.replyTo === c.id && s.replyName ? s.replyName : (c.who || ''),
+        onPostReply: () => {
+          const t = s.replyDraft.trim();
+          if (!t) return;
+          const list = (s.addedReplies[c.id] || []).concat([Object.assign({ id: c.id + '-n' + Date.now(), age: 'now', text: t }, ME)]);
+          this.setState({ replyTo: null, replyDraft: '', addedReplies: Object.assign({}, s.addedReplies, { [c.id]: list }) });
+        }
+      });
+    });
+
+    const isOwner = viewer === 'owner';
+    return {
+      isRemoved: status === 'removed', isPresent: status !== 'removed',
+      isOpen: open, isPaused: status === 'paused', isClosed: status === 'closed', notOpen: status === 'paused' || status === 'closed',
+      statusNote: status === 'paused' ? 'Asha has paused this post — the game isn’t available right now. You can still read the discussion.' : 'Closed — this copy is no longer available. The discussion stays up for reference.',
+      isMember: !isOwner, isOwner,
+      canMessage: status !== 'closed',
+      photo0: s.photo === 0, photo1: s.photo === 1, photoLabel: (s.photo + 1) + ' of 2',
+      prevPhoto: set({ photo: s.photo === 0 ? 1 : 0 }), nextPhoto: set({ photo: s.photo === 1 ? 0 : 1 }),
+      statusMenu: s.statusMenu, toggleStatusMenu: set({ statusMenu: !s.statusMenu }),
+      statusName: (STATUS.find((x) => x[0] === status) || ['', 'Open'])[1],
+      statusOpts: STATUS.map(([v, label, help]) => ({ label, help, sel: status === v, bg: status === v ? '#232920' : 'transparent', pick: () => this.setState({ statusOverride: v, statusMenu: false, replyTo: null }) })),
+      confirmDeletePost: s.confirmDeletePost, askDeletePost: set({ confirmDeletePost: true }), keepPost: set({ confirmDeletePost: false }),
+      deletePost: set({ deletedPost: true, confirmDeletePost: false }),
+      reportingPost: s.reportFor === 'post', postReportSent: !!s.reported.post, canReportPost: !s.reported.post,
+      reportPost: () => this.setState({ reportFor: s.reportFor === 'post' ? null : 'post', reportDraft: '' }),
+      sendPostReport: () => this.setState({ reportFor: null, reported: Object.assign({}, s.reported, { post: true }) }),
+      cancelReport: set({ reportFor: null }),
+      onReportDraft: (e) => this.setState({ reportDraft: e.target.value }),
+      reportCount: s.reportDraft.length, reportEmpty: !s.reportDraft.trim(),
+      canComment: open, commentsLocked: !open,
+      lockedLabel: status === 'paused' ? 'Comments are paused with the post.' : 'Comments are locked because this post is closed.',
+      composerOpen: s.composer, composerClosed: !s.composer,
+      openComposer: set({ composer: true }), closeComposer: set({ composer: false, draft: '' }),
+      onDraft: (e) => this.setState({ draft: e.target.value }), draftEmpty: !s.draft.trim(),
+      postComment: () => {
+        const t = s.draft.trim();
+        if (!t) return;
+        this.setState({ composer: false, draft: '', added: s.added.concat([Object.assign({ id: 'n' + Date.now(), age: 'now', text: t, replies: [] }, ME)]) });
+      },
+      onReplyDraft: (e) => this.setState({ replyDraft: e.target.value }), replyEmpty: !s.replyDraft.trim(),
+      cancelReply: set({ replyTo: null, replyDraft: '' }),
+      onEditDraft: (e) => this.setState({ editDraft: e.target.value }),
+      comments,
+      countLabel: total + (total === 1 ? ' comment' : ' comments')
+    };
+  }
+}
+</script>
+</body>
+</html>

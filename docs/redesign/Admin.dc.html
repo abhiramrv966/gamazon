@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Community admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input,.gz textarea{font:inherit;color:inherit}
+.gz button,.gz label{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.45}
+.gz :is(a,button,input,textarea):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz label:has(input[type=radio]:focus-visible){outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .tl:hover{text-decoration:underline}
+.gz .fld:focus{border-color:#CBB28C;outline:none}
+.gz input::placeholder,.gz textarea::placeholder{color:#8F948A}
+.gz .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gz td,.gz th{padding:12px 14px;text-align:left;vertical-align:middle}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="display: flex; align-items: center; gap: 14px; height: 56px; padding: 0 20px; background: #0F130F; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <span style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 6px; background: #2B2417; color: #EBD3A8; font-size: 13px; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Admin</span>
+  <span style="flex: 1"></span>
+  <a href="Main.dc.html" class="hb" style="display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 14px; border-radius: 19px; color: #E5DED0; text-decoration: none; font-size: 14px; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back to community</a>
+  <span aria-hidden="true" style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; font-size: 12.5px; font-weight: 600">AM</span>
+</header>
+
+<sc-if value="{{locked}}" hint-placeholder-val="{{false}}">
+  <main style="padding: 80px 24px">
+    <form onSubmit="{{unlock}}" style="max-width: 420px; margin: 0 auto; padding: 28px; border-radius: 16px; background: #141814; display: flex; flex-direction: column; gap: 12px">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 600">Confirm it's you</h1>
+      <p style="margin: 0; color: #BDBFB5; font-size: 14.5px">Enter the 6-digit code from your authenticator app to open admin tools.</p>
+      <label for="gate" class="sr">Authenticator code</label>
+      <input id="gate" class="fld" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="{{gateCode}}" onChange="{{onGate}}" aria-invalid="{{gateErr}}" aria-describedby="gate-msg" style="height: 52px; padding: 0 16px; border-radius: 10px; border: 1px solid {{gateBorder}}; background: #0F130F; font: 500 22px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.35em">
+      <span id="gate-msg" style="font-size: 13.5px; color: #F0A18C">{{gateMsg}}</span>
+      <button type="submit" style="height: 46px; border: 0; border-radius: 23px; background: #CBB28C; color: #1A150E; font-size: 15px; font-weight: 600">Verify</button>
+      <p style="margin: 4px 0 0; font-size: 13.5px; color: #A9ADA2">No authenticator yet? <a href="Settings.dc.html" style="text-decoration: none">Set one up in Settings</a>.</p>
+    </form>
+  </main>
+</sc-if>
+
+<sc-if value="{{unlocked}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Admin" style="flex: 0 0 232px; padding: 16px 12px 32px; background: #0F130F; border-right: 1px solid rgba(240,233,220,0.09)">
+    <sc-for list="{{sections}}" as="x"><button onClick="{{x.pick}}" aria-current="{{x.sel}}" style="display: flex; align-items: center; gap: 10px; width: 100%; height: 42px; padding: 0 12px; border: 0; border-radius: 8px; background: {{x.bg}}; color: {{x.fg}}; font-size: 14.5px; font-weight: 500; text-align: left"><span style="flex: 1">{{x.label}}</span><span style="font-size: 12.5px; color: #A9ADA2">{{x.count}}</span></button></sc-for>
+  </nav>
+
+  <main style="flex: 999 1 640px; min-width: 0; padding: 24px 28px 80px">
+    <div style="max-width: 1100px; display: flex; flex-direction: column; gap: 18px">
+      <div>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 600">{{title}}</h1>
+        <p style="margin: 6px 0 0; font-size: 14px; color: #BDBFB5">48 members · 132 posts · 17 exchanges confirmed by both people · 9 confirmed by one person</p>
+        <p style="margin: 2px 0 0; font-size: 13px; color: #8F948A">Exchanges are private self-reports. They don't verify the game, its condition or any payment.</p>
+      </div>
+
+      <sc-if value="{{secReports}}" hint-placeholder-val="{{true}}">
+        <div role="tablist" aria-label="Report status" style="display: flex; gap: 4px">
+          <button role="tab" aria-selected="{{fOpen}}" onClick="{{showOpen}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: {{openBg}}; color: {{openFg}}; font-size: 14px; font-weight: 500">Open · {{openCount}}</button>
+          <button role="tab" aria-selected="{{fResolved}}" onClick="{{showResolved}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: {{resBg}}; color: {{resFg}}; font-size: 14px; font-weight: 500">Resolved · {{resolvedCount}}</button>
+        </div>
+        <sc-if value="{{hasNotice}}" hint-placeholder-val="{{false}}"><p role="status" style="margin: 0; padding: 12px 14px; border-radius: 10px; background: #1B2019; color: #CFE0C4; font-size: 14px">{{notice}}</p></sc-if>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px">
+          <div style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 4px">
+            <sc-for list="{{queue}}" as="r">
+              <button onClick="{{r.pick}}" aria-current="{{r.sel}}" class="hb" style="display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 12px 14px; border: 1px solid {{r.border}}; border-radius: 12px; background: {{r.bg}}; text-align: left">
+                <span style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #8F948A"><span style="padding: 0 6px; border-radius: 4px; background: #232920; color: #E5DED0; font-weight: 600; line-height: 19px">{{r.type}}</span>{{r.when}}<span style="flex: 1"></span>{{r.state}}</span>
+                <span style="font-weight: 500">{{r.reason}}</span>
+                <span style="font-size: 13px; color: #A9ADA2">About {{r.subject}} · reported by {{r.reporter}}</span>
+              </button>
+            </sc-for>
+            <sc-if value="{{queueEmpty}}" hint-placeholder-val="{{false}}"><div style="padding: 28px 18px; border-radius: 12px; background: #141814; text-align: center"><p style="margin: 0 0 4px; font-weight: 600">{{queueEmptyTitle}}</p><p style="margin: 0; font-size: 14px; color: #A9ADA2">New reports from members show up here.</p></div></sc-if>
+          </div>
+
+          <sc-if value="{{hasCur}}" hint-placeholder-val="{{true}}">
+            <section aria-label="Report detail" style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 14px; background: #141814">
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px">
+                <h2 style="flex: 1 1 auto; margin: 0; font-size: 18px; font-weight: 600">{{cur.reason}}</h2>
+                <span style="font-size: 13px; color: #8F948A">{{cur.date}}</span>
+              </div>
+              <div>
+                <div style="margin-bottom: 6px; font-size: 13px; color: #8F948A">Reported {{cur.typeLower}} · by {{cur.subject}} · {{cur.context}}</div>
+                <blockquote style="margin: 0; padding: 14px 16px; border-radius: 10px; background: #0F130F; font-size: 15px; line-height: 1.55; color: #E5DED0; overflow-wrap: anywhere">{{cur.evidence}}</blockquote>
+                <sc-if value="{{cur.canContext}}"><a href="Thread.dc.html" style="display: inline-block; margin-top: 8px; font-size: 13.5px; text-decoration: none">Open in context</a></sc-if>
+                <sc-if value="{{cur.isMessage}}"><p style="margin: 8px 0 0; font-size: 13px; color: #A9ADA2">Only this message was shared with moderators — not the rest of the conversation.</p></sc-if>
+              </div>
+              <div>
+                <div style="margin-bottom: 6px; font-size: 13px; color: #8F948A">What {{cur.reporter}} told us</div>
+                <p style="margin: 0; font-size: 14.5px; color: #D9D3C6">{{cur.note}}</p>
+              </div>
+
+              <sc-if value="{{cur.isResolved}}">
+                <div style="padding: 12px 14px; border-radius: 10px; background: #1B2019; font-size: 14px"><strong style="font-weight: 600">{{cur.decision}}</strong> · {{cur.decidedBy}}<br><span style="color: #BDBFB5">{{cur.decisionNote}}</span></div>
+              </sc-if>
+
+              <sc-if value="{{cur.isOpen}}">
+                <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+                  <legend style="margin-bottom: 8px; font-size: 14px; font-weight: 600">Decision</legend>
+                  <sc-for list="{{actions}}" as="a">
+                    <label style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; border: 1px solid {{a.border}}; background: {{a.bg}}">
+                      <input type="radio" name="decision" checked="{{a.sel}}" onChange="{{a.pick}}" style="width: 18px; height: 18px; margin: 2px 0 0; accent-color: #CBB28C">
+                      <span><span style="display: block; font-weight: 500; color: {{a.fg}}">{{a.label}}</span><span style="font-size: 13px; color: #A9ADA2">{{a.help}}</span></span>
+                    </label>
+                  </sc-for>
+                </fieldset>
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <label for="dnote" style="font-size: 14px; font-weight: 600">Decision note <span style="color: #8F948A; font-weight: 400">required · kept in moderation history</span></label>
+                  <textarea id="dnote" class="fld" rows="3" maxlength="1000" value="{{dnote}}" onChange="{{onNote}}" aria-invalid="{{noteErr}}" aria-describedby="dnote-msg" style="width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid {{noteBorder}}; background: #0F130F; font-size: 15px; line-height: 1.5; resize: vertical"></textarea>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px"><span id="dnote-msg" style="color: #F0A18C">{{noteMsg}}</span><span style="color: #8F948A">{{noteCount}}/1,000</span></div>
+                </div>
+                <sc-if value="{{confirming}}" hint-placeholder-val="{{false}}">
+                  <div role="alertdialog" aria-label="Confirm decision" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-radius: 12px; background: #2A1A16">
+                    <p style="flex: 1 1 260px; margin: 0; font-size: 14px">{{confirmText}}</p>
+                    <button onClick="{{cancelConfirm}}" class="hb" style="height: 38px; padding: 0 14px; border-radius: 19px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Go back</button>
+                    <button onClick="{{commit}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 19px; background: #C4563F; color: #FFF6EE; font-size: 14px; font-weight: 600">{{confirmAction}}</button>
+                  </div>
+                </sc-if>
+                <sc-if value="{{notConfirming}}"><div><button onClick="{{apply}}" style="height: 44px; padding: 0 22px; border: 0; border-radius: 22px; background: #CBB28C; color: #1A150E; font-size: 15px; font-weight: 600">Apply decision</button></div></sc-if>
+              </sc-if>
+            </section>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{secInvites}}" hint-placeholder-val="{{false}}">
+        <form onSubmit="{{createInvite}}" style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; padding: 18px; border-radius: 14px; background: #141814">
+          <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 6px">
+            <label for="inv" style="font-size: 14px; font-weight: 600">Invite someone by email</label>
+            <input id="inv" class="fld" type="email" value="{{invEmail}}" onChange="{{onInv}}" aria-invalid="{{invErr}}" aria-describedby="inv-msg" placeholder="name@example.com" style="height: 46px; padding: 0 14px; border-radius: 10px; border: 1px solid {{invBorder}}; background: #0F130F; font-size: 16px">
+          </div>
+          <button type="submit" style="height: 46px; padding: 0 20px; border: 0; border-radius: 23px; background: #CBB28C; color: #1A150E; font-size: 15px; font-weight: 600">Create invitation</button>
+          <span id="inv-msg" style="flex: 1 0 100%; font-size: 13px; color: {{invMsgColor}}">{{invMsg}}</span>
+        </form>
+
+        <sc-if value="{{hasCode}}" hint-placeholder-val="{{false}}">
+          <section aria-label="New invitation code" style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 14px; border: 1px solid #CBB28C; background: #12160F">
+            <div style="font-size: 14px; color: #BDBFB5">Invitation code for <strong style="color: #F0E9DC; font-weight: 600">{{codeFor}}</strong></div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+              <code style="font: 600 26px/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.08em">GZ-7Q4M-K2XP</code>
+              <button onClick="{{copy}}" class="hb" style="height: 40px; padding: 0 16px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">{{copyLabel}}</button>
+            </div>
+            <p style="margin: 0; font-size: 14px; color: #D9D3C6">This is the only time the code is shown. Send it to them yourself — it works once, only for this email, and expires on 15 October.</p>
+            <div><button onClick="{{dismissCode}}" class="tl" style="padding: 4px 0; border: 0; background: none; color: #CBB28C; font-size: 14px; font-weight: 500">Done</button></div>
+          </section>
+        </sc-if>
+
+        <div style="overflow-x: auto; border-radius: 14px; background: #141814">
+          <table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14.5px">
+            <thead><tr style="font-size: 12.5px; color: #8F948A"><th scope="col" style="font-weight: 500">Email</th><th scope="col" style="font-weight: 500">Status</th><th scope="col" style="font-weight: 500">Expires</th><th scope="col"><span class="sr">Actions</span></th></tr></thead>
+            <tbody>
+              <sc-for list="{{invites}}" as="i">
+                <tr style="background: {{i.rowBg}}">
+                  <td style="overflow-wrap: anywhere">{{i.email}}</td>
+                  <td style="color: {{i.statusColor}}">{{i.status}}</td>
+                  <td style="color: #BDBFB5">{{i.expires}}</td>
+                  <td style="text-align: right; white-space: nowrap">
+                    <sc-if value="{{i.canRevoke}}"><button onClick="{{i.ask}}" class="hb" style="height: 34px; padding: 0 12px; border: 0; border-radius: 17px; background: transparent; color: #E5DED0; font-size: 13.5px">Revoke</button></sc-if>
+                    <sc-if value="{{i.asking}}"><span style="margin-right: 8px; font-size: 13.5px">Revoke this code?</span><button onClick="{{i.keep}}" class="hb" style="height: 34px; padding: 0 12px; border: 0; border-radius: 17px; background: transparent; font-size: 13.5px">Keep</button><button onClick="{{i.revoke}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 17px; background: #C4563F; color: #FFF6EE; font-size: 13.5px; font-weight: 600">Revoke</button></sc-if>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{secHistory}}" hint-placeholder-val="{{false}}">
+        <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px">
+          <sc-for list="{{history}}" as="h">
+            <li style="display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 14px 16px; border-radius: 12px; background: #141814">
+              <span style="flex: 0 0 90px; font-size: 13px; color: #8F948A">{{h.date}}</span>
+              <span style="flex: 1 1 360px; min-width: 0">
+                <span style="display: block; font-weight: 500">{{h.action}} <span style="font-weight: 400; color: #BDBFB5">· {{h.target}}</span></span>
+                <span style="display: block; margin-top: 2px; font-size: 14px; color: #D9D3C6">{{h.note}}</span>
+              </span>
+              <span style="flex: 0 0 auto; font-size: 13px; color: #8F948A">{{h.by}}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"verified":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1650}}'>
+const REPORTS = [
+  { id: 'r1', type: 'Message', reason: 'Pressured me to pay a deposit before meeting', reporter: 'Neha Kapoor', subject: 'Vikram Iyer', when: '2h ago', date: 'Today, 9:40 AM', context: 'private message', evidence: 'Send ₹500 on UPI to hold it, otherwise it goes to someone else tonight. Last chance.', note: 'We hadn’t even agreed a price. Felt like a scam, he kept messaging every few minutes.' },
+  { id: 'r2', type: 'Post', reason: 'Selling account access, not a disc', reporter: 'Rohan Mehta', subject: 'Dev Malhotra', when: '5h ago', date: 'Today, 6:15 AM', context: 'post in PlayStation', evidence: 'FIFA 24 (PS5) — digital. I’ll sign into your console with my account. ₹900 for a year.', note: 'This is account sharing, which the guidelines don’t allow.' },
+  { id: 'r3', type: 'Comment', reason: 'Insulting the seller', reporter: 'Asha Rao', subject: 'Sameer K', when: '1d ago', date: 'Yesterday, 8:02 PM', context: 'comment on Red Dead Redemption 2', evidence: 'Overpriced junk. Nobody is paying that, you clearly have no clue what you’re doing.', note: 'Third comment like this on my posts this month.' },
+  { id: 'r4', type: 'Profile', reason: 'Phone number in bio', reporter: 'Kabir Sethi', subject: 'Arjun P', when: '2d ago', date: '6 Oct', context: 'profile bio', evidence: 'WhatsApp 98••••••21 for fast deals, no time to chat here', note: 'Guidelines say to keep contact details off profiles.' },
+  { id: 'r5', type: 'Comment', reason: 'Spam link', reporter: 'Priya Nair', subject: 'Rahul V', when: '6 Oct', date: '6 Oct', context: 'comment on Gran Turismo 7', evidence: 'Cheap PSN codes at codez-hub dot shop, DM for discount', note: 'Spam.', resolved: { decision: 'Removed content', by: 'Ira Shah, 6 Oct', note: 'Spam link to a code reseller.' } }
+];
+const HISTORY = [
+  { date: '6 Oct', action: 'Removed comment', target: 'Rahul V on Gran Turismo 7', note: 'Spam link to a code reseller.', by: 'Ira Shah' },
+  { date: '2 Oct', action: 'Dismissed report', target: 'Post: Gran Turismo 7', note: 'Price looks high but isn’t against the rules.', by: 'Aarav Menon' },
+  { date: '28 Sep', action: 'Suspended member', target: 'Arvind T', note: 'Asked three members for their account logins.', by: 'Ira Shah' },
+  { date: '25 Sep', action: 'Revoked invitation', target: 'dev.m@example.com', note: 'Sent to the wrong address.', by: 'Aarav Menon' }
+];
+const INVITES = [
+  { email: 'meera.s@example.com', status: 'Waiting', expires: '13 Oct' },
+  { email: 'priya.nair@example.com', status: 'Redeemed', expires: '—' },
+  { email: 'dev.m@example.com', status: 'Revoked', expires: '—' },
+  { email: 'old.friend.from.college.who.never.signed.up@example.com', status: 'Expired', expires: '30 Sep' }
+];
+const ACTIONS = [
+  ['dismiss', 'Dismiss report', 'No action. The content stays up.'],
+  ['remove', 'Remove content', 'Removes the reported {type}. The member keeps their account.'],
+  ['suspend', 'Suspend member', '{who} loses access straight away and their posts are hidden.']
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { verified: null, gateCode: '', gateErr: '', section: 'reports', filter: 'open', cur: 'r1', decision: 'dismiss', dnote: '', noteErr: false, confirming: false,
+      resolved: {}, history: [], notice: '', invEmail: '', invErr: '', invites: INVITES.map((x) => Object.assign({}, x)), code: null, copied: false, asking: null };
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const verified = s.verified ?? (this.props.verified ?? true);
+    const reports = REPORTS.map((r) => s.resolved[r.id] ? Object.assign({}, r, { resolved: s.resolved[r.id] }) : r);
+    const open = reports.filter((r) => !r.resolved), done = reports.filter((r) => r.resolved);
+    const list = s.filter === 'open' ? open : done;
+    const curR = list.find((r) => r.id === s.cur) || list[0];
+    const fill = (t) => curR ? t.replace('{type}', curR.type.toLowerCase()).replace('{who}', curR.subject) : t;
+    const SECTIONS = [['reports', 'Reports', open.length + ' open'], ['invites', 'Invitations', ''], ['history', 'Moderation history', '']];
+    const verbs = { dismiss: 'Dismissed report', remove: 'Removed ' + (curR ? curR.type.toLowerCase() : 'content'), suspend: 'Suspended member' };
+    const commit = () => {
+      if (!curR) return;
+      const label = ACTIONS.find((a) => a[0] === s.decision)[1];
+      const res = { decision: label, by: 'Aarav Menon, just now', note: s.dnote.trim() };
+      const next = open.find((r) => r.id !== curR.id);
+      this.setState({ resolved: Object.assign({}, s.resolved, { [curR.id]: res }), confirming: false, dnote: '', decision: 'dismiss',
+        history: [{ date: 'Today', action: verbs[s.decision], target: curR.subject, note: res.note, by: 'Aarav Menon' }].concat(s.history),
+        notice: 'Decision recorded for the report about ' + curR.subject + '. It’s now in moderation history.', cur: next ? next.id : null });
+    };
+    const validEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.invEmail.trim());
+    const statusColor = { Waiting: '#D8B46A', Redeemed: '#A9C59B', Revoked: '#A9ADA2', Expired: '#A9ADA2' };
+
+    return {
+      locked: !verified, unlocked: verified,
+      gateCode: s.gateCode, onGate: (e) => this.setState({ gateCode: e.target.value.replace(/\D/g, '').slice(0, 6), gateErr: '' }),
+      gateErr: !!s.gateErr, gateMsg: s.gateErr, gateBorder: s.gateErr ? '#E07A62' : 'rgba(240,233,220,0.18)',
+      unlock: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        if (s.gateCode.length !== 6) return this.setState({ gateErr: 'Enter the 6-digit code from your app.' });
+        if (s.gateCode === '000000') return this.setState({ gateErr: 'That code didn’t match. Try the newest one.' });
+        this.setState({ verified: true });
+      },
+      sections: SECTIONS.map(([k, label, count]) => ({ label, count, sel: s.section === k, bg: s.section === k ? '#1B2019' : 'transparent', fg: s.section === k ? '#F0E9DC' : '#BDBFB5', pick: set({ section: k, notice: '' }) })),
+      title: { reports: 'Reports', invites: 'Invitations', history: 'Moderation history' }[s.section],
+      secReports: s.section === 'reports', secInvites: s.section === 'invites', secHistory: s.section === 'history',
+      fOpen: s.filter === 'open', fResolved: s.filter === 'resolved', openCount: open.length, resolvedCount: done.length,
+      showOpen: set({ filter: 'open', cur: open[0] ? open[0].id : null, confirming: false }), showResolved: set({ filter: 'resolved', cur: done[0] ? done[0].id : null, confirming: false }),
+      openBg: s.filter === 'open' ? '#1B2019' : 'transparent', openFg: s.filter === 'open' ? '#F0E9DC' : '#A9ADA2',
+      resBg: s.filter === 'resolved' ? '#1B2019' : 'transparent', resFg: s.filter === 'resolved' ? '#F0E9DC' : '#A9ADA2',
+      hasNotice: !!s.notice, notice: s.notice,
+      queue: list.map((r) => { const sel = curR && r.id === curR.id; return { type: r.type, when: r.when, reason: r.reason, subject: r.subject, reporter: r.reporter,
+        state: r.resolved ? r.resolved.decision : 'Open', sel, bg: sel ? '#1B2019' : 'transparent', border: sel ? 'rgba(203,178,140,0.6)' : 'rgba(240,233,220,0.08)',
+        pick: () => this.setState({ cur: r.id, confirming: false, noteErr: false, notice: '' }) }; }),
+      queueEmpty: list.length === 0, queueEmptyTitle: s.filter === 'open' ? 'No open reports' : 'Nothing resolved yet',
+      hasCur: !!curR,
+      cur: curR ? { reason: curR.reason, date: curR.date, typeLower: curR.type.toLowerCase(), subject: curR.subject, reporter: curR.reporter, context: curR.context,
+        evidence: curR.evidence, note: curR.note, canContext: curR.type !== 'Message', isMessage: curR.type === 'Message',
+        isOpen: !curR.resolved, isResolved: !!curR.resolved,
+        decision: curR.resolved ? curR.resolved.decision : '', decidedBy: curR.resolved ? curR.resolved.by : '', decisionNote: curR.resolved ? curR.resolved.note : '' } : {},
+      actions: ACTIONS.map(([k, label, help]) => ({ label, help: fill(help), sel: s.decision === k, fg: k === 'suspend' ? '#F0B3A3' : '#F0E9DC',
+        border: s.decision === k ? '#CBB28C' : 'rgba(240,233,220,0.12)', bg: s.decision === k ? '#1B2019' : 'transparent', pick: set({ decision: k, confirming: false }) })),
+      dnote: s.dnote, onNote: (e) => this.setState({ dnote: e.target.value, noteErr: false }), noteCount: s.dnote.length.toLocaleString('en-IN'),
+      noteErr: s.noteErr, noteBorder: s.noteErr ? '#E07A62' : 'rgba(240,233,220,0.18)', noteMsg: s.noteErr ? 'Add a note explaining the decision.' : '',
+      confirming: s.confirming, notConfirming: !s.confirming, cancelConfirm: set({ confirming: false }),
+      confirmText: curR ? (s.decision === 'suspend' ? 'Suspend ' + curR.subject + '? They lose access straight away and their posts are hidden.' : 'Remove this ' + curR.type.toLowerCase() + ' by ' + curR.subject + '? Members will see it as removed by a moderator.') : '',
+      confirmAction: s.decision === 'suspend' ? 'Suspend' : 'Remove',
+      apply: () => {
+        if (!s.dnote.trim()) return this.setState({ noteErr: true });
+        if (s.decision === 'dismiss') return commit();
+        this.setState({ confirming: true });
+      },
+      commit,
+      invEmail: s.invEmail, onInv: (e) => this.setState({ invEmail: e.target.value, invErr: '' }),
+      invErr: !!s.invErr, invBorder: s.invErr ? '#E07A62' : 'rgba(240,233,220,0.18)',
+      invMsg: s.invErr || 'Creates a single-use code tied to this email. It expires after 7 days.', invMsgColor: s.invErr ? '#F0A18C' : '#8F948A',
+      createInvite: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        if (!validEmail) return this.setState({ invErr: 'Enter a full email address, like name@example.com.' });
+        const email = s.invEmail.trim();
+        this.setState({ code: email, copied: false, invEmail: '', invites: [{ email, status: 'Waiting', expires: '15 Oct' }].concat(s.invites) });
+      },
+      hasCode: !!s.code, codeFor: s.code || '', copyLabel: s.copied ? 'Copied' : 'Copy code',
+      copy: () => { try { navigator.clipboard.writeText('GZ-7Q4M-K2XP'); } catch (err) {} this.setState({ copied: true }); },
+      dismissCode: set({ code: null }),
+      invites: s.invites.map((i, idx) => ({ email: i.email, status: i.status, expires: i.expires, statusColor: statusColor[i.status],
+        rowBg: idx % 2 ? 'transparent' : 'rgba(240,233,220,0.02)',
+        canRevoke: i.status === 'Waiting' && s.asking !== idx, asking: s.asking === idx,
+        ask: set({ asking: idx }), keep: set({ asking: null }),
+        revoke: () => { const list = s.invites.slice(); list[idx] = Object.assign({}, i, { status: 'Revoked', expires: '—' });
+          this.setState({ invites: list, asking: null, history: [{ date: 'Today', action: 'Revoked invitation', target: i.email, note: 'Revoked before it was used.', by: 'Aarav Menon' }].concat(s.history) }); } })),
+      history: s.history.concat(HISTORY)
+    };
+  }
+}
+</script>
+</body>
+</html>

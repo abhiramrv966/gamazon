@@ -1,0 +1,62 @@
+[
+  {
+    "file": "witcher-1.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/f7f564ecedd09b3e503b071a637aeefdedbeedd8/ss_f7f564ecedd09b3e503b071a637aeefdedbeedd8.1920x1080.jpg?t=1790845156",
+    "store": "https://store.steampowered.com/app/292030/"
+  },
+  {
+    "file": "witcher-2.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/0a38e4d0d57f15934772dbe09b322d08132d5518/ss_0a38e4d0d57f15934772dbe09b322d08132d5518.1920x1080.jpg?t=1790845156",
+    "store": "https://store.steampowered.com/app/292030/"
+  },
+  {
+    "file": "rdr2-1.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/ss_66b553f4c209476d3e4ce25fa4714002cc914c4f.1920x1080.jpg?t=1759502961",
+    "store": "https://store.steampowered.com/app/1174180/"
+  },
+  {
+    "file": "rdr2-2.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/ss_bac60bacbf5da8945103648c08d27d5e202444ca.1920x1080.jpg?t=1759502961",
+    "store": "https://store.steampowered.com/app/1174180/"
+  },
+  {
+    "file": "last-of-us-1.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1888930/ss_3f1805ecddafacee7f61f87cb8e4624435a83ee3.1920x1080.jpg?t=1750959031",
+    "store": "https://store.steampowered.com/app/1888930/"
+  },
+  {
+    "file": "last-of-us-2.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1888930/ss_89fffc2857dcae29dee2a09f1be33d745610e19d.1920x1080.jpg?t=1750959031",
+    "store": "https://store.steampowered.com/app/1888930/"
+  },
+  {
+    "file": "gta5-1.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/ss_43e9c59d968e7f99f1eef065af85b3e542100366.1920x1080.jpg?t=1765387725",
+    "store": "https://store.steampowered.com/app/271590/"
+  },
+  {
+    "file": "gta5-2.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/ss_95a1f04eb687eae71478c0c5ba644da57e10f215.1920x1080.jpg?t=1765387725",
+    "store": "https://store.steampowered.com/app/271590/"
+  },
+  {
+    "file": "days-gone-1.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1259420/ss_8d958e566d5315463d099b21eae729d0f462caad.1920x1080.jpg?t=1750947718",
+    "store": "https://store.steampowered.com/app/1259420/"
+  },
+  {
+    "file": "days-gone-2.webp",
+    "source": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1259420/ss_4a1a39d5559909424ed36414070477a96c91e92c.1920x1080.jpg?t=1750947718",
+    "store": "https://store.steampowered.com/app/1259420/"
+  },
+  {
+    "file": "gta6-1.webp",
+    "source": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_01.135x56yoeu.6t.jpg?akim=1&imdensity=1&imwidth=3840",
+    "store": "https://www.rockstargames.com/VI/media/screenshots"
+  },
+  {
+    "file": "gta6-2.webp",
+    "source": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_02.0c5.7qx17u9kl.jpg?akim=1&imdensity=1&imwidth=3840",
+    "store": "https://www.rockstargames.com/VI/media/screenshots"
+  }
+]

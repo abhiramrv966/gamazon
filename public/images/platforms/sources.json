@@ -1,0 +1,17 @@
+{
+  "retrieved": "2026-10-08",
+  "playstation.svg": {
+    "source": "https://www.playstation.com/etc.clientlibs/global_pdc/clientlibs/auto-clientlibs/pdc.designkit/resources/ps-icons-map__dig__brand.svg",
+    "page": "https://www.playstation.com/en-in/",
+    "processing": "Extracted the PlayStation family symbol and trimmed its viewBox; white display variant."
+  },
+  "xbox.png": {
+    "source": "https://uhf.microsoft.com/images/xbox/RW8TP2.png",
+    "page": "https://www.xbox.com/en-US/",
+    "processing": "Extracted the white Xbox sphere from the official header logo."
+  },
+  "nintendo.svg": {
+    "source": "https://www.nintendo.com/us/",
+    "processing": "Extracted the inline NintendoRacetrackLogoIcon SVG; white display variant."
+  }
+}

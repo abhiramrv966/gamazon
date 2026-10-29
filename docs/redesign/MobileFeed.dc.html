@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Feed on phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}
+.gz *{box-sizing:border-box}
+.gz button{font:inherit;color:inherit;cursor:pointer}
+.gz :is(a,button):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz .noscroll::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div class="gz" style="position: relative; width: 390px; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+  <header style="flex: 0 0 auto; display: flex; align-items: center; gap: 4px; height: 56px; padding: 0 6px; border-bottom: 1px solid rgba(240,233,220,0.09)">
+    <button onClick="{{openDrawer}}" aria-label="Open menu" aria-expanded="{{drawer}}" style="display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    <a href="Main.dc.html" style="flex: 1; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 26px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+    <button aria-label="Search game titles" style="display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+    <button aria-label="Notifications, 3 unread" style="position: relative; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position: absolute; top: 5px; right: 4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">3</span></button>
+  </header>
+
+  <div style="flex: 1 1 auto; overflow-y: auto; background: #050706">
+    <div style="background: #0B0E0C; padding: 10px 0 8px">
+      <div class="noscroll" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none">
+        <sc-for list="{{boards}}" as="b"><button onClick="{{b.pick}}" aria-pressed="{{b.active}}" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px 0 6px; border-radius: 19px; border: 1px solid {{b.border}}; background: {{b.bg}}; font-size: 14px; font-weight: 500"><span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: {{b.color}}; font-size: 9.5px; font-weight: 700">{{b.abbr}}</span>{{b.name}}</button></sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 0 16px">
+        <div role="tablist" aria-label="Whose posts" style="display: flex; padding: 3px; border-radius: 10px; background: #141814">
+          <button role="tab" aria-selected="{{scopeEveryone}}" onClick="{{setEveryone}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: {{everyoneBg}}; color: {{everyoneFg}}; font-size: 13.5px; font-weight: 500">Everyone</button>
+          <button role="tab" aria-selected="{{scopeConn}}" onClick="{{setConnections}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: {{connBg}}; color: {{connFg}}; font-size: 13.5px; font-weight: 500">Connections</button>
+        </div>
+        <span style="flex: 1"></span>
+        <button onClick="{{openSheet}}" aria-haspopup="dialog" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border: 1px solid rgba(240,233,220,0.18); border-radius: 20px; background: transparent; font-size: 14px; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filters<span style="min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #CBB28C; color: #1A150E; font-size: 11.5px; font-weight: 700; line-height: 20px; text-align: center">{{filterCount}}</span></button>
+      </div>
+      <p style="margin: 10px 16px 0; font-size: 13px; color: #8F948A">{{summary}}</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 6px">
+      <sc-for list="{{posts}}" as="p" hint-placeholder-count="3">
+        <article style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; background: #0B0E0C">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: 12.5px; color: #8F948A">
+            <span aria-hidden="true" style="display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: {{p.boardColor}}; color: #F0E9DC; font-size: 8.5px; font-weight: 700">{{p.boardAbbr}}</span>
+            <span style="color: #E5DED0; font-weight: 600">{{p.boardName}}</span><span aria-hidden="true">·</span><span>{{p.author}}</span><span aria-hidden="true">·</span><span>{{p.area}}</span><span aria-hidden="true">·</span><span>{{p.age}}</span>
+          </div>
+          <h2 style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.3"><a href="MobileThread.dc.html" style="color: #F0E9DC; text-decoration: none">{{p.title}}</a></h2>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px 9px; font-size: 13px">
+            <sc-if value="{{p.isOffer}}"><span style="padding: 1px 7px; border-radius: 5px; background: #3A3020; color: #EBD3A8; font-size: 11.5px; font-weight: 600">Offer</span></sc-if>
+            <sc-if value="{{p.isWanted}}"><span style="padding: 0 6px; border-radius: 5px; border: 1px solid #71859A; color: #C6D3E0; font-size: 11.5px; font-weight: 600">Wanted</span></sc-if>
+            <span style="color: #BDBFB5">{{p.spec}}</span>
+            <sc-if value="{{p.hasPrice}}"><span style="font-weight: 600">{{p.price}}</span></sc-if>
+            <sc-if value="{{p.noPrice}}"><span style="color: #8F948A">No asking price</span></sc-if>
+            <sc-if value="{{p.isOpen}}"><span style="color: #A9C59B">Open</span></sc-if>
+            <sc-if value="{{p.isPaused}}"><span style="color: #D8B46A">Paused</span></sc-if>
+            <sc-if value="{{p.isClosed}}"><span style="color: #A9ADA2">Closed · locked</span></sc-if>
+          </div>
+          <sc-if value="{{p.hasExcerpt}}"><p style="margin: 0; color: #C9C6BB; font-size: 14.5px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">{{p.excerpt}}</p></sc-if>
+          <sc-if value="{{p.hasMedia}}">
+            <a href="MobileThread.dc.html" aria-label="{{p.photos}} of {{p.title}}" style="position: relative; display: flex; justify-content: center; height: {{p.mediaH}}; margin: 0 -16px; overflow: hidden; background: {{p.mediaBg}}">
+              <span style="display: flex; align-items: center; justify-content: center; height: 100%; width: {{p.photoW}}; background: linear-gradient(160deg, #5A452F 0%, #3A2C1F 55%, #271E15 100%)">
+                <span style="display: flex; flex-direction: column; width: 120px; height: 156px; border-radius: 4px; overflow: hidden; transform: rotate({{p.rot}}deg); box-shadow: 0 16px 26px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)">
+                  <span style="display: flex; align-items: center; height: 14px; padding: 0 7px; background: #1E4FA3; color: #FFFFFF; font-size: 8.5px; font-weight: 700; letter-spacing: 0.12em">{{p.model}}</span>
+                  <span style="flex: 1; display: flex; align-items: flex-end; padding: 8px; background: {{p.cover}}; color: #F3E6CF; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; line-height: 1.15; text-transform: uppercase">{{p.coverTitle}}</span>
+                </span>
+              </span>
+              <span style="position: absolute; right: 10px; bottom: 10px; padding: 2px 8px; border-radius: 6px; background: rgba(11,14,12,0.82); font-size: 12px">{{p.photos}}</span>
+            </a>
+          </sc-if>
+          <sc-if value="{{p.hasNote}}"><p style="margin: 0; font-size: 13px; color: #D8B46A">{{p.note}}</p></sc-if>
+          <div style="display: flex; gap: 6px">
+            <a href="MobileThread.dc.html" style="display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border-radius: 18px; background: #171C16; color: #E5DED0; text-decoration: none; font-size: 13.5px; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>{{p.commentsLabel}}</a>
+            <sc-if value="{{p.canMessage}}"><a href="Messages.dc.html" style="display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border-radius: 18px; background: #171C16; color: #E5DED0; text-decoration: none; font-size: 13.5px; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg>Message</a></sc-if>
+          </div>
+        </article>
+      </sc-for>
+      <sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}">
+        <div style="padding: 36px 24px; background: #0B0E0C; text-align: center">
+          <p style="margin: 0; font-weight: 600">Nothing matches these filters</p>
+          <p style="margin: 6px 0 16px; font-size: 14px; color: #BDBFB5">Try another area or status, or post a wanted ad.</p>
+          <button onClick="{{reset}}" style="height: 42px; padding: 0 18px; border-radius: 21px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">Reset filters</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{hasHidden}}"><div style="padding: 16px; background: #0B0E0C; text-align: center; font-size: 14px; color: #BDBFB5">{{hiddenLabel}} <button onClick="{{showAllStatuses}}" style="padding: 4px; border: 0; background: none; color: #CBB28C; font-size: 14px; font-weight: 500">Show them</button></div></sc-if>
+      <div style="height: 16px"></div>
+    </div>
+  </div>
+
+  <nav aria-label="Primary" style="flex: 0 0 auto; display: flex; align-items: stretch; height: 64px; padding: 0 4px 4px; background: #0B0E0C; border-top: 1px solid rgba(240,233,220,0.09)">
+    <a href="MobileFeed.dc.html" aria-current="page" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #F0E9DC; text-decoration: none; font-size: 11.5px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBB28C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>Feed</a>
+    <a href="Profile.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #A9ADA2; text-decoration: none; font-size: 11.5px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path></svg>Members</a>
+    <a href="Submit.dc.html" aria-label="Create post" style="flex: 1; display: grid; place-items: center"><span style="display: grid; place-items: center; width: 46px; height: 38px; border-radius: 14px; background: #CBB28C; color: #1A150E"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span></a>
+    <a href="Messages.dc.html" style="position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #A9ADA2; text-decoration: none; font-size: 11.5px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Messages<span aria-label="2 unread" style="position: absolute; top: 6px; left: 50%; margin-left: 6px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">2</span></a>
+    <a href="Profile.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #A9ADA2; text-decoration: none; font-size: 11.5px"><span aria-hidden="true" style="display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #7A5A36; color: #F0E9DC; font-size: 9.5px; font-weight: 600">AM</span>My games</a>
+  </nav>
+
+  <sc-if value="{{drawer}}" hint-placeholder-val="{{false}}">
+    <div onClick="{{closeDrawer}}" style="position: absolute; inset: 0; z-index: 30; background: rgba(0,0,0,0.6)"></div>
+    <div role="dialog" aria-modal="true" aria-label="Menu" style="position: absolute; top: 0; bottom: 0; left: 0; z-index: 31; width: 300px; display: flex; flex-direction: column; padding: 12px 10px 16px; background: #0F130F; overflow-y: auto">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 8px 8px 16px">
+        <span aria-hidden="true" style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #7A5A36; font-size: 14px; font-weight: 600">AM</span>
+        <div style="flex: 1; min-width: 0"><div style="font-weight: 600">Aarav Menon</div><a href="Profile.dc.html" style="font-size: 13px; text-decoration: none">View profile</a></div>
+        <button onClick="{{closeDrawer}}" aria-label="Close menu" style="display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+      </div>
+      <a href="MobileFeed.dc.html" style="display: flex; align-items: center; height: 46px; padding: 0 12px; border-radius: 10px; background: #1B2019; color: #F0E9DC; text-decoration: none; font-weight: 500">Feed</a>
+      <a href="Profile.dc.html" style="display: flex; align-items: center; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">Members</a>
+      <a href="Messages.dc.html" style="display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">Messages<span style="font-size: 12px; font-weight: 600; color: #1A150E; background: #CBB28C; border-radius: 9px; padding: 0 7px; line-height: 18px">2 new</span></a>
+      <a href="Profile.dc.html" style="display: flex; align-items: center; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">My games</a>
+      <div style="margin: 18px 12px 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8F948A">Community</div>
+      <a href="#guidelines" style="display: flex; align-items: center; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">Guidelines</a>
+      <a href="#settings" style="display: flex; align-items: center; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">Settings and privacy</a>
+      <a href="#admin" style="display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 12px; border-radius: 10px; color: #E5DED0; text-decoration: none">Admin<span style="font-size: 12.5px; color: #BDBFB5">4 reports</span></a>
+      <span style="flex: 1"></span>
+      <button style="height: 46px; margin-top: 16px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #BDBFB5; text-align: left">Sign out</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{sheet}}" hint-placeholder-val="{{false}}">
+    <div onClick="{{closeSheet}}" style="position: absolute; inset: 0; z-index: 30; background: rgba(0,0,0,0.6)"></div>
+    <div role="dialog" aria-modal="true" aria-label="Filter posts" style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 31; max-height: 86%; display: flex; flex-direction: column; border-radius: 20px 20px 0 0; background: #141814">
+      <div aria-hidden="true" style="width: 40px; height: 4px; margin: 10px auto 0; border-radius: 2px; background: #3A4037"></div>
+      <div style="display: flex; align-items: center; padding: 8px 8px 4px 20px">
+        <h2 style="flex: 1; margin: 0; font-size: 17px; font-weight: 600">Filter posts</h2>
+        <button onClick="{{closeSheet}}" aria-label="Close filters" style="display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 22px; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+      </div>
+      <div style="overflow-y: auto; padding: 4px 20px 12px; display: flex; flex-direction: column; gap: 18px">
+        <fieldset style="margin: 0; padding: 0; border: 0"><legend style="margin-bottom: 8px; font-size: 13.5px; color: #BDBFB5">Type</legend><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{typeOpts}}" as="o"><button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid {{o.border}}; background: {{o.bg}}; font-size: 14px; font-weight: 500">{{o.label}}</button></sc-for></div></fieldset>
+        <fieldset style="margin: 0; padding: 0; border: 0"><legend style="margin-bottom: 8px; font-size: 13.5px; color: #BDBFB5">Status</legend><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{statusOpts}}" as="o"><button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid {{o.border}}; background: {{o.bg}}; font-size: 14px; font-weight: 500">{{o.label}}</button></sc-for></div></fieldset>
+        <fieldset style="margin: 0; padding: 0; border: 0"><legend style="margin-bottom: 8px; font-size: 13.5px; color: #BDBFB5">Area</legend><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{areaOpts}}" as="o"><button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid {{o.border}}; background: {{o.bg}}; font-size: 14px; font-weight: 500">{{o.label}}</button></sc-for></div></fieldset>
+      </div>
+      <div style="display: flex; gap: 10px; padding: 12px 20px 20px">
+        <button onClick="{{reset}}" style="flex: 1; height: 48px; border-radius: 24px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 15px; font-weight: 500">Reset</button>
+        <button onClick="{{closeSheet}}" style="flex: 2; height: 48px; border: 0; border-radius: 24px; background: #CBB28C; color: #1A150E; font-size: 15px; font-weight: 600">{{showLabel}}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+const BOARDS = {
+  all: { name: 'All', abbr: 'g.', color: '#4A3F2E' },
+  ps: { name: 'PlayStation', abbr: 'PS', color: '#2F4A7E' },
+  xb: { name: 'Xbox', abbr: 'XB', color: '#3B5F33' },
+  ns: { name: 'Nintendo', abbr: 'NS', color: '#873A32' }
+};
+const POSTS = [
+  { board: 'ps', title: 'Red Dead Redemption 2', type: 'offer', model: 'PS4', format: 'Disc', cond: 'Good', price: '₹1,800', area: 'Indiranagar', author: 'Asha Rao', age: '3h', status: 'open', media: 'portrait', cover: 'linear-gradient(180deg,#9A3622 0%,#521A10 100%)', coverTitle: 'Red Dead Redemption II', photos: '2 photos', comments: 6, conn: true },
+  { board: 'ps', title: 'The Witcher 3: Wild Hunt — Complete Edition', type: 'offer', model: 'PS4', format: 'Disc', cond: 'Like new', price: null, area: 'Koramangala', author: 'Rohan Mehta', age: '5h', status: 'open', media: 'landscape', cover: 'linear-gradient(180deg,#34474A 0%,#151E1F 100%)', coverTitle: 'The Witcher 3 Complete', photos: '3 photos', comments: 14, conn: true, note: 'Expansions come from a redemption code — ask whether it’s been used.' },
+  { board: 'ns', title: 'The Legend of Zelda: Breath of the Wild', type: 'wanted', model: 'Nintendo Switch', format: 'Cartridge', cond: 'Any condition', price: null, area: 'HSR Layout', author: 'Neha Kapoor', age: '8h', status: 'open', comments: 3, conn: false, excerpt: 'Looking to buy or borrow for a few weeks. I can swap Mario Kart 8 Deluxe, or pay a fair price.' },
+  { board: 'xb', title: 'Forza Horizon 5', type: 'offer', model: 'Xbox Series X', format: 'Disc', cond: 'Like new', price: '₹1,500', area: 'Whitefield', author: 'Kabir Sethi', age: '11h', status: 'open', comments: 0, conn: false, excerpt: 'Finished the campaign once, no scratches. Not for the disc-less Series S.', note: 'Needs about 110 GB and a download before first play.' },
+  { board: 'ps', title: 'The Last of Us Part II', type: 'offer', model: 'PS4', format: 'Disc', cond: 'Good', price: '₹1,200', area: 'Indiranagar', author: 'Asha Rao', age: '1d', status: 'paused', media: 'portrait', cover: 'linear-gradient(180deg,#4A5644 0%,#1D241C 100%)', coverTitle: 'The Last of Us Part II', photos: '1 photo', comments: 2, conn: true },
+  { board: 'ps', title: 'Days Gone', type: 'offer', model: 'PS4', format: 'Disc', cond: 'Fair', price: '₹700', area: 'Jayanagar', author: 'Vikram Iyer', age: '3d', status: 'closed', comments: 9, conn: false, excerpt: 'Exchanged with a member this weekend.' }
+];
+const DEFAULTS = { board: 'all', scope: 'everyone', type: 'all', status: 'open', area: 'any' };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = Object.assign({}, DEFAULTS, { drawer: false, sheet: false });
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const base = POSTS.filter((p) => (s.board === 'all' || p.board === s.board) && (s.scope === 'everyone' || p.conn) && (s.type === 'all' || p.type === s.type) && (s.area === 'any' || p.area === s.area));
+    const list = base.filter((p) => s.status === 'all' || p.status === s.status);
+    const hidden = s.status === 'open' ? base.length - list.length : 0;
+    const on = (sel) => ({ sel, border: sel ? '#CBB28C' : 'rgba(240,233,220,0.16)', bg: sel ? '#232920' : 'transparent' });
+    const opts = (key, pairs) => pairs.map(([v, label]) => Object.assign({ label, pick: () => this.setState({ [key]: v }) }, on(s[key] === v)));
+    const filterCount = ['type', 'status', 'area'].filter((k) => s[k] !== (k === 'area' ? 'any' : 'all')).length;
+    const statusName = { open: 'Open', paused: 'Paused', closed: 'Closed', all: 'Any status' }[s.status];
+    return {
+      boards: Object.keys(BOARDS).map((k) => Object.assign({}, BOARDS[k], { active: s.board === k, bg: s.board === k ? '#1B2019' : 'transparent', border: s.board === k ? '#CBB28C' : 'rgba(240,233,220,0.14)', pick: set({ board: k }) })),
+      scopeEveryone: s.scope === 'everyone', scopeConn: s.scope === 'connections',
+      everyoneBg: s.scope === 'everyone' ? '#232920' : 'transparent', everyoneFg: s.scope === 'everyone' ? '#F0E9DC' : '#A9ADA2',
+      connBg: s.scope === 'connections' ? '#232920' : 'transparent', connFg: s.scope === 'connections' ? '#F0E9DC' : '#A9ADA2',
+      setEveryone: set({ scope: 'everyone' }), setConnections: set({ scope: 'connections' }),
+      filterCount,
+      summary: list.length + (list.length === 1 ? ' post' : ' posts') + ' · ' + statusName + (s.area !== 'any' ? ' · ' + s.area : '') + ' · newest first',
+      posts: list.map((p) => {
+        const b = BOARDS[p.board];
+        return Object.assign({}, p, { boardName: b.name === 'All' ? 'Gamazon' : b.name, boardAbbr: b.abbr, boardColor: b.color,
+          isOffer: p.type === 'offer', isWanted: p.type === 'wanted', spec: [p.model, p.format, p.cond].join(' · '),
+          hasPrice: !!p.price, noPrice: !p.price && p.type === 'offer',
+          isOpen: p.status === 'open', isPaused: p.status === 'paused', isClosed: p.status === 'closed',
+          hasMedia: !!p.media, mediaH: p.media === 'landscape' ? '220px' : '300px', photoW: p.media === 'landscape' ? '100%' : '240px',
+          mediaBg: '#15110D', rot: p.media === 'landscape' ? 6 : -5,
+          hasExcerpt: !!p.excerpt, hasNote: !!p.note,
+          commentsLabel: p.comments === 0 ? 'Comment' : String(p.comments), canMessage: p.status !== 'closed' });
+      }),
+      isEmpty: list.length === 0,
+      hasHidden: hidden > 0, hiddenLabel: hidden + (hidden === 1 ? ' paused or closed post hidden.' : ' paused or closed posts hidden.'), showAllStatuses: set({ status: 'all' }),
+      drawer: s.drawer, openDrawer: set({ drawer: true }), closeDrawer: set({ drawer: false }),
+      sheet: s.sheet, openSheet: set({ sheet: true }), closeSheet: set({ sheet: false }),
+      typeOpts: opts('type', [['all', 'Offers and wanted'], ['offer', 'Offers'], ['wanted', 'Wanted']]),
+      statusOpts: opts('status', [['open', 'Open'], ['paused', 'Paused'], ['closed', 'Closed'], ['all', 'Any status']]),
+      areaOpts: opts('area', [['any', 'Any area'], ['Indiranagar', 'Indiranagar'], ['Koramangala', 'Koramangala'], ['HSR Layout', 'HSR Layout'], ['Whitefield', 'Whitefield'], ['Jayanagar', 'Jayanagar']]),
+      reset: set(Object.assign({}, DEFAULTS)),
+      showLabel: 'Show ' + list.length + (list.length === 1 ? ' post' : ' posts')
+    };
+  }
+}
+</script>
+</body>
+</html>

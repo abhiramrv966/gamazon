@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Create a post</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input,.gz textarea,.gz select{font:inherit;color:inherit}
+.gz button,.gz label{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.5}
+.gz :is(a,button,input,textarea,select,summary):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz label:has(input[type=radio]:focus-visible),.gz label:has(input[type=file]:focus-visible){outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .tl:hover{text-decoration:underline}
+.gz input::placeholder,.gz textarea::placeholder{color:#8F948A}
+.gz .fld:focus{border-color:#CBB28C;outline:none}
+.gz .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes gzspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.gz .spin{animation-duration:3s!important}}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px 0 20px; background: #0B0E0C; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="flex: 0 0 auto; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <div role="search" style="position: relative; flex: 1 1 auto; max-width: 620px; margin: 0 auto">
+    <label for="q" class="sr">Search game titles</label>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8F948A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 14px; top: 11px"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+    <input id="q" type="search" placeholder="Search game titles" style="width: 100%; height: 40px; padding: 0 16px 0 42px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.12); background: #141814; font-size: 14.5px">
+  </div>
+  <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 4px">
+    <a href="Messages.dc.html" class="hb" aria-label="Messages, 2 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">2</span></a>
+    <button class="hb" aria-label="Notifications, 3 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 20px; background: transparent; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">3</span></button>
+    <button class="hb" aria-label="Account menu for Aarav Menon" style="display: flex; align-items: center; height: 40px; padding: 0 4px; border: 0; border-radius: 20px; background: transparent"><span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; color: #F0E9DC; font-size: 12.5px; font-weight: 600">AM</span></button>
+  </div>
+</header>
+
+<main style="padding: 28px 24px 96px">
+  <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 32px">
+
+    <sc-if value="{{isPublished}}" hint-placeholder-val="{{false}}">
+      <section style="flex: 999 1 520px; min-width: 0; max-width: 740px; padding: 40px 32px; border-radius: 16px; background: #141814">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A9C59B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 5-5"></path></svg>
+        <h1 style="margin: 12px 0 6px; font-size: 24px; font-weight: 600">Posted to {{platformName}}</h1>
+        <p style="margin: 0 0 22px; color: #BDBFB5; max-width: 480px">{{titleOrPlaceholder}} is now in the feed, marked open. You'll get a notification when someone comments.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <a href="Thread.dc.html" style="display: inline-flex; align-items: center; height: 42px; padding: 0 20px; border-radius: 21px; background: #CBB28C; color: #1A150E; text-decoration: none; font-weight: 600">View your post</a>
+          <a href="Main.dc.html" class="hb" style="display: inline-flex; align-items: center; height: 42px; padding: 0 18px; border-radius: 21px; border: 1px solid rgba(240,233,220,0.2); color: #F0E9DC; text-decoration: none; font-weight: 500">Back to the feed</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{showForm}}" hint-placeholder-val="{{true}}">
+    <form onSubmit="{{submit}}" novalidate style="flex: 999 1 520px; min-width: 0; max-width: 740px; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <a href="Main.dc.html" class="hb" aria-label="Back to feed" style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #141814; color: #E5DED0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></a>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 600">Create a post</h1>
+      </div>
+
+      <sc-if value="{{isPhotoFailed}}" hint-placeholder-val="{{false}}">
+        <div role="alert" style="display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px; background: #2B2417">
+          <p style="margin: 0; font-weight: 600">Your post is live, but the photo didn't upload.</p>
+          <p style="margin: 0; font-size: 14px; color: #D9CFBD">“{{titleOrPlaceholder}}” was published without a photo. Retrying adds the photo to the same post — it won't create a second one.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button type="button" onClick="{{retryPhoto}}" style="height: 38px; padding: 0 16px; border: 0; border-radius: 19px; background: #CBB28C; color: #1A150E; font-size: 14px; font-weight: 600">Retry upload</button>
+            <a href="Thread.dc.html" class="hb" style="display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 19px; color: #F0E9DC; text-decoration: none; font-size: 14px; font-weight: 500">View post without photo</a>
+          </div>
+        </div>
+      </sc-if>
+
+      <fieldset style="margin: 0; padding: 0; border: 0">
+        <legend style="margin-bottom: 10px; font-size: 14px; font-weight: 500">Platform</legend>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{platforms}}" as="p">
+            <label style="display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px solid {{p.border}}; background: {{p.bg}}; font-weight: 500">
+              <input type="radio" name="platform" class="sr" checked="{{p.sel}}" onChange="{{p.pick}}" disabled="{{busy}}">
+              <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: {{p.color}}; font-size: 10px; font-weight: 700">{{p.abbr}}</span>{{p.name}}
+            </label>
+          </sc-for>
+        </div>
+      </fieldset>
+
+      <div>
+        <div role="tablist" aria-label="Post type" style="display: flex; gap: 4px">
+          <button type="button" role="tab" aria-selected="{{isOffer}}" onClick="{{setOffer}}" style="height: 44px; padding: 0 16px; border: 0; border-bottom: 2px solid {{offerLine}}; background: transparent; color: {{offerFg}}; font-size: 15px; font-weight: 500">A game to offer</button>
+          <button type="button" role="tab" aria-selected="{{isWanted}}" onClick="{{setWanted}}" style="height: 44px; padding: 0 16px; border: 0; border-bottom: 2px solid {{wantedLine}}; background: transparent; color: {{wantedFg}}; font-size: 15px; font-weight: 500">A game I'm looking for</button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="f-title" style="font-size: 14px; font-weight: 500">Game title <span style="color: #8F948A; font-weight: 400">required</span></label>
+        <div style="position: relative">
+          <input id="f-title" class="fld" type="text" maxlength="100" value="{{title}}" onChange="{{onTitle}}" disabled="{{busy}}" aria-invalid="{{titleErr}}" aria-describedby="f-title-msg" placeholder="e.g. Ghost of Tsushima" style="width: 100%; height: 48px; padding: 0 76px 0 14px; border-radius: 10px; border: 1px solid {{titleBorder}}; background: #121611; font-size: 16px">
+          <span aria-hidden="true" style="position: absolute; right: 14px; top: 14px; font-size: 12.5px; color: #8F948A">{{titleCount}}/100</span>
+        </div>
+        <sc-if value="{{titleErr}}" hint-placeholder-val="{{false}}"><span id="f-title-msg" style="font-size: 13.5px; color: #F0A18C">Add the game's title.</span></sc-if>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="f-model" style="font-size: 14px; font-weight: 500">Console model <span style="color: #8F948A; font-weight: 400">required</span></label>
+          <input id="f-model" class="fld" type="text" list="models" maxlength="40" value="{{model}}" onChange="{{onModel}}" disabled="{{busy}}" aria-invalid="{{modelErr}}" aria-describedby="f-model-msg" placeholder="{{modelHint}}" style="width: 100%; height: 48px; padding: 0 14px; border-radius: 10px; border: 1px solid {{modelBorder}}; background: #121611; font-size: 16px">
+          <datalist id="models"><sc-for list="{{models}}" as="m"><option value="{{m.v}}"></option></sc-for></datalist>
+          <sc-if value="{{modelErr}}" hint-placeholder-val="{{false}}"><span id="f-model-msg" style="font-size: 13.5px; color: #F0A18C">Add the console model, for example {{modelHint}}.</span></sc-if>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="f-area" style="font-size: 14px; font-weight: 500">Neighbourhood <span style="color: #8F948A; font-weight: 400">required</span></label>
+          <input id="f-area" class="fld" type="text" maxlength="60" value="{{area}}" onChange="{{onArea}}" disabled="{{busy}}" style="width: 100%; height: 48px; padding: 0 14px; border-radius: 10px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font-size: 16px">
+          <span style="font-size: 12.5px; color: #8F948A">Shown on the post. Keep it approximate.</span>
+        </div>
+      </div>
+
+      <fieldset style="margin: 0; padding: 0; border: 0">
+        <legend style="margin-bottom: 8px; font-size: 14px; font-weight: 500">Format</legend>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{formats}}" as="f">
+            <label style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 10px; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.fg}}; font-size: 14.5px; font-weight: 500; cursor: {{f.cursor}}">
+              <input type="radio" name="format" class="sr" checked="{{f.sel}}" disabled="{{f.off}}" onChange="{{f.pick}}">{{f.label}}
+            </label>
+          </sc-for>
+        </div>
+        <p style="margin: 8px 0 0; font-size: 13px; color: #A9ADA2">{{formatHelp}}</p>
+      </fieldset>
+
+      <fieldset style="margin: 0; padding: 0; border: 0">
+        <legend style="margin-bottom: 8px; font-size: 14px; font-weight: 500">Condition</legend>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{conditions}}" as="c">
+            <label style="display: inline-flex; align-items: center; height: 42px; padding: 0 16px; border-radius: 10px; border: 1px solid {{c.border}}; background: {{c.bg}}; font-size: 14.5px; font-weight: 500">
+              <input type="radio" name="condition" class="sr" checked="{{c.sel}}" onChange="{{c.pick}}" disabled="{{busy}}">{{c.label}}
+            </label>
+          </sc-for>
+        </div>
+      </fieldset>
+
+      <sc-if value="{{isOffer}}" hint-placeholder-val="{{true}}">
+        <div style="display: flex; flex-direction: column; gap: 6px; max-width: 320px">
+          <label for="f-price" style="font-size: 14px; font-weight: 500">Asking price <span style="color: #8F948A; font-weight: 400">optional</span></label>
+          <div style="position: relative">
+            <span aria-hidden="true" style="position: absolute; left: 14px; top: 13px; color: #BDBFB5; font-size: 16px">₹</span>
+            <input id="f-price" class="fld" type="number" inputmode="numeric" min="0" max="100000" step="50" value="{{price}}" onChange="{{onPrice}}" disabled="{{busy}}" aria-invalid="{{priceErr}}" aria-describedby="f-price-msg" placeholder="Leave blank to discuss" style="width: 100%; height: 48px; padding: 0 14px 0 32px; border-radius: 10px; border: 1px solid {{priceBorder}}; background: #121611; font-size: 16px">
+          </div>
+          <span id="f-price-msg" style="font-size: 12.5px; color: {{priceMsgColor}}">{{priceMsg}}</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; font-weight: 500">Photo of your copy <span style="color: #8F948A; font-weight: 400">optional</span></span>
+          <sc-if value="{{noFile}}" hint-placeholder-val="{{false}}">
+            <label style="display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 12px; border: 1px dashed rgba(240,233,220,0.24); background: #0F130F">
+              <span aria-hidden="true" style="display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: #1B2019; color: #CBB28C"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-3h6l2 3h3v13H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+              <span><span style="display: block; font-weight: 500">Take or choose a photo</span><span style="display: block; font-size: 13px; color: #A9ADA2">JPEG, PNG or WebP. Show the actual disc and case.</span></span>
+              <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" class="sr" onChange="{{onFile}}" disabled="{{busy}}">
+            </label>
+          </sc-if>
+          <sc-if value="{{hasFile}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; background: #141814">
+              <span aria-hidden="true" style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 8px; background: linear-gradient(160deg, #5A452F, #271E15)"><span style="display: flex; flex-direction: column; width: 26px; height: 34px; border-radius: 2px; overflow: hidden; transform: rotate(-5deg)"><span style="height: 5px; background: #1E4FA3"></span><span style="flex: 1; background: linear-gradient(180deg, #6E1F1A, #2A0D0B)"></span></span></span>
+              <span style="flex: 1; min-width: 0"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500">{{fileName}}</span><span style="font-size: 13px; color: #A9ADA2">{{fileNote}}</span></span>
+              <button type="button" class="hb" onClick="{{removeFile}}" disabled="{{busy}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 18px; background: transparent; color: #E5DED0; font-size: 13.5px">Remove</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="f-desc" style="font-size: 14px; font-weight: 500">Description <span style="color: #8F948A; font-weight: 400">required</span></label>
+        <textarea id="f-desc" class="fld" rows="6" maxlength="2000" onChange="{{onDesc}}" value="{{desc}}" disabled="{{busy}}" aria-invalid="{{descErr}}" aria-describedby="f-desc-msg" placeholder="{{descHint}}" style="width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid {{descBorder}}; background: #121611; font-size: 16px; line-height: 1.55; resize: vertical"></textarea>
+        <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px">
+          <span id="f-desc-msg" style="color: #F0A18C">{{descMsg}}</span>
+          <span style="color: #8F948A">{{descCount}}/2,000</span>
+        </div>
+      </div>
+
+      <sc-if value="{{isOffer}}" hint-placeholder-val="{{true}}">
+        <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px">
+          <legend style="margin-bottom: 8px; font-size: 14px; font-weight: 500">Before someone plays it</legend>
+          <label style="display: flex; gap: 12px; align-items: flex-start"><input type="checkbox" checked="{{needsDownload}}" onChange="{{toggleDownload}}" disabled="{{busy}}" style="width: 20px; height: 20px; margin: 1px 0 0; accent-color: #CBB28C"><span><span style="display: block">Needs a download or internet connection to play</span><span style="font-size: 13px; color: #A9ADA2">Common for game-key cards and day-one updates.</span></span></label>
+          <label style="display: flex; gap: 12px; align-items: flex-start"><input type="checkbox" checked="{{needsCode}}" onChange="{{toggleCode}}" disabled="{{busy}}" style="width: 20px; height: 20px; margin: 1px 0 0; accent-color: #CBB28C"><span><span style="display: block">Some content depends on a redemption code</span><span style="font-size: 13px; color: #A9ADA2">DLC or expansion codes may already be used and might not transfer.</span></span></label>
+        </fieldset>
+      </sc-if>
+      <sc-if value="{{isWanted}}" hint-placeholder-val="{{false}}">
+        <details style="border-radius: 12px; background: #141814; padding: 0 16px">
+          <summary style="min-height: 48px; display: flex; align-items: center; font-size: 14px; font-weight: 500; cursor: pointer">Compatibility needs <span style="margin-left: 6px; color: #8F948A; font-weight: 400">optional</span></summary>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 0 0 16px">
+            <label style="display: flex; gap: 12px; align-items: center"><input type="checkbox" checked="{{needsDownload}}" onChange="{{toggleDownload}}" style="width: 20px; height: 20px; margin: 0; accent-color: #CBB28C">A copy that needs a download is fine</label>
+            <label style="display: flex; gap: 12px; align-items: center"><input type="checkbox" checked="{{needsCode}}" onChange="{{toggleCode}}" style="width: 20px; height: 20px; margin: 0; accent-color: #CBB28C">Redemption-code extras don't matter to me</label>
+          </div>
+        </details>
+      </sc-if>
+
+      <sc-if value="{{confirmDiscard}}" hint-placeholder-val="{{false}}">
+        <div role="alertdialog" aria-label="Discard post" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-radius: 12px; background: #2A1A16">
+          <p style="flex: 1 1 240px; margin: 0; font-size: 14px">Discard this post? What you've typed won't be saved.</p>
+          <button type="button" onClick="{{keepEditing}}" class="hb" style="height: 38px; padding: 0 14px; border-radius: 19px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Keep editing</button>
+          <a href="Main.dc.html" style="display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 19px; background: #C4563F; color: #FFF6EE; text-decoration: none; font-size: 14px; font-weight: 600">Discard</a>
+        </div>
+      </sc-if>
+
+      <div style="position: sticky; bottom: 0; display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 14px 0; background: #0B0E0C">
+        <sc-if value="{{hasErrors}}" hint-placeholder-val="{{false}}"><span role="status" style="flex: 1; font-size: 13.5px; color: #F0A18C">{{errorSummary}}</span></sc-if>
+        <button type="button" class="hb" onClick="{{cancel}}" disabled="{{busy}}" style="height: 44px; padding: 0 18px; border: 0; border-radius: 22px; background: transparent; font-size: 15px; font-weight: 500">Cancel</button>
+        <button type="submit" disabled="{{busy}}" aria-busy="{{isSubmitting}}" style="display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 24px; border: 0; border-radius: 22px; background: #CBB28C; color: #1A150E; font-size: 15px; font-weight: 600; opacity: 1">
+          <sc-if value="{{isSubmitting}}" hint-placeholder-val="{{false}}"><span class="spin" aria-hidden="true" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(26,21,14,0.3); border-top-color: #1A150E; animation: gzspin 0.8s linear infinite"></span></sc-if>{{postLabel}}
+        </button>
+      </div>
+    </form>
+    </sc-if>
+
+    <aside aria-label="Preview and rules" style="flex: 1 1 280px; max-width: 320px; display: flex; flex-direction: column; gap: 16px; position: sticky; top: 84px">
+      <section style="padding: 16px; border-radius: 14px; background: #141814">
+        <h2 style="margin: 0 0 12px; font-size: 13px; font-weight: 600; color: #BDBFB5">How it appears in the feed</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: 12.5px; color: #8F948A">
+          <span aria-hidden="true" style="display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: {{platformColor}}; color: #F0E9DC; font-size: 8.5px; font-weight: 700">{{platformAbbr}}</span>
+          <span style="color: #E5DED0; font-weight: 600">{{platformName}}</span> · Aarav Menon · {{areaOrPlaceholder}} · now
+        </div>
+        <div style="margin: 8px 0 6px; font-size: 17px; font-weight: 600; line-height: 1.3; color: {{previewTitleColor}}; overflow-wrap: anywhere">{{titleOrPlaceholder}}</div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 13px">
+          <sc-if value="{{isOffer}}" hint-placeholder-val="{{true}}"><span style="padding: 1px 7px; border-radius: 5px; background: #3A3020; color: #EBD3A8; font-size: 11.5px; font-weight: 600">Offer</span></sc-if>
+          <sc-if value="{{isWanted}}" hint-placeholder-val="{{false}}"><span style="padding: 0 6px; border-radius: 5px; border: 1px solid #71859A; color: #C6D3E0; font-size: 11.5px; font-weight: 600">Wanted</span></sc-if>
+          <span style="color: #BDBFB5">{{specLine}}</span>
+          <sc-if value="{{hasPrice}}"><span style="font-weight: 600">{{priceText}}</span></sc-if>
+        </div>
+        <sc-if value="{{previewNote}}"><p style="margin: 8px 0 0; font-size: 12.5px; color: #D8B46A">{{previewNote}}</p></sc-if>
+      </section>
+
+      <section style="padding: 16px; border-radius: 14px; background: #141814">
+        <h2 style="margin: 0 0 10px; font-size: 15px; font-weight: 600">Posting on Gamazon</h2>
+        <ol style="margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; line-height: 1.5; color: #C9C6BB">
+          <li>Physical copies only — discs, cartridges, game-key cards.</li>
+          <li>Photograph the copy you actually have.</li>
+          <li>Price is optional. No rental or per-day pricing.</li>
+          <li>Keep phone numbers and addresses out of posts — use messages.</li>
+        </ol>
+      </section>
+    </aside>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"state":{"editor":"enum","options":["filled","empty","errors","submitting","photo-failed","published"],"default":"filled"},"$preview":{"width":1440,"height":1650}}'>
+const PLATFORMS = [
+  { id: 'ps', name: 'PlayStation', abbr: 'PS', color: '#2F4A7E', models: ['PS5', 'PS5 Digital Edition', 'PS4', 'PS4 Pro'], formats: ['Disc'], hint: 'PS5' },
+  { id: 'xb', name: 'Xbox', abbr: 'XB', color: '#3B5F33', models: ['Xbox Series X', 'Xbox Series S', 'Xbox One', 'Xbox One X'], formats: ['Disc'], hint: 'Xbox Series X' },
+  { id: 'ns', name: 'Nintendo', abbr: 'NS', color: '#873A32', models: ['Nintendo Switch', 'Nintendo Switch OLED', 'Nintendo Switch Lite', 'Nintendo Switch 2'], formats: ['Cartridge', 'Game-key card'], hint: 'Nintendo Switch' }
+];
+const FORMATS = ['Disc', 'Cartridge', 'Game-key card'];
+const FILLED = { platform: 'ps', type: 'offer', title: 'Ghost of Tsushima', model: 'PS4', area: 'Indiranagar', format: 'Disc', cond: 'Like new', price: '1500', desc: 'Played once, disc and case are spotless. Comes with the paper map. Happy to swap for Red Dead Redemption 2', file: 'ghost-of-tsushima-case.jpg', dl: false, code: false };
+const EMPTY = { platform: 'ps', type: 'offer', title: '', model: '', area: 'Indiranagar', format: 'Disc', cond: 'Good', price: '', desc: '', file: null, dl: false, code: false };
+
+function initial(mode) {
+  const base = Object.assign({}, mode === 'empty' || mode === 'errors' ? EMPTY : FILLED);
+  return Object.assign(base, { phase: mode === 'submitting' ? 'submitting' : mode === 'photo-failed' ? 'photoFailed' : mode === 'published' ? 'published' : 'editing', showErrors: mode === 'errors', confirmDiscard: false });
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = initial(props.state ?? 'filled');
+  }
+  componentDidUpdate(prev) {
+    if (prev.state !== this.props.state) this.setState(initial(this.props.state ?? 'filled'));
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const field = (k) => (e) => this.setState({ [k]: e.target.value });
+    const P = PLATFORMS.find((p) => p.id === s.platform);
+    const offer = s.type === 'offer';
+    const busy = s.phase === 'submitting';
+    const priceNum = s.price === '' ? null : Number(s.price);
+    const errs = {
+      title: !s.title.trim(),
+      model: !s.model.trim(),
+      desc: !s.desc.trim(),
+      price: offer && priceNum != null && (isNaN(priceNum) || priceNum < 0 || priceNum > 100000)
+    };
+    const show = s.showErrors;
+    const errCount = Object.values(errs).filter(Boolean).length;
+    const ok = '#CBB28C', line = 'rgba(240,233,220,0.16)', bad = '#E07A62';
+    const conds = offer ? ['Like new', 'Good', 'Fair'] : ['Any condition', 'Like new', 'Good', 'Fair'];
+    const dirty = !!(s.title || s.model || s.desc || s.price || s.file);
+    const formatHelp = s.format === 'Disc'
+      ? 'Shown as: needs a console with a disc drive (not PS5 Digital or Xbox Series S).'
+      : s.format === 'Game-key card'
+        ? 'Shown as: the cartridge holds a key — the game downloads, so internet is required.'
+        : 'Shown as: plays straight from the cartridge on any Switch.';
+    const titleText = s.title.trim() || 'Your game title';
+
+    return {
+      busy, isSubmitting: busy, isPublished: s.phase === 'published', showForm: s.phase !== 'published', isPhotoFailed: s.phase === 'photoFailed',
+      platforms: PLATFORMS.map((p) => ({ name: p.name, abbr: p.abbr, color: p.color, sel: s.platform === p.id,
+        border: s.platform === p.id ? ok : line, bg: s.platform === p.id ? '#1B2019' : 'transparent',
+        pick: () => this.setState({ platform: p.id, format: p.formats[0], model: '' }) })),
+      platformName: P.name, platformAbbr: P.abbr, platformColor: P.color,
+      isOffer: offer, isWanted: !offer,
+      offerLine: offer ? '#CBB28C' : 'transparent', wantedLine: offer ? 'transparent' : '#CBB28C',
+      offerFg: offer ? '#F0E9DC' : '#A9ADA2', wantedFg: offer ? '#A9ADA2' : '#F0E9DC',
+      setOffer: set({ type: 'offer', cond: s.cond === 'Any condition' ? 'Good' : s.cond }), setWanted: set({ type: 'wanted', cond: 'Any condition' }),
+      title: s.title, onTitle: field('title'), titleCount: s.title.length, titleErr: show && errs.title, titleBorder: show && errs.title ? bad : line,
+      model: s.model, onModel: field('model'), modelErr: show && errs.model, modelBorder: show && errs.model ? bad : line,
+      modelHint: P.hint, models: P.models.map((v) => ({ v })),
+      area: s.area, onArea: field('area'),
+      formats: FORMATS.map((f) => { const allowed = P.formats.includes(f); const sel = s.format === f; return { label: f, sel, off: !allowed || busy,
+        border: sel ? ok : allowed ? line : 'rgba(240,233,220,0.07)', bg: sel ? '#1B2019' : 'transparent', fg: allowed ? '#F0E9DC' : '#6B7066', cursor: allowed ? 'pointer' : 'not-allowed',
+        pick: () => this.setState({ format: f }) }; }),
+      formatHelp: formatHelp + (P.formats.length === 1 ? ' ' + P.name + ' games come on disc.' : ''),
+      conditions: conds.map((c) => ({ label: c, sel: s.cond === c, border: s.cond === c ? ok : line, bg: s.cond === c ? '#1B2019' : 'transparent', pick: () => this.setState({ cond: c }) })),
+      price: s.price, onPrice: field('price'), priceErr: show && errs.price, priceBorder: show && errs.price ? bad : line,
+      priceMsg: show && errs.price ? 'Enter an amount between ₹0 and ₹1,00,000.' : 'Leave blank if you’d rather discuss. ₹0 means free.',
+      priceMsgColor: show && errs.price ? '#F0A18C' : '#8F948A',
+      hasFile: !!s.file, noFile: !s.file, fileName: s.file || '',
+      fileNote: s.phase === 'photoFailed' ? 'Upload failed — check your connection and retry' : 'Ready to upload with the post',
+      onFile: (e) => { const f = e.target.files && e.target.files[0]; if (f) this.setState({ file: f.name }); },
+      removeFile: set({ file: null }),
+      retryPhoto: set({ phase: 'published' }),
+      desc: s.desc, onDesc: field('desc'), descCount: s.desc.length.toLocaleString('en-IN'),
+      descErr: show && errs.desc, descBorder: show && errs.desc ? bad : line, descMsg: show && errs.desc ? 'Describe the copy so people know what they’re getting.' : '',
+      descHint: offer ? 'Condition of the disc and case, what’s included, when you can meet.' : 'Which edition you’re after, and whether you’d buy, swap or borrow.',
+      needsDownload: s.dl, needsCode: s.code, toggleDownload: set({ dl: !s.dl }), toggleCode: set({ code: !s.code }),
+      hasErrors: show && errCount > 0, errorSummary: errCount === 1 ? 'Fix 1 field to post.' : 'Fix ' + errCount + ' fields to post.',
+      confirmDiscard: s.confirmDiscard, keepEditing: set({ confirmDiscard: false }),
+      cancel: () => { if (dirty) this.setState({ confirmDiscard: true }); else this.setState({ confirmDiscard: false }); },
+      postLabel: busy ? 'Posting…' : 'Post',
+      submit: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        if (busy) return;
+        if (errCount > 0) { this.setState({ showErrors: true }); return; }
+        this.setState({ phase: 'submitting', showErrors: false });
+        setTimeout(() => this.setState({ phase: 'published' }), 1100);
+      },
+      titleOrPlaceholder: titleText, previewTitleColor: s.title.trim() ? '#F0E9DC' : '#6B7066',
+      areaOrPlaceholder: s.area.trim() || 'Your area',
+      specLine: [s.model.trim() || P.hint, s.format, s.cond].join(' · '),
+      hasPrice: offer && priceNum != null && !isNaN(priceNum), priceText: priceNum != null && !isNaN(priceNum) ? (priceNum === 0 ? 'Free' : '₹' + priceNum.toLocaleString('en-IN')) : '',
+      previewNote: offer && (s.dl || s.code) ? [s.dl ? 'Needs a download' : '', s.code ? 'Extras use a redemption code' : ''].filter(Boolean).join(' · ') : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

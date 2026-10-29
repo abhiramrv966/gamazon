@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Messages</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0E0C}
+a{color:#CBB28C}a:hover{color:#E4CFA8}
+.gz *{box-sizing:border-box}
+.gz button,.gz input,.gz textarea{font:inherit;color:inherit}
+.gz button{cursor:pointer}
+.gz button:disabled{cursor:default;opacity:0.5}
+.gz :is(a,button,input,textarea):focus-visible{outline:2px solid #D9B88B;outline-offset:2px}
+.gz .hb:hover{background:#232920}
+.gz .tl:hover{text-decoration:underline}
+.gz .msg .act{opacity:0}
+.gz .msg:hover .act,.gz .msg:focus-within .act{opacity:1}
+.gz .msg:hover{background:#101410}
+.gz input::placeholder,.gz textarea::placeholder{color:#8F948A}
+.gz .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div class="gz" style="min-height: 100vh; background: #0B0E0C; color: #F0E9DC; font-family: Outfit, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.45">
+
+<header style="display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px 0 20px; background: #0B0E0C; border-bottom: 1px solid rgba(240,233,220,0.09)">
+  <a href="Main.dc.html" style="flex: 0 0 auto; color: #F0E9DC; text-decoration: none; font-family: Italiana, serif; font-size: 28px; line-height: 1">gamazon<span style="color: #CBB28C">.</span></a>
+  <div role="search" style="position: relative; flex: 1 1 auto; max-width: 620px; margin: 0 auto">
+    <label for="q" class="sr">Search game titles</label>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8F948A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 14px; top: 11px"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+    <input id="q" type="search" placeholder="Search game titles" style="width: 100%; height: 40px; padding: 0 16px 0 42px; border-radius: 20px; border: 1px solid rgba(240,233,220,0.12); background: #141814; font-size: 14.5px">
+  </div>
+  <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 4px">
+    <a href="Submit.dc.html" class="hb" style="display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 20px; color: #F0E9DC; text-decoration: none; font-weight: 500; font-size: 14.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Create</a>
+    <a href="Messages.dc.html" aria-current="page" aria-label="Messages" style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 20px; background: #1B2019; color: #CBB28C"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
+    <button class="hb" aria-label="Notifications, 3 unread" style="position: relative; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 20px; background: transparent; color: #E5DED0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position: absolute; top: 3px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; border: 2px solid #0B0E0C; background: #CBB28C; color: #1A150E; font-size: 10.5px; font-weight: 700; line-height: 14px; text-align: center">3</span></button>
+    <button class="hb" aria-label="Account menu for Aarav Menon" style="display: flex; align-items: center; height: 40px; padding: 0 4px; border: 0; border-radius: 20px; background: transparent"><span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #7A5A36; color: #F0E9DC; font-size: 12.5px; font-weight: 600">AM</span></button>
+  </div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; height: 920px">
+
+  <section aria-label="Conversations" style="flex: 1 1 320px; max-width: 360px; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid rgba(240,233,220,0.09)">
+    <div style="padding: 16px 16px 10px">
+      <h1 style="margin: 0 0 12px; font-size: 22px; font-weight: 600">Messages</h1>
+      <div role="tablist" aria-label="Filter conversations" style="display: flex; gap: 4px">
+        <button role="tab" aria-selected="{{tabAll}}" onClick="{{showAll}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 17px; background: {{allBg}}; color: {{allFg}}; font-size: 13.5px; font-weight: 500">All</button>
+        <button role="tab" aria-selected="{{tabReq}}" onClick="{{showReq}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 17px; background: {{reqBg}}; color: {{reqFg}}; font-size: 13.5px; font-weight: 500">Requests · {{reqCount}}</button>
+      </div>
+    </div>
+    <div style="flex: 1; overflow-y: auto; padding: 0 8px 16px">
+      <sc-for list="{{convos}}" as="c" hint-placeholder-count="5">
+        <button class="hb" onClick="{{c.open}}" aria-current="{{c.active}}" style="display: flex; gap: 12px; width: 100%; padding: 10px; border: 0; border-radius: 12px; background: {{c.bg}}; text-align: left">
+          <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: {{c.color}}; color: #F0E9DC; font-size: 13.5px; font-weight: 600; opacity: {{c.avOpacity}}">{{c.ini}}</span>
+          <span style="flex: 1 1 auto; min-width: 0">
+            <span style="display: flex; align-items: baseline; gap: 8px">
+              <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: {{c.weight}}; color: {{c.nameColor}}">{{c.name}}</span>
+              <span style="flex: 0 0 auto; font-size: 12px; color: #8F948A">{{c.time}}</span>
+            </span>
+            <span style="display: flex; align-items: center; gap: 8px; margin-top: 2px">
+              <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; color: {{c.previewColor}}">{{c.preview}}</span>
+              <sc-if value="{{c.hasUnread}}"><span style="flex: 0 0 auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #CBB28C; color: #1A150E; font-size: 11.5px; font-weight: 700; line-height: 20px; text-align: center"><span class="sr">unread: </span>{{c.unread}}</span></sc-if>
+            </span>
+            <sc-if value="{{c.hasTag}}"><span style="display: inline-block; margin-top: 5px; padding: 0 7px; border-radius: 4px; border: 1px solid {{c.tagBorder}}; color: {{c.tagColor}}; font-size: 11.5px; font-weight: 600; line-height: 18px">{{c.tag}}</span></sc-if>
+          </span>
+        </button>
+      </sc-for>
+      <sc-if value="{{listEmpty}}" hint-placeholder-val="{{false}}"><p style="margin: 24px 12px; color: #A9ADA2; font-size: 14px">No message requests right now.</p></sc-if>
+    </div>
+  </section>
+
+  <section aria-label="Conversation with {{cur.name}}" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; height: 100%">
+    <div style="position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid rgba(240,233,220,0.09)">
+      <span aria-hidden="true" style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: {{cur.color}}; color: #F0E9DC; font-size: 13.5px; font-weight: 600; opacity: {{cur.avOpacity}}">{{cur.ini}}</span>
+      <div style="flex: 1; min-width: 0">
+        <div style="font-weight: 600; font-size: 16px">{{cur.name}}</div>
+        <div style="font-size: 13px; color: #8F948A">{{cur.sub}}</div>
+      </div>
+      <sc-if value="{{cur.available}}"><a href="Profile.dc.html" class="hb" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 18px; color: #E5DED0; text-decoration: none; font-size: 14px; font-weight: 500">View profile</a></sc-if>
+      <sc-if value="{{cur.available}}">
+        <button class="hb" onClick="{{toggleMenu}}" aria-haspopup="menu" aria-expanded="{{menuOpen}}" style="display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 10px 0 14px; border: 1px solid rgba(240,233,220,0.16); border-radius: 18px; background: transparent; font-size: 14px; font-weight: 500">Safety<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+      </sc-if>
+      <sc-if value="{{menuOpen}}" hint-placeholder-val="{{false}}">
+        <div role="menu" style="position: absolute; top: 56px; right: 20px; z-index: 6; width: 280px; padding: 6px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12); box-shadow: 0 14px 36px rgba(0,0,0,0.55)">
+          <button role="menuitem" class="hb" onClick="{{askBlock}}" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 9px 10px; border: 0; border-radius: 8px; background: transparent; text-align: left"><span style="font-size: 14px; font-weight: 500">Block {{cur.first}}</span><span style="font-size: 12.5px; color: #A9ADA2">Stops new messages and hides their posts from you.</span></button>
+          <button role="menuitem" class="hb" onClick="{{closeMenu}}" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 9px 10px; border: 0; border-radius: 8px; background: transparent; text-align: left"><span style="font-size: 14px; font-weight: 500">Report a message</span><span style="font-size: 12.5px; color: #A9ADA2">Hover any message from {{cur.first}} and choose Report.</span></button>
+        </div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{confirmBlock}}" hint-placeholder-val="{{false}}">
+      <div role="alertdialog" aria-label="Block member" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 12px 20px 0; padding: 14px 16px; border-radius: 12px; background: #2A1A16">
+        <p style="flex: 1 1 300px; margin: 0; font-size: 14px">Block {{cur.first}}? They won't be able to message you, and you won't see their posts. Past messages stay in this conversation.</p>
+        <button onClick="{{cancelBlock}}" class="hb" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Cancel</button>
+        <button onClick="{{doBlock}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: #C4563F; color: #FFF6EE; font-size: 14px; font-weight: 600">Block</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{offline}}" hint-placeholder-val="{{false}}">
+      <p role="status" style="margin: 12px 20px 0; padding: 10px 14px; border-radius: 10px; background: #2B2417; color: #EBD3A8; font-size: 13.5px">Reconnecting… new messages will appear when you're back online.</p>
+    </sc-if>
+
+    <sc-if value="{{cur.hasListing}}">
+      <a href="Thread.dc.html" class="hb" style="display: flex; align-items: center; gap: 12px; margin: 12px 20px 0; padding: 10px 12px; border-radius: 12px; background: #141814; color: #F0E9DC; text-decoration: none">
+        <span aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; background: {{cur.listingThumb}}; color: #8F948A"><sc-if value="{{cur.listingGone}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg></sc-if><sc-if value="{{cur.listingLive}}"><span style="display: flex; flex-direction: column; width: 20px; height: 27px; border-radius: 2px; overflow: hidden; transform: rotate(-5deg)"><span style="height: 4px; background: #1E4FA3"></span><span style="flex: 1; background: {{cur.listingCover}}"></span></span></sc-if></span>
+        <span style="flex: 1; min-width: 0">
+          <span style="display: block; font-size: 12px; color: #8F948A">About</span>
+          <span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; color: {{cur.listingTitleColor}}">{{cur.listingTitle}}</span>
+        </span>
+        <span style="flex: 0 0 auto; font-size: 13px; color: {{cur.listingStateColor}}">{{cur.listingState}}</span>
+      </a>
+    </sc-if>
+
+    <div role="log" aria-label="Message history" style="flex: 1; overflow-y: auto; padding: 8px 12px 12px">
+      <sc-if value="{{cur.hasOlder}}"><div style="display: flex; justify-content: center; padding: 8px 0"><button class="hb" onClick="{{loadOlder}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: transparent; color: #CBB28C; font-size: 13px; font-weight: 500">{{olderLabel}}</button></div></sc-if>
+      <sc-for list="{{cur.items}}" as="m" hint-placeholder-count="6">
+        <sc-if value="{{m.isDay}}"><div style="padding: 14px 0 6px; text-align: center; font-size: 12.5px; font-weight: 600; color: #8F948A">{{m.label}}</div></sc-if>
+        <sc-if value="{{m.isNote}}"><p style="margin: 10px 8px; padding: 10px 14px; border-radius: 10px; background: #141814; color: #BDBFB5; font-size: 13.5px; text-align: center">{{m.text}}</p></sc-if>
+        <sc-if value="{{m.isMsg}}">
+          <div class="msg" style="position: relative; display: flex; gap: 12px; padding: {{m.pad}}; border-radius: 8px">
+            <span aria-hidden="true" style="flex: 0 0 36px; display: grid; place-items: center; width: 36px; height: {{m.avH}}; border-radius: 50%; background: {{m.avBg}}; color: #F0E9DC; font-size: 12px; font-weight: 600">{{m.avText}}</span>
+            <div style="flex: 1; min-width: 0">
+              <sc-if value="{{m.showHead}}"><div style="display: flex; align-items: baseline; gap: 8px"><span style="font-weight: 600; font-size: 14.5px">{{m.who}}</span><span style="font-size: 12px; color: #8F948A">{{m.time}}</span></div></sc-if>
+              <p style="margin: 1px 0 0; font-size: 15px; line-height: 1.55; color: {{m.color}}; overflow-wrap: anywhere; white-space: pre-wrap">{{m.text}}</p>
+              <sc-if value="{{m.failed}}"><div style="display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 13px; color: #F0A18C">Not sent<button class="tl" onClick="{{m.retry}}" style="padding: 2px 0; border: 0; background: none; color: #CBB28C; font-size: 13px; font-weight: 500">Retry</button></div></sc-if>
+              <sc-if value="{{m.sending}}"><div style="margin-top: 4px; font-size: 13px; color: #8F948A">Sending…</div></sc-if>
+              <sc-if value="{{m.reportSent}}"><div style="margin-top: 4px; font-size: 13px; color: #A9C59B">Reported to moderators</div></sc-if>
+              <sc-if value="{{m.reporting}}">
+                <div role="group" aria-label="Report message" style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding: 14px; border-radius: 12px; background: #1B2019; border: 1px solid rgba(240,233,220,0.12)">
+                  <div style="font-size: 13.5px; font-weight: 600">Report this message from {{m.who}}</div>
+                  <label for="rp-{{m.id}}" style="font-size: 13.5px">What happened?</label>
+                  <textarea id="rp-{{m.id}}" rows="2" maxlength="1000" onChange="{{onReportDraft}}" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid rgba(240,233,220,0.16); background: #121611; font-size: 14.5px"></textarea>
+                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+                    <span style="flex: 1 1 240px; font-size: 12.5px; color: #A9ADA2">Moderators see this one message and your note — not the rest of the conversation.</span>
+                    <button onClick="{{cancelReport}}" class="hb" style="height: 32px; padding: 0 12px; border: 0; border-radius: 16px; background: transparent; font-size: 13px">Cancel</button>
+                    <button onClick="{{m.sendReport}}" disabled="{{reportEmpty}}" style="height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background: #CBB28C; color: #1A150E; font-size: 13px; font-weight: 600">Send report</button>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+            <sc-if value="{{m.canReport}}"><button class="act hb" onClick="{{m.report}}" aria-label="Report this message from {{m.who}}" style="position: absolute; top: 4px; right: 8px; height: 30px; padding: 0 10px; border: 1px solid rgba(240,233,220,0.14); border-radius: 15px; background: #141814; color: #BDBFB5; font-size: 12.5px">Report</button></sc-if>
+          </div>
+        </sc-if>
+      </sc-for>
+
+      <sc-if value="{{cur.hasOutcome}}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 8px 4px; padding: 14px 16px; border-radius: 12px; background: #141814">
+          <sc-if value="{{outcomeUnset}}" hint-placeholder-val="{{true}}">
+            <div style="flex: 1 1 260px">
+              <div style="font-size: 14.5px; font-weight: 500">Did you exchange Red Dead Redemption 2?</div>
+              <div style="font-size: 12.5px; color: #A9ADA2">Private — Asha doesn't see your answer, and nothing is posted.</div>
+            </div>
+            <button onClick="{{markYes}}" class="hb" style="height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">Yes</button>
+            <button onClick="{{markNotYet}}" class="hb" style="height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px; font-weight: 500">Not yet</button>
+          </sc-if>
+          <sc-if value="{{outcomeSet}}" hint-placeholder-val="{{false}}">
+            <p style="flex: 1 1 260px; margin: 0; font-size: 14px; color: #E5DED0">{{outcomeLabel}}</p>
+            <button onClick="{{resetOutcome}}" class="tl" style="padding: 4px; border: 0; background: none; color: #CBB28C; font-size: 13.5px">Change</button>
+          </sc-if>
+        </div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{cur.isIncoming}}">
+      <div style="margin: 0 20px 16px; padding: 16px; border-radius: 14px; background: #141814">
+        <p style="margin: 0 0 4px; font-weight: 600">{{cur.first}} wants to message you</p>
+        <p style="margin: 0 0 12px; font-size: 13.5px; color: #BDBFB5">You're not connected. Accept to reply — you can block or report at any time.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <button onClick="{{acceptReq}}" style="height: 38px; padding: 0 18px; border: 0; border-radius: 19px; background: #CBB28C; color: #1A150E; font-size: 14px; font-weight: 600">Accept</button>
+          <button onClick="{{declineReq}}" class="hb" style="height: 38px; padding: 0 16px; border-radius: 19px; border: 1px solid rgba(240,233,220,0.2); background: transparent; font-size: 14px">Decline</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{cur.isLocked}}">
+      <p style="display: flex; align-items: center; gap: 8px; margin: 0 20px 16px; padding: 14px 16px; border-radius: 14px; background: #141814; color: #BDBFB5; font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: 0 0 auto"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>{{cur.lockText}}</p>
+    </sc-if>
+    <sc-if value="{{cur.canSend}}">
+      <form onSubmit="{{send}}" style="display: flex; align-items: flex-end; gap: 8px; margin: 0 20px 16px; padding: 6px 6px 6px 16px; border-radius: 22px; border: 1px solid rgba(240,233,220,0.16); background: #0F130F">
+        <label for="compose" class="sr">Message {{cur.first}}</label>
+        <textarea id="compose" rows="1" maxlength="2000" value="{{draft}}" onChange="{{onDraft}}" placeholder="Message {{cur.first}}" style="flex: 1; min-height: 34px; max-height: 160px; padding: 7px 0; border: 0; outline: 0; background: transparent; font-size: 15px; line-height: 1.4; resize: none"></textarea>
+        <sc-if value="{{nearLimit}}"><span style="flex: 0 0 auto; padding-bottom: 9px; font-size: 12px; color: #D8B46A">{{draftCount}}/2,000</span></sc-if>
+        <button type="submit" disabled="{{draftEmpty}}" aria-label="Send" style="flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border: 0; border-radius: 50%; background: #CBB28C; color: #1A150E"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></button>
+      </form>
+    </sc-if>
+  </section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"offline":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":980}}'>
+const ME = { who: 'Aarav Menon', ini: 'AM', color: '#7A5A36' };
+const CONVOS = {
+  asha: { name: 'Asha Rao', first: 'Asha', ini: 'AR', color: '#6B4E2E', sub: 'Indiranagar · Connected', time: '10:15', unread: 2, kind: 'normal',
+    listing: { title: 'Red Dead Redemption 2 · PS4 · Disc · ₹1,800', state: 'Open', cover: 'linear-gradient(180deg,#9A3622,#521A10)' }, outcome: true, older: true,
+    items: [
+      { day: 'Yesterday' },
+      { id: 'a1', me: true, time: '6:42 PM', text: 'Hi Asha — is the RDR2 copy still available? Saw your reply about the PS5 drive, that settles it for me.' },
+      { id: 'a2', time: '7:05 PM', text: 'Yes, still here! Someone else asked but hasn’t confirmed. Are you okay with ₹1,800?' },
+      { id: 'a3', me: true, time: '7:09 PM', text: 'Could you do ₹1,600? Happy to come to you.' },
+      { day: 'Today' },
+      { id: 'a4', time: '10:14 AM', text: '₹1,700 and it’s yours. I’ll bring both discs and the map so you can check them before paying.\n\nI’m usually near Indiranagar metro after work — the 100 Feet Road exit, by the bookshop. Thursday around 7?' },
+      { id: 'a5', time: '10:15 AM', text: 'Also tested disc 2 again this morning — no issues.' },
+      { id: 'a6', me: true, time: '10:31 AM', text: 'Thursday at 7 works. See you there!' },
+      { id: 'a7', me: true, time: '10:32 AM', text: 'I’ll message when I reach the station.', failed: true }
+    ] },
+  neha: { name: 'Neha Kapoor', first: 'Neha', ini: 'NK', color: '#6A3B4E', sub: 'HSR Layout · Not connected', time: '9:02', unread: 1, kind: 'incoming', tag: 'Message request',
+    items: [
+      { day: 'Today' },
+      { id: 'n1', time: '9:02 AM', text: 'Hi! Your shelf shows Breath of the Wild. I know that doesn’t mean it’s up for grabs — but would you consider lending it for a couple of weeks? I can leave Mario Kart 8 with you meanwhile.' }
+    ] },
+  vikram: { name: 'Vikram Iyer', first: 'Vikram', ini: 'VI', color: '#5A4A6E', sub: 'Jayanagar · Not connected', time: 'Mon', kind: 'waiting', tag: 'Waiting for reply',
+    listing: { title: 'Days Gone · PS4 · Disc · ₹700', state: 'Closed', cover: 'linear-gradient(180deg,#5B4A36,#2A2118)' },
+    items: [
+      { day: 'Monday' },
+      { id: 'v1', me: true, time: '8:20 PM', text: 'Hi Vikram, if the Days Gone exchange falls through, I’d be interested. Fine with the disc being in fair condition.' },
+      { note: 'Message request sent. You can send more once Vikram accepts.' }
+    ] },
+  kabir: { name: 'Kabir Sethi', first: 'Kabir', ini: 'KS', color: '#3E5A3A', sub: 'Whitefield · Connected', time: 'Sep 28', kind: 'normal',
+    listing: { title: 'Forza Horizon 5', state: 'Post removed', gone: true },
+    items: [
+      { day: '28 September' },
+      { id: 'k1', time: '4:10 PM', text: 'Disc needs the update from here before it runs offline: https://support.xbox.com/en-IN/help/games-apps/game-setup-and-play/forza-horizon-5-first-launch-update-requirements-series-x-and-one' },
+      { id: 'k2', me: true, time: '4:25 PM', text: 'Ah, I only have the Series S, so no drive. No worries — maybe next time.' },
+      { id: 'k3', time: '4:27 PM', text: 'Fair enough! I’ve taken the post down anyway.' }
+    ] },
+  priya: { name: 'Member unavailable', first: 'this member', ini: '?', color: '#2A2F27', sub: 'This account is no longer active', time: 'Aug 14', kind: 'gone',
+    items: [
+      { day: '14 August' },
+      { id: 'p1', time: '11:00 AM', text: 'Is the Hollow Knight cartridge still around?' },
+      { id: 'p2', me: true, time: '11:30 AM', text: 'Sorry, already swapped it last week.' }
+    ] }
+};
+const ORDER = ['asha', 'neha', 'vikram', 'kabir', 'priya'];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { active: 'asha', tab: 'all', read: { asha: true }, sent: {}, draft: '', retried: {}, accepted: {}, declined: {}, blocked: {},
+      menu: false, confirmBlock: false, reportFor: null, reportDraft: '', reported: {}, outcome: null, older: false };
+  }
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    const kindOf = (id) => {
+      const c = CONVOS[id];
+      if (s.blocked[id]) return 'blocked';
+      if (c.kind === 'incoming' && s.accepted[id]) return 'normal';
+      if (c.kind === 'incoming' && s.declined[id]) return 'declined';
+      return c.kind;
+    };
+    const visible = ORDER.filter((id) => s.tab === 'all' || (CONVOS[id].kind === 'incoming' && kindOf(id) === 'incoming'));
+    const convos = visible.map((id) => {
+      const c = CONVOS[id];
+      const k = kindOf(id);
+      const msgs = c.items.filter((m) => m.text);
+      const mine = s.sent[id] || [];
+      const last = mine.length ? mine[mine.length - 1] : msgs[msgs.length - 1];
+      const unread = s.read[id] ? 0 : (c.unread || 0);
+      const active = s.active === id;
+      const tag = k === 'blocked' ? 'Blocked' : k === 'declined' ? 'Declined' : k === 'incoming' ? c.tag : k === 'waiting' ? c.tag : '';
+      return { name: c.name, ini: c.ini, color: c.color, time: c.time, active,
+        bg: active ? '#1B2019' : 'transparent', avOpacity: k === 'gone' ? 0.6 : 1,
+        weight: unread ? 600 : 500, nameColor: k === 'gone' ? '#A9ADA2' : '#F0E9DC',
+        preview: (last.me ? 'You: ' : '') + last.text, previewColor: unread ? '#E5DED0' : '#8F948A',
+        hasUnread: unread > 0, unread,
+        hasTag: !!tag, tag, tagBorder: k === 'incoming' ? '#CBB28C' : 'rgba(240,233,220,0.2)', tagColor: k === 'incoming' ? '#E4CFA8' : '#BDBFB5',
+        open: () => this.setState({ active: id, read: Object.assign({}, s.read, { [id]: true }), menu: false, confirmBlock: false, reportFor: null, draft: '' }) };
+    });
+
+    const c = CONVOS[s.active];
+    const k = kindOf(s.active);
+    let prevWho = null;
+    const items = c.items.concat(s.sent[s.active] || []).map((m, i) => {
+      if (m.day) { prevWho = null; return { isDay: true, label: m.day }; }
+      if (m.note) { prevWho = null; return { isNote: true, text: m.note }; }
+      const who = m.me ? ME.who : c.name;
+      const grouped = prevWho === who;
+      prevWho = who;
+      const failed = !!m.failed && !s.retried[m.id];
+      const canReport = !m.me && k !== 'gone' && !s.reported[m.id];
+      return { isMsg: true, id: m.id, who, time: m.time, text: m.text, showHead: !grouped,
+        avBg: grouped ? 'transparent' : (m.me ? ME.color : c.color), avText: grouped ? '' : (m.me ? ME.ini : c.ini), avH: grouped ? '0px' : '36px',
+        pad: grouped ? '2px 8px' : '10px 8px 2px',
+        color: failed ? '#BDBFB5' : '#E5DED0', failed, sending: !!m.sending,
+        retry: () => this.setState({ retried: Object.assign({}, s.retried, { [m.id]: true }) }),
+        canReport, reportSent: !!s.reported[m.id], reporting: s.reportFor === m.id,
+        report: () => this.setState({ reportFor: m.id, reportDraft: '' }),
+        sendReport: () => this.setState({ reportFor: null, reported: Object.assign({}, s.reported, { [m.id]: true }) }) };
+    });
+
+    const lockText = k === 'waiting' ? 'Waiting for ' + c.first + ' to accept your message request.'
+      : k === 'declined' ? 'You declined this request. ' + c.first + ' can’t message you again unless you connect.'
+      : k === 'blocked' ? 'You blocked ' + c.first + '. Unblock them in Settings to message again.'
+      : k === 'gone' ? 'You can’t reply — this member is no longer available.' : '';
+    const L = c.listing;
+    const cur = { name: c.name, first: c.first, ini: c.ini, color: c.color, avOpacity: k === 'gone' ? 0.6 : 1,
+      sub: k === 'blocked' ? 'Blocked' : (s.accepted[s.active] ? c.sub.replace('Not connected', 'Request accepted') : c.sub),
+      available: k !== 'gone' && k !== 'blocked',
+      hasListing: !!L, listingTitle: L ? L.title : '', listingState: L ? L.state : '', listingGone: !!(L && L.gone), listingLive: !!(L && !L.gone),
+      listingThumb: L && !L.gone ? 'linear-gradient(160deg,#5A452F,#271E15)' : '#1B2019', listingCover: L && L.cover ? L.cover : '#333',
+      listingTitleColor: L && L.gone ? '#A9ADA2' : '#F0E9DC',
+      listingStateColor: !L ? '#8F948A' : L.state === 'Open' ? '#A9C59B' : '#A9ADA2',
+      items, hasOlder: !!c.older, hasOutcome: !!c.outcome && k === 'normal',
+      isIncoming: k === 'incoming', isLocked: !!lockText, lockText, canSend: k === 'normal' };
+
+    const reqCount = ORDER.filter((id) => CONVOS[id].kind === 'incoming' && kindOf(id) === 'incoming').length;
+    return {
+      convos, cur, listEmpty: convos.length === 0, reqCount,
+      tabAll: s.tab === 'all', tabReq: s.tab === 'req', showAll: set({ tab: 'all' }), showReq: set({ tab: 'req' }),
+      allBg: s.tab === 'all' ? '#232920' : 'transparent', allFg: s.tab === 'all' ? '#F0E9DC' : '#A9ADA2',
+      reqBg: s.tab === 'req' ? '#232920' : 'transparent', reqFg: s.tab === 'req' ? '#F0E9DC' : '#A9ADA2',
+      offline: !!this.props.offline,
+      olderLabel: s.older ? 'Start of your conversation with ' + c.first : 'Load earlier messages', loadOlder: set({ older: true }),
+      menuOpen: s.menu, toggleMenu: set({ menu: !s.menu }), closeMenu: set({ menu: false }),
+      askBlock: set({ menu: false, confirmBlock: true }), cancelBlock: set({ confirmBlock: false }),
+      confirmBlock: s.confirmBlock,
+      doBlock: () => this.setState({ confirmBlock: false, blocked: Object.assign({}, s.blocked, { [s.active]: true }) }),
+      cancelReport: set({ reportFor: null }), onReportDraft: (e) => this.setState({ reportDraft: e.target.value }), reportEmpty: !s.reportDraft.trim(),
+      acceptReq: () => this.setState({ accepted: Object.assign({}, s.accepted, { [s.active]: true }) }),
+      declineReq: () => this.setState({ declined: Object.assign({}, s.declined, { [s.active]: true }) }),
+      outcomeUnset: !s.outcome, outcomeSet: !!s.outcome,
+      outcomeLabel: s.outcome === 'yes' ? 'You noted that you exchanged this game. Only you can see this.' : 'Noted — not yet. We’ll leave it here in case that changes.',
+      markYes: set({ outcome: 'yes' }), markNotYet: set({ outcome: 'notyet' }), resetOutcome: set({ outcome: null }),
+      draft: s.draft, onDraft: (e) => this.setState({ draft: e.target.value }), draftEmpty: !s.draft.trim(),
+      draftCount: s.draft.length.toLocaleString('en-IN'), nearLimit: s.draft.length > 1800,
+      send: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const t = s.draft.trim();
+        if (!t) return;
+        const list = (s.sent[s.active] || []).concat([{ id: 's' + Date.now(), me: true, time: 'Now', text: t }]);
+        this.setState({ draft: '', sent: Object.assign({}, s.sent, { [s.active]: list }) });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
