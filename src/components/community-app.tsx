@@ -385,7 +385,7 @@ function Login({ message, reload }: { message: string; reload: () => void }) {
           {membership ? 'Check access' : 'Sign in'} <ArrowRight size={16} />
         </Link>
         <Link className="auth-resend" href="/signup">
-          Accept an invitation
+          Create an account
         </Link>
         <button type="button" className="auth-resend" onClick={reload}>
           Try again
@@ -415,7 +415,6 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
     [profileId, setProfileId] = useState<string | null>(null),
     [mobileNav, setMobileNav] = useState(false),
     [limit, setLimit] = useState(8),
-    [inviteToken, setInviteToken] = useState(''),
     [reply, setReply] = useState<string | null>(null),
     [mfa, setMfa] = useState<{ id: string; qr: string } | null>(null),
     [metrics, setMetrics] = useState<Record<string, number> | null>(null);
@@ -634,7 +633,6 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
     setProfileId(null);
     setModal(null);
     setReply(null);
-    setInviteToken('');
     if (p !== 'messages') window.scrollTo({ top: 0 });
   }
   async function openChat(id: string) {
@@ -2706,9 +2704,12 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
                 </div>
                 <div className="gz-settings-row">
                   <div>
-                    <h2>Email</h2>
-                    <p>Sign-in codes are sent to your verified email. There’s no password.</p>
+                    <h2>Password</h2>
+                    <p>Sign in with your email and password.</p>
                   </div>
+                  <Link className="gz-button" href="/reset-password">
+                    Reset password
+                  </Link>
                 </div>
                 <div className="gz-settings-row" data-context>
                   <div>
@@ -2947,7 +2948,6 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
             <nav className="gz-admin-nav" aria-label="Admin sections">
               {[
                 ['reports', 'Reports'],
-                ['invites', 'Invitations'],
                 ['history', 'Moderation history'],
               ].map(([id, label]) => (
                 <button
@@ -2963,13 +2963,7 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
               ))}
             </nav>
             <section className="gz-admin-main">
-              <h1>
-                {adminTab === 'reports'
-                  ? 'Reports'
-                  : adminTab === 'invites'
-                    ? 'Invitations'
-                    : 'Moderation history'}
-              </h1>
+              <h1>{adminTab === 'reports' ? 'Reports' : 'Moderation history'}</h1>
               {metrics ? (
                 <>
                   <p className="gz-small gz-muted">
@@ -3155,104 +3149,6 @@ export default function CommunityApp({ initialPage = 'feed' }: { initialPage?: '
                       </section>
                     )}
                   </div>
-                </>
-              )}
-              {adminTab === 'invites' && (data.demo || metrics) && (
-                <>
-                  <form
-                    className="gz-invite-form gz-surface"
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      const r = await act({
-                        type: 'invite.create',
-                        email: String(new FormData(e.currentTarget).get('email')),
-                      });
-                      if (r?.token) setInviteToken(r.token);
-                    }}
-                  >
-                    <Field label="Invite someone by email">
-                      <input type="email" name="email" required placeholder="name@example.com" />
-                    </Field>
-                    <button className="gz-button primary" disabled={busy}>
-                      Create invitation
-                    </button>
-                    <p className="gz-small gz-muted">
-                      Creates a single-use code tied to this email. It expires after 7 days.
-                    </p>
-                  </form>
-                  {inviteToken && (
-                    <section className="gz-invite-code gz-surface">
-                      <h2>Invitation code</h2>
-                      <code>{inviteToken}</code>
-                      <div className="gz-actions">
-                        <button
-                          className="gz-button primary"
-                          onClick={async () => {
-                            try {
-                              await navigator.clipboard.writeText(inviteToken);
-                              setToast('Invitation code copied.');
-                            } catch {
-                              setToast('Could not copy. Select and copy the code manually.');
-                            }
-                          }}
-                        >
-                          Copy code
-                        </button>
-                        <button className="gz-button" onClick={() => setInviteToken('')}>
-                          Done
-                        </button>
-                      </div>
-                      <p>
-                        This is the only time the code is shown. Send it to them yourself — it works
-                        once, only for the specified email.
-                      </p>
-                    </section>
-                  )}
-                  <div className="gz-invites-table">
-                    <div className="gz-table-heading">
-                      <span>Email</span>
-                      <span>Status</span>
-                      <span>Expires</span>
-                      <span>Actions</span>
-                    </div>
-                    {data.invites.map((i) => (
-                      <div className="gz-invite-row" key={i.id} data-context>
-                        <strong>{i.email}</strong>
-                        <span>
-                          {i.used_at
-                            ? 'Redeemed'
-                            : i.revoked
-                              ? 'Revoked'
-                              : Date.parse(i.expires_at) < Date.now()
-                                ? 'Expired'
-                                : 'Waiting'}
-                        </span>
-                        <span>
-                          {new Date(i.expires_at).toLocaleDateString('en-IN', {
-                            day: 'numeric',
-                            month: 'short',
-                          })}
-                        </span>
-                        {!i.used_at && !i.revoked && Date.parse(i.expires_at) > Date.now() ? (
-                          <button
-                            className="gz-button"
-                            onClick={() =>
-                              confirm(
-                                { type: 'invite.revoke', id: i.id },
-                                'Revoke invitation',
-                                'Revoke this code? It can no longer be used to join.',
-                              )
-                            }
-                          >
-                            Revoke
-                          </button>
-                        ) : (
-                          <span>—</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  {!data.invites.length && <p className="gz-muted">No invitations yet.</p>}
                 </>
               )}
               {adminTab === 'history' && (data.demo || metrics) && (

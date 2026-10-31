@@ -18,9 +18,15 @@ Supabase connected on 29 October 2026. Migrations 001–005 are applied, row-lev
 - [x] Verify the sending domain in Resend, create a domain-restricted sending key, and configure Supabase custom SMTP using `RESEND-SETUP.md`. Install the code-email template and verify delivery with the selected test recipient. Completed 31 October 2026: delivered email, code validation/replay rejection, cooldown, session restoration, sign-out and non-member privacy passed on the hosted app.
 - [ ] Choose the owner's sign-in email, display name and neighbourhood; verify the email before assigning the sole admin role. Record the adult/rules consent during onboarding. Testing verified an existing Auth identity; it did not grant membership or assign an owner/admin role.
 - [ ] Complete the owner's profile and the community name/city configuration.
-- [ ] Enrol and verify the owner's authenticator, and confirm that invitations and moderation require MFA. Keep account recovery access outside the app.
+- [ ] Enrol and verify the owner's authenticator, and confirm that moderation requires MFA. Keep account recovery access outside the app.
 - [ ] Configure the hosted maintenance schedule with `CRON_SECRET`; confirm successful runs and alerts.
-- [ ] Complete a live two-member invitation/listing/message/photo journey, realtime reconnection and blocking checks, and a third-account privacy check.
+- [ ] Complete a live two-member signup/listing/message/photo journey, realtime reconnection and blocking checks, and a third-account privacy check.
 - [ ] Complete the remaining pilot prerequisites in `OPERATIONS.md`, including operator/contact details, policy review, provider backups and a restore drill.
 
-Website DNS, HTTPS and sign-in email delivery are verified. Verified owner onboarding, MFA and the remaining pilot checks are still required before opening membership.
+Website DNS, HTTPS and email delivery are verified. The user approved opening registration on 31 October 2026. Owner onboarding, MFA and the remaining pilot checks remain operational tasks.
+
+## Password registration change
+
+- [x] Implement email/password sign-in, invitation-free signup and password recovery, preserving email verification and sole-admin controls.
+- [x] Obtain explicit approval to open production registration and apply migration 006 plus Supabase password/email settings. Approved and applied 31 October 2026; required email verification, 12-character password minimum and recovery templates were read back successfully.
+- [ ] Deploy the password flow and run live disposable-account signup, login, recovery and cleanup checks.

@@ -130,11 +130,7 @@ for (const viewport of [
     await expect(page.getByRole('heading', { name: 'Reports', exact: true })).toBeVisible();
     await expect(page.getByText(/Exchanges are private self-reports/)).toBeVisible();
     await capture('admin');
-    await page
-      .locator('.gz-admin-nav')
-      .getByRole('button', { name: 'Invitations', exact: true })
-      .click();
-    await capture('invitations');
+    await expect(page.getByRole('button', { name: 'Invitations', exact: true })).toHaveCount(0);
     if (mobile)
       await page
         .locator('.gz-mobile-bottom')

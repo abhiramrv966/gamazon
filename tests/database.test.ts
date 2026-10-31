@@ -47,6 +47,7 @@ beforeAll(async () => {
     '003_api.sql',
     '004_listing_arrangements.sql',
     '005_single_admin.sql',
+    '006_open_membership.sql',
   ])
     await db.exec(readFileSync(new URL('../supabase/migrations/' + file, import.meta.url), 'utf8'));
   for (const [i, id] of Object.values(ids).entries()) {
@@ -84,6 +85,57 @@ afterAll(async () => {
   await db?.close();
 });
 describe('PostgreSQL migrations, RLS and command authorization', () => {
+  it('lets a verified adult join without an invitation and always assigns the member role', async () => {
+    const newcomer = randomUUID();
+    await db.query('insert into auth.users values($1,$2,now())', [newcomer, 'open@example.com']);
+    await as(newcomer);
+    await expect(
+      save(() => db.query('select join_community($1,$2,false,true)', ['New', 'Local'])),
+    ).rejects.toThrow('acceptance');
+    await expect(
+      save(() => db.query('select join_community($1,$2,true,true)', ['', 'Local'])),
+    ).rejects.toThrow('name');
+    await db.query('select join_community($1,$2,true,true)', ['New member', 'Local']);
+    await db.query('select join_community($1,$2,true,true)', ['Retry', 'Changed']);
+    expect(
+      (await db.query<{ role: string }>('select role from memberships where id=$1', [newcomer]))
+        .rows[0].role,
+    ).toBe('member');
+    expect(
+      (await db.query<{ name: string }>('select name from profiles where id=$1', [newcomer]))
+        .rows[0].name,
+    ).toBe('New member');
+  });
+
+  it('denies anonymous, unverified, suspended and deleting accounts public onboarding', async () => {
+    const newcomer = randomUUID();
+    await db.query('insert into auth.users values($1,$2,null)', [
+      newcomer,
+      'unverified@example.com',
+    ]);
+    await as(newcomer);
+    await expect(
+      save(() => db.query("select join_community('New','Local',true,true)")),
+    ).rejects.toThrow('Verify');
+    await db.exec('reset role; set role anon;');
+    await expect(
+      save(() => db.query("select join_community('New','Local',true,true)")),
+    ).rejects.toThrow('permission');
+    await db.exec('reset role;');
+    await db.query('update auth.users set email_confirmed_at=now() where id=$1', [newcomer]);
+    await db.query('insert into app_private.deletions(user_id) values($1)', [newcomer]);
+    await as(newcomer);
+    await expect(
+      save(() => db.query("select join_community('New','Local',true,true)")),
+    ).rejects.toThrow('deleted');
+    await db.exec('reset role;');
+    await db.query("update memberships set status='suspended' where id=$1", [ids.rohan]);
+    await as(ids.rohan);
+    await expect(
+      save(() => db.query("select join_community('New','Local',true,true)")),
+    ).rejects.toThrow('paused');
+  });
+
   it('stores arrangements, permits owner edits, and keeps the previous command RPC private', async () => {
     await as(ids.me);
     const listing = {

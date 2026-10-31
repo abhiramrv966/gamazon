@@ -67,6 +67,7 @@ try {
   // Compile the dev routes before browser assertions start their interaction timers.
   for (const path of [
     '/signup',
+    '/reset-password',
     '/community',
     '/admin',
     '/api/v1/session',

@@ -8,8 +8,7 @@ export async function POST(request: Request) {
     const c = joinSchema.parse(JSON.parse(new TextDecoder().decode(await readBody(request, 2000))));
     if (!user.email_confirmed_at)
       return NextResponse.json({ error: 'Verify your email first.' }, { status: 403 });
-    const { error } = await db.rpc('redeem_invite', {
-      token: c.token,
+    const { error } = await db.rpc('join_community', {
       display_name: c.name,
       neighbourhood: c.area,
       adult: c.adult,

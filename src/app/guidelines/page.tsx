@@ -7,8 +7,8 @@ export default function Guidelines() {
       </Link>
       <h1>Community guidelines and privacy</h1>
       <p>
-        Gamazon connects adults in a local, invitation-only community around original physical
-        console games. These rules apply to profiles, posts, comments, and messages.
+        Gamazon connects adults in a community around original physical console games. These rules
+        apply to profiles, posts, comments, and messages.
       </p>
       <h2>Community guidelines</h2>
       <ul>
@@ -35,7 +35,7 @@ export default function Guidelines() {
         <li>
           Use report and block. Moderators review the reported item and submitted context, not
           unrestricted private inboxes. Removal or suspension decisions are recorded. Appeal by
-          contacting your invitation organiser with the report reference.
+          contacting the community administrator with the report reference.
         </li>
       </ul>
       <h2>Privacy</h2>
@@ -75,7 +75,7 @@ export default function Guidelines() {
       </p>
       <h2>Questions or concerns</h2>
       <p>
-        Contact the organiser who invited you if you have questions about your data or a moderation
+        Contact the community administrator if you have questions about your data or a moderation
         decision.
       </p>
       <Link href="/community">← Back to the community</Link>

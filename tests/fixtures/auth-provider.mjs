@@ -17,6 +17,7 @@ function token(user) {
       aud: 'authenticated',
       role: 'authenticated',
       aal: 'aal1',
+      jti: randomUUID(),
       exp: Math.floor(Date.now() / 1000) + 3600,
     }),
   ).toString('base64url');
@@ -70,7 +71,7 @@ const server = createServer(async (request, response) => {
     'Access-Control-Allow-Headers',
     'authorization, apikey, content-type, x-client-info, x-supabase-api-version',
   );
-  response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
   response.setHeader('Cache-Control', 'no-store');
   const send = (status, data) => {
     response.writeHead(status, { 'Content-Type': 'application/json' });
@@ -94,39 +95,73 @@ const server = createServer(async (request, response) => {
         email: data.email.toLowerCase(),
         status: data.status || 'none',
         role: data.role === 'admin' ? 'admin' : 'member',
-        verified: false,
-        invite: data.invite || randomUUID(),
+        verified: data.verified ?? data.status !== 'none',
+        password: data.password || 'Fixture-only_password-123',
         codes: 0,
         name: 'Test member',
         area: 'Test area',
       };
       users.set(member.email, member);
-      return send(200, { email: member.email, invite: member.invite });
+      return send(200, { email: member.email });
     }
-    if (url.pathname === '/auth/v1/otp') {
+    if (url.pathname === '/auth/v1/signup') {
+      if (!data.email?.endsWith('.test') || data.password?.length < 12)
+        return send(400, { msg: 'Use a fictional email and at least 12 password characters.' });
+      let member = users.get(data.email.toLowerCase());
+      if (member?.status === 'active') return send(422, { msg: 'Account already registered.' });
+      if (!member) {
+        member = {
+          id: randomUUID(),
+          email: data.email.toLowerCase(),
+          status: 'none',
+          role: 'member',
+          codes: 0,
+        };
+        users.set(member.email, member);
+      }
+      member.password = data.password;
+      member.verified = false;
+      member.codes = 1;
+      member.codeType = 'email';
+      return send(200, identity(member));
+    }
+    if (url.pathname === '/auth/v1/recover' || url.pathname === '/auth/v1/resend') {
       const member = users.get(data.email?.toLowerCase());
-      if (!member || (!data.create_user && member.status === 'none'))
-        return send(400, {
-          msg: 'No account found. Use your invitation to sign up.',
-          code: 'user_not_found',
-        });
-      member.codes++;
+      if (member) {
+        member.codes = 1;
+        member.codeType = url.pathname.endsWith('/recover') ? 'recovery' : 'email';
+      }
       return send(200, {});
     }
     if (url.pathname === '/auth/v1/verify') {
       const member = users.get(data.email?.toLowerCase());
-      if (!member || !member.codes || data.token !== '654321')
+      if (!member || !member.codes || data.token !== '654321' || data.type !== member.codeType)
         return send(403, { msg: 'That code is invalid or has expired.', code: 'otp_expired' });
       member.verified = true;
+      member.codes = 0;
       return send(200, session(member));
     }
     if (url.pathname === '/auth/v1/token') {
+      if (url.searchParams.get('grant_type') === 'password') {
+        const member = users.get(data.email?.toLowerCase());
+        if (!member || data.password !== member.password)
+          return send(400, { msg: 'Invalid email or password.', code: 'invalid_credentials' });
+        if (!member.verified)
+          return send(400, { msg: 'Verify your email first.', code: 'email_not_confirmed' });
+        return send(200, session(member));
+      }
       const member = refreshTokens.get(data.refresh_token);
       return member ? send(200, session(member)) : send(400, { msg: 'Session expired.' });
     }
     const member = authenticated(request);
     if (!member) return send(401, { message: 'Sign in required.', code: 'session_not_found' });
-    if (url.pathname === '/auth/v1/user') return send(200, identity(member));
+    if (url.pathname === '/auth/v1/user') {
+      if (request.method === 'PUT') {
+        if (data.password?.length < 12) return send(400, { msg: 'Use at least 12 characters.' });
+        member.password = data.password;
+      }
+      return send(200, identity(member));
+    }
     if (url.pathname === '/auth/v1/logout') {
       revoked.add(request.headers.authorization.replace(/^Bearer /, ''));
       for (const [refresh, owner] of refreshTokens)
@@ -142,10 +177,10 @@ const server = createServer(async (request, response) => {
         request.headers.accept?.includes('vnd.pgrst.object') ? rows[0] || null : rows,
       );
     }
-    if (url.pathname === '/rest/v1/rpc/redeem_invite') {
+    if (url.pathname === '/rest/v1/rpc/join_community') {
       if (
-        member.status !== 'none' ||
-        member.invite !== data.token ||
+        member.status === 'suspended' ||
+        !member.verified ||
         !data.adult ||
         !data.rules ||
         !data.display_name?.trim() ||
@@ -153,8 +188,9 @@ const server = createServer(async (request, response) => {
       )
         return send(400, {
           code: 'P0001',
-          message: 'This invitation is invalid, expired, or already used.',
+          message: 'Verified sign-in, a profile and acceptance are required.',
         });
+      if (member.status === 'active') return send(200, null);
       member.status = 'active';
       member.name = data.display_name;
       member.area = data.neighbourhood;

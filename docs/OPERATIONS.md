@@ -19,7 +19,7 @@
 4. Block a participant while both sessions are active. Verify denied sends and hidden content. Previously issued photo links can survive only for their remaining 60-second TTL.
 5. Replay a message UUID; there is one stored message. Interrupt realtime and reconnect; message history recovers from PostgreSQL.
 6. Fail outbox delivery after committing a comment. Rerun the worker and confirm exactly one notification. Confirm signed photo upload sanitisation with EXIF GPS test data; inspect the downloaded output.
-7. Report content, edit/delete the original, and confirm the evidence snapshot survives. Resolve the case and confirm an audit entry. An admin at AAL1 must not moderate or create invites.
+7. Report content, edit/delete the original, and confirm the evidence snapshot survives. Resolve the case and confirm an audit entry. An admin at AAL1 must not moderate.
 8. Delete a non-admin member. Confirm immediate loss of community access, database cascades, object-deletion queue, and eventual Auth identity deletion. Confirm retention cleanup after advancing fixture timestamps.
 9. Test keyboard focus, modal escape/focus return, 390px phone layout, and 1280px desktop layout. Review colour contrast before public expansion.
 
@@ -37,7 +37,7 @@ Daily: inspect reports and respond within 24 hours, verify cron success, check e
 
 ## Sole administrator and recovery
 
-The owner is the only administrator. Migration `005_single_admin.sql` enforces this with a unique index, including suspended admin accounts. Members have no Admin navigation or admin authenticator settings. Direct `/admin` requests are checked on the server; moderation, invitations, metrics and activity RPCs independently require an active admin and AAL2. Authentication or membership lookup failures never render the admin workspace. No member-facing command can change roles.
+The owner is the only administrator. Migration `005_single_admin.sql` enforces this with a unique index, including suspended admin accounts. Members have no Admin navigation or admin authenticator settings. Direct `/admin` requests are checked on the server; moderation, metrics and activity RPCs independently require an active admin and AAL2. Authentication or membership lookup failures never render the admin workspace. No member-facing command can change roles.
 
 Bootstrap your verified Supabase Auth UUID privately using the README procedure. Do not identify the owner through a client-supplied email, signup metadata or the first public signup. Keep recovery access for your email, authenticator, hosting and Supabase accounts. The owner cannot self-delete through the app. Recover the same Auth identity through the provider first. If replacing it is unavoidable, a database operator must transfer ownership in one locked transaction (demote the old identity before promoting the new one), revoke the old sessions, and record the operation; never temporarily create a second admin.
 
@@ -47,4 +47,4 @@ The current private entry point is `/admin` on the main host. A subdomain is opt
 
 To introduce `admin.<your-domain>` later, use a trusted deployment host mapping to `/admin`, retain the server/database checks and require HTTPS. Configure sign-in for that exact origin with host-only session cookies and expect a separate login there. Update the server's same-origin write allowlist for the two exact trusted origins before enabling admin mutations; the current configuration accepts only `NEXT_PUBLIC_SITE_URL`. Do not allow wildcard origins or widen cookie scope to every subdomain. Verify signed-in owner, ordinary member, suspended owner, logout, MFA and forged API requests on both deployed origins before switching over.
 
-Rollback: deploy the prior compatible application version; never blindly roll back destructive schema changes. Migrations here are initial-schema files and should be applied exactly once. Preserve database backups before future migrations. Close invitations and pause onboarding while investigating an incident.
+Rollback: deploy the prior compatible application version; never blindly roll back destructive schema changes. Migrations here are initial-schema files and should be applied exactly once. Preserve database backups before future migrations. Pause onboarding while investigating an incident.

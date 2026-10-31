@@ -120,9 +120,10 @@ test('mobile landing provides working sign-in, sign-up and demo navigation', asy
   await page.goto('/');
   await page.locator('header').getByRole('link', { name: 'Sign up', exact: true }).click();
   await expect(page).toHaveURL(/\/signup$/);
-  await expect(page.getByLabel('Invitation code')).toBeVisible();
+  await expect(page.getByLabel('Invitation code')).toHaveCount(0);
+  await expect(page.getByLabel('Password', { exact: true })).toBeVisible();
   await expect(page.getByLabel('I am 18 or older.')).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Send sign-in code' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Create account', exact: true })).toBeDisabled();
   await page.getByRole('link', { name: 'Sign in', exact: true }).click();
   await expect(page).toHaveURL(/\/signin$/);
   await expect(page.getByLabel('Email address')).toBeVisible();

@@ -20,13 +20,13 @@ Do not copy `.env.example` just to run the demo: it explicitly disables demo mod
 ## What is implemented
 
 - Cinematic public landing page with six game galleries, scroll transitions, pointer parallax, screenshot viewer, keyboard controls, and reduced-motion support. Official image sources are recorded in `public/images/games/sources.json` and linked in the page credits; images are illustrative, not listing availability. Reference fonts are served locally.
-- Dedicated `/signin` and `/signup` pages wired to Supabase email codes and invitation redemption. When authentication is unconfigured, the forms clearly show preview status and link to the demo.
+- Dedicated `/signin`, `/signup` and `/reset-password` pages wired to Supabase passwords, email verification and recovery codes. When authentication is unconfigured, the forms clearly show preview status and link to the demo.
 - Responsive community feed with console, status, neighbourhood, offer/wanted, and connections filters.
 - Profiles, owned/wishlist shelves, mutual connections, blocking, and one-level listing discussions.
 - One-page offer/wanted composer with sell/swap/lend choices, profile defaults, optional notes, compatibility details, photos, owner editing and availability. Retrying a publish request or failed photo does not duplicate the listing.
 - Persistent live-mode conversations, one initial non-friend request, recipient approval, idempotent messages, unread markers, and database-authorised realtime updates with polling recovery.
-- Email verification, single-use email-bound invitations, adult/rules declarations, and active-membership access control.
-- Reports with captured evidence, MFA-gated moderation and invitations, audit history, account deletion, and retryable cleanup.
+- Open registration, verified email, adult/rules declarations, and active-membership access control.
+- Reports with captured evidence, MFA-gated moderation, audit history, account deletion, and retryable cleanup.
 - A protected `/admin` entry point, with admin navigation hidden from members. The database allows one administrator; members cannot grant themselves that role.
 - Transactional notification outbox and private, optional exchange feedback; mutually confirmed exchanges are distinguished in the admin metrics RPC.
 - SQL migrations, database-level authorization tests, browser tests, and pilot/release runbooks.
@@ -37,12 +37,12 @@ There is no payment handling, account trading, escrow, managed rental, shipping,
 
 Create **separate staging and production projects** in an appropriate region after confirming provider terms and costs. No external project or deployment has been provisioned by this implementation.
 
-1. Apply `supabase/migrations/001_community.sql`, `002_media_operations.sql`, `003_api.sql`, `004_listing_arrangements.sql`, and `005_single_admin.sql` in order using the Supabase SQL editor or your normal migration runner. Existing installations apply only migrations they have not yet applied. Migration 005 rejects existing data with multiple admins rather than silently demoting anyone. They create a single-community deployment. Do not apply the tests' mocked `auth` or `storage` schemas to Supabase.
+1. Apply `supabase/migrations/001_community.sql`, `002_media_operations.sql`, `003_api.sql`, `004_listing_arrangements.sql`, `005_single_admin.sql`, and `006_open_membership.sql` in order using the Supabase SQL editor or your normal migration runner. Existing installations apply only migrations they have not yet applied. Migration 005 rejects existing data with multiple admins rather than silently demoting anyone. They create a single-community deployment. Do not apply the tests' mocked `auth` or `storage` schemas to Supabase.
 2. Copy `.env.example` to `.env.local`. Set the project URL, public anon key, server-only service role key, your site URL, and a random `CRON_SECRET`. Keep `GAMAZON_DEMO=false`. Never prefix the service role key with `NEXT_PUBLIC_`.
-3. Enable email authentication and configure SMTP. Set the **Magic Link email template** to show `{{ .Token }}`: the interface accepts a verification code, not a magic-link callback. Set appropriate OTP expiry and authentication rate limits. Leave anonymous auth disabled. Set Supabase's Site URL and allowed origins to your actual deployment.
-4. Sign in through the app with the organiser's email. The organiser will have an authenticated identity but cannot join yet. Find their UUID in Supabase Authentication and run the bootstrap SQL below with real values. New users thereafter must redeem invitations.
-5. In Settings, enrol a TOTP authenticator and verify it. Existing sessions can enter a current code using “Verify admin session.” Invitations and moderation require AAL2 at the database, including direct RPC calls.
-6. Configure the community's city/name and replace the operator placeholders on `/guidelines` with a real legal identity, privacy/grievance contact, and retention terms before inviting members.
+3. Enable email authentication and configure SMTP. Require email confirmation and a minimum password length of 12. Set **Confirm signup** and **Reset password** templates to show `{{ .Token }}` using `docs/email/auth-code.html` and `docs/email/password-reset.html`; these flows accept a numeric code. Set appropriate OTP expiry and authentication rate limits. Leave anonymous auth disabled. Set Supabase's Site URL and allowed origins to your actual deployment.
+4. Create an account, verify the organiser's email and finish the profile/adult/rules form. Find that verified member's UUID in Supabase Authentication and run the bootstrap SQL below with real values. Public registrations always receive the member role.
+5. In Settings, enrol a TOTP authenticator and verify it. Existing sessions can enter a current code using “Verify admin session.” Moderation requires AAL2 at the database, including direct RPC calls.
+6. Configure the community's city/name and replace the operator placeholders on `/guidelines` with a real legal identity, privacy/grievance contact, and retention terms before opening membership.
 7. Configure the scheduled `/api/cron` worker. The checked-in Vercel schedule runs daily; the authenticated state/command requests also drain notification outbox events promptly. Worker failures return non-2xx for alerting and retry next run. Run more frequently on a scheduler supporting it if deletion latency requires it.
 8. Follow `docs/OPERATIONS.md` before opening the pilot. Do not use a preview deployment with production secrets.
 
@@ -51,15 +51,16 @@ Bootstrap, as the project database administrator, **after recording the organise
 ```sql
 begin;
 update public.community set name = 'Your city gaming circle', city = 'Your city';
-insert into public.memberships(id, role) values ('ORGANISER_AUTH_UUID', 'admin');
-insert into public.profiles(id, name, area)
-values ('ORGANISER_AUTH_UUID', 'Organiser display name', 'Neighbourhood');
+update public.memberships set role = 'admin'
+where id = 'ORGANISER_AUTH_UUID' and status = 'active'
+  and exists (select 1 from auth.users where id = 'ORGANISER_AUTH_UUID' and email_confirmed_at is not null);
+-- Confirm exactly one row was updated. The existing profile is retained.
 commit;
 ```
 
-Substitute a valid UUID; the example intentionally cannot run unchanged. Auth users must have a verified email. Invite codes are returned once, stored as SHA-256 hashes, email-bound, expire in seven days, and are atomically redeemed under a database lock.
+Substitute a valid UUID; the example intentionally cannot run unchanged. Auth users must have a verified email. Migration 006 adds idempotent, invitation-free onboarding for verified adults. Suspended and deleting accounts cannot rejoin. Legacy invitation records/RPCs remain for compatibility, but there are no invitation controls in the app.
 
-There is one owner account. Assign its role to your verified Auth UUID during the private bootstrap; sign-ups and invitations always create ordinary members. `/admin` checks the verified identity and active database membership before rendering, and the data/command RPCs independently require the admin role plus MFA. Knowing the URL does not grant access. See `docs/OPERATIONS.md` for recovery and the optional admin subdomain.
+There is one owner account. Assign its role to your verified Auth UUID during the private bootstrap; sign-ups always create ordinary members. `/admin` checks the verified identity and active database membership before rendering, and the data/command RPCs independently require the admin role plus MFA. Knowing the URL does not grant access. See `docs/OPERATIONS.md` for recovery and the optional admin subdomain.
 
 ## Architecture and API
 
@@ -73,7 +74,7 @@ There is one owner account. Assign its role to your verified Auth UUID during th
 | `GET /api/v1/posts`    | Cursor-paginated listing API (`q`, `platform`, `kind`, `status`, `limit`, `cursor`).                                 |
 | `GET /api/v1/messages` | Cursor-paginated history (`conversation_id`, `limit`, `cursor`).                                                     |
 | `POST /api/v1/images`  | Owned-post multipart upload; <=5 MB, JPEG/PNG/WebP input, max four images.                                           |
-| `POST /api/v1/join`    | Redeem an invitation as a verified email identity.                                                                   |
+| `POST /api/v1/join`    | Join as a verified email identity after profile and adult/rules acceptance.                                          |
 | `GET /api/cron`        | Bearer-secret-protected outbox and retention/deletion worker.                                                        |
 | `POST /api/v1/demo`    | Loopback-only demo member switch; absent in live mode.                                                               |
 
@@ -99,7 +100,7 @@ npm run test:scale
 
 Browser tests run against a local demo on port 3000. They create disposable demo posts/comments and change the fictional profile. Restart the demo server to reset it. When installing browsers to a project-local directory, use the same `PLAYWRIGHT_BROWSERS_PATH` for installation and test execution.
 
-The auth suite starts a separate Next.js test app on port 3001 and a loopback-only Supabase Auth contract fixture on port 54329, then stops both. It uses fictional `.test` email addresses and exercises the real browser SDK/cookies, server authentication and invitation request flow. It does not send email or prove live Supabase transport. The real migration/RLS suite independently tests database authorization and single-use invitations. No fake auth endpoint or bypass is included in the application.
+The auth suite starts a separate Next.js test app on port 3001 and a loopback-only Supabase Auth contract fixture on port 54329, then stops both. It uses fictional `.test` email addresses and exercises the real browser SDK/cookies, server authentication, password signup/login/recovery and profile onboarding. It does not send email or prove live Supabase transport. The real migration/RLS suite independently tests database authorization, open-membership guards and legacy invitation behavior. No fake auth endpoint or bypass is included in the application.
 
 Run concurrency tests against a production preview: build and start with `GAMAZON_DEMO=true` locally, then run `npm run test:scale` (100 independent browser contexts, eight concurrent workers by default) and `node scripts/load-test.mjs --local` (500 mixed reads, 100 concurrent clients). `GAMAZON_BROWSER_WORKERS` adjusts browser concurrency; CI defaults to four workers. Set `GAMAZON_E2E_PRODUCTION=true` to let Playwright start a production preview instead of a development server. Local fixture results are not hosted-database or nationwide-capacity claims. Hosted load tests require `GAMAZON_BASE_URL` and a dedicated fixture's `GAMAZON_SESSION_COOKIE`; never use a real member's session.
 

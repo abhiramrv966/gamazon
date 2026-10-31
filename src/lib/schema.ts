@@ -91,7 +91,6 @@ export const commandSchema = z.discriminatedUnion('type', [
 ]);
 export type Command = z.infer<typeof commandSchema>;
 export const joinSchema = z.object({
-  token: text(200),
   name: text(60),
   area: text(60),
   adult: z.literal(true),

@@ -13,21 +13,24 @@ export default function AuthScreen({
   configured,
   demo,
 }: {
-  mode: 'signin' | 'signup';
+  mode: 'signin' | 'signup' | 'recovery';
   configured: boolean;
   demo: boolean;
 }) {
   const signup = mode === 'signup';
+  const recovery = mode === 'recovery';
   const router = useRouter();
-  const [step, setStep] = useState<'email' | 'code' | 'join'>('email');
+  const [step, setStep] = useState<'email' | 'code' | 'join' | 'password' | 'done'>('email');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState(false);
   const [retryAt, setRetryAt] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [suspended, setSuspended] = useState(false);
-  const details = useRef({ token: '', name: '', area: '', adult: false, rules: false });
+  const details = useRef({ name: '', area: '', adult: false, rules: false });
   useEffect(() => {
+    setReady(true);
     if (!configured) return;
     let active = true;
     fetch('/api/v1/session', { cache: 'no-store' })
@@ -35,6 +38,10 @@ export default function AuthScreen({
         if (!response.ok || !active) return;
         const session = await response.json();
         if (!active) return;
+        if (recovery) {
+          setEmail(session.email);
+          return;
+        }
         if (session.membership === 'active') router.replace('/community');
         else if (session.membership === 'suspended') setSuspended(true);
         else if (session.verified) {
@@ -48,7 +55,7 @@ export default function AuthScreen({
     return () => {
       active = false;
     };
-  }, [configured, router]);
+  }, [configured, recovery, router]);
   useEffect(() => {
     const update = () => setSeconds(Math.max(0, Math.ceil((retryAt - Date.now()) / 1000)));
     update();
@@ -65,8 +72,17 @@ export default function AuthScreen({
     });
     const result = await response.json();
     if (!response.ok)
-      throw new Error(result.error || 'Could not accept the invitation. Please try again.');
+      throw new Error(result.error || 'Could not finish your profile. Please try again.');
     router.replace('/community');
+  }
+
+  async function continueAfterSignIn() {
+    const response = await fetch('/api/v1/session', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Could not check your account. Please try again.');
+    const session = await response.json();
+    if (session.membership === 'suspended') setSuspended(true);
+    else if (session.membership === 'active') router.replace('/community');
+    else setStep('join');
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -79,27 +95,44 @@ export default function AuthScreen({
       const db = browserDb();
       if (!db) throw new Error('Sign-in is not available in this preview.');
       if (step === 'email') {
-        if (signup) details.current.token = String(form.get('invite') || '').trim();
-        const { error } = await db.auth.signInWithOtp({
-          email: email.trim(),
-          options: { shouldCreateUser: signup },
-        });
-        if (error) throw error;
+        if (recovery) {
+          const { error } = await db.auth.resetPasswordForEmail(email.trim());
+          if (error) throw error;
+        } else {
+          const credentials = { email: email.trim(), password: String(form.get('password') || '') };
+          if (signup) {
+            const { data, error } = await db.auth.signUp(credentials);
+            if (error) throw error;
+            if (data.session) return await continueAfterSignIn();
+          } else {
+            const { error } = await db.auth.signInWithPassword(credentials);
+            if (!error) return await continueAfterSignIn();
+            if (error.code !== 'email_not_confirmed') throw error;
+            const resent = await db.auth.resend({ type: 'signup', email: email.trim() });
+            if (resent.error) throw resent.error;
+          }
+        }
         setRetryAt(Date.now() + 60000);
         setStep('code');
       } else if (step === 'code') {
         const { error } = await db.auth.verifyOtp({
           email: email.trim(),
           token: String(form.get('code') || '').trim(),
-          type: 'email',
+          type: recovery ? 'recovery' : 'email',
         });
         if (error) throw error;
-        if (signup) {
-          setStep('join');
-        } else router.replace('/community');
+        if (recovery) setStep('password');
+        else await continueAfterSignIn();
+      } else if (step === 'password') {
+        const { error } = await db.auth.updateUser({
+          password: String(form.get('password') || ''),
+        });
+        if (error) throw error;
+        const signedOut = await db.auth.signOut();
+        if (signedOut.error) throw signedOut.error;
+        setStep('done');
       } else {
         details.current = {
-          token: String(form.get('invite') || '').trim(),
           name: String(form.get('name') || '').trim(),
           area: String(form.get('area') || '').trim(),
           adult: form.get('adult') === 'on',
@@ -125,10 +158,9 @@ export default function AuthScreen({
     try {
       const db = browserDb();
       if (!db) throw new Error('Sign-in is not available in this preview.');
-      const { error } = await db.auth.signInWithOtp({
-        email: email.trim(),
-        options: { shouldCreateUser: signup },
-      });
+      const { error } = recovery
+        ? await db.auth.resetPasswordForEmail(email.trim())
+        : await db.auth.resend({ type: 'signup', email: email.trim() });
       if (error) throw error;
       setRetryAt(Date.now() + 60000);
     } catch (error) {
@@ -157,7 +189,10 @@ export default function AuthScreen({
           </p>
         </div>
       </aside>
-      <section className="auth-panel" aria-label={signup ? 'Sign up' : 'Sign in'}>
+      <section
+        className="auth-panel"
+        aria-label={recovery ? 'Reset password' : signup ? 'Sign up' : 'Sign in'}
+      >
         <Link href="/" className="auth-back">
           <ArrowLeft size={14} /> Back to Gamazon
         </Link>
@@ -167,21 +202,33 @@ export default function AuthScreen({
             : step === 'code'
               ? 'Check your email.'
               : step === 'join'
-                ? 'Accept your invitation.'
-                : signup
-                  ? 'Join Gamazon.'
-                  : 'Sign in.'}
+                ? 'Make it yours.'
+                : step === 'password'
+                  ? 'Choose a new password.'
+                  : step === 'done'
+                    ? 'Password updated.'
+                    : recovery
+                      ? 'Reset your password.'
+                      : signup
+                        ? 'Join Gamazon.'
+                        : 'Sign in.'}
         </h1>
         <p>
           {suspended
-            ? 'Contact the organiser who invited you to discuss your membership.'
+            ? 'Contact the community administrator to discuss your membership.'
             : step === 'code'
-              ? `Enter the sign-in code sent to ${email}.`
+              ? `Enter the verification code sent to ${email}.`
               : step === 'join'
                 ? 'Your email is verified. Add your name and area to finish joining.'
-                : signup
-                  ? 'You’ll need an invitation from your community organiser.'
-                  : 'Use your email to receive a sign-in code. No password needed.'}
+                : step === 'password'
+                  ? 'Use at least 12 characters.'
+                  : step === 'done'
+                    ? 'Sign in with your new password.'
+                    : recovery
+                      ? 'We’ll email you a code to set or reset your password.'
+                      : signup
+                        ? 'Create your account with an email and password.'
+                        : 'Welcome back. Enter your email and password.'}
         </p>
         {!configured && (
           <div className="auth-demo-notice">
@@ -198,9 +245,9 @@ export default function AuthScreen({
             )}
           </div>
         )}
-        {!suspended && (
-          <form onSubmit={submit} aria-busy={busy}>
-            <fieldset className="auth-fields" key={step} disabled={busy}>
+        {!suspended && step !== 'done' && (
+          <form method="post" onSubmit={submit} aria-busy={busy}>
+            <fieldset className="auth-fields" key={step} disabled={busy || !ready}>
               {step === 'email' ? (
                 <>
                   <label>
@@ -216,20 +263,19 @@ export default function AuthScreen({
                       maxLength={254}
                     />
                   </label>
-                  {signup && (
-                    <>
-                      <label>
-                        Invitation code
-                        <input
-                          name="invite"
-                          defaultValue={details.current.token}
-                          required
-                          maxLength={200}
-                          placeholder="Code from your organiser"
-                          autoComplete="off"
-                        />
-                      </label>
-                    </>
+                  {!recovery && (
+                    <label>
+                      Password
+                      <input
+                        name="password"
+                        type="password"
+                        required
+                        minLength={signup ? 12 : undefined}
+                        maxLength={128}
+                        placeholder={signup ? 'At least 12 characters' : 'Your password'}
+                        autoComplete={signup ? 'new-password' : 'current-password'}
+                      />
+                    </label>
                   )}
                 </>
               ) : step === 'code' ? (
@@ -245,6 +291,20 @@ export default function AuthScreen({
                     minLength={6}
                     maxLength={10}
                     placeholder="Enter your code"
+                    autoFocus
+                  />
+                </label>
+              ) : step === 'password' ? (
+                <label>
+                  New password
+                  <input
+                    name="password"
+                    type="password"
+                    required
+                    minLength={12}
+                    maxLength={128}
+                    autoComplete="new-password"
+                    placeholder="At least 12 characters"
                     autoFocus
                   />
                 </label>
@@ -269,16 +329,6 @@ export default function AuthScreen({
                       maxLength={60}
                       defaultValue={details.current.area}
                       placeholder="Your area, not your address"
-                    />
-                  </label>
-                  <label>
-                    Invitation code
-                    <input
-                      name="invite"
-                      required
-                      maxLength={200}
-                      defaultValue={details.current.token}
-                      autoFocus
                     />
                   </label>
                   <label className="auth-check">
@@ -313,7 +363,7 @@ export default function AuthScreen({
                 {error}
               </p>
             )}
-            <button type="submit" className="landing-pill" disabled={busy || !configured}>
+            <button type="submit" className="landing-pill" disabled={busy || !ready || !configured}>
               {busy ? (
                 <>
                   <LoaderCircle className="spin" size={17} /> Please wait
@@ -321,10 +371,16 @@ export default function AuthScreen({
               ) : (
                 <>
                   {step === 'email'
-                    ? 'Send sign-in code'
+                    ? recovery
+                      ? 'Send reset code'
+                      : signup
+                        ? 'Create account'
+                        : 'Sign in'
                     : step === 'join'
-                      ? 'Join community'
-                      : 'Verify email'}{' '}
+                      ? 'Join Gamazon'
+                      : step === 'password'
+                        ? 'Save password'
+                        : 'Verify email'}{' '}
                   <ArrowRight size={16} />
                 </>
               )}
@@ -379,14 +435,19 @@ export default function AuthScreen({
             Use another email
           </button>
         )}
+        {!recovery && step === 'email' && (
+          <p className="auth-switch">
+            <Link href="/reset-password">Forgot your password?</Link>
+          </p>
+        )}
         <p className="auth-switch">
-          {signup ? (
+          {signup || recovery ? (
             <>
               Already a member? <Link href="/signin">Sign in</Link>
             </>
           ) : (
             <>
-              Have an invitation? <Link href="/signup">Sign up</Link>
+              New to Gamazon? <Link href="/signup">Create an account</Link>
             </>
           )}
         </p>

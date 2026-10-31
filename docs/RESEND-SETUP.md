@@ -1,5 +1,7 @@
 # Resend email setup
 
+Password-registration update — 31 October 2026: the user explicitly approved public registration and deployment. Migration 006 and Supabase password/confirmation/recovery settings are applied and verified. The new app uses email/password login, signup confirmation codes and recovery codes; passwords require at least 12 characters. Deployment and live disposable-account tests are the next verification step. `docs/email/auth-code.html` is the confirmation template and `docs/email/password-reset.html` is the recovery template. The earlier sign-in-code verification below records the previous production flow.
+
 Resend is the selected email provider. Supabase Auth generates and verifies sign-in codes, and delivers them through Resend SMTP. The app continues using its existing Supabase Auth calls; it does not need a Resend SDK or a public email-sending endpoint.
 
 Status: activated and verified on 31 October 2026. Supabase custom SMTP and both branded code templates are configured and read back successfully. The `Gamazon Supabase Auth` key has Sending access restricted to `auth.gamazon.store`. Resend marks the domain and all four DNS records verified. A real sign-in email was delivered to the selected test recipient and its code was verified through the hosted app.

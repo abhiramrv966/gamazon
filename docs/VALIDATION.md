@@ -1,5 +1,15 @@
 # Implementation verification
 
+## Password authentication and open registration — prepared 31 October 2026
+
+The local implementation replaces invitation/email-code login with email/password signup and sign-in. New identities must confirm their email before finishing a profile and adult/rules acceptance. The recovery page verifies an emailed recovery code before setting a password, then signs out so the new password is used at login. Existing code-only identities can set their first password through the same recovery page. Public onboarding always creates the member role; it does not grant ownership.
+
+The production build, all 44 unit/database checks and all eight local Auth browser scenarios passed. Database tests cover verified onboarding without invitations, consent/field validation, idempotence, member-role assignment and denial for anonymous, unverified, suspended and deleting accounts. Browser checks cover valid/invalid passwords, confirmation codes, profile completion, retry, session restoration, recovery, code replay rejection and owner/member/suspension access controls. Phone/desktop auth screenshots were visually inspected. These Auth browser checks use the loopback fixture and do not prove production password email transport.
+
+All 13 affected landing, community-layout and admin UI scenarios passed on isolated port 3002 across 320/390/820/1440px layouts, leaving the existing live local server on port 3000 untouched. The first admin check hit a cold development-route timeout and passed when rerun after warming that route.
+
+The user explicitly approved opening registration and deploying on 31 October 2026. Migration 006 was applied over verified TLS and Supabase password/confirmation/recovery settings were read back successfully. The earlier blocked attempt executed no mutation. Deployment and live disposable-account verification are pending. No real user's password or membership was changed.
+
 ## Live Resend email and authentication — 31 October 2026
 
 Resend verified `auth.gamazon.store` and all four GoDaddy DNS records. Independent public DNS checks matched every required value. Supabase custom SMTP uses `Gamazon <login@auth.gamazon.store>` through `smtp.resend.com:465`, with a sending-only key restricted to that domain. Both branded code templates and the production Site URL/redirect settings were read back successfully. OTPs retain eight digits, expire after ten minutes, and have a 60-second per-address cooldown; the project email rate limit is 30 per hour.

@@ -21,7 +21,7 @@ Keep the existing landing page as the visual reference. Do not redesign it unles
 
 ## 2. What the product does
 
-Gamazon is an invite-only community where adults find physical console games and connect with people who own them. Members can offer a game, ask for a game, discuss a post, message one another, and independently arrange a purchase, swap, or loan.
+Gamazon is a community with open registration where adults find physical console games and connect with people who own them. Members can offer a game, ask for a game, discuss a post, message one another, and independently arrange a purchase, swap, or loan.
 
 Core journey:
 
@@ -31,12 +31,12 @@ Supported families: PlayStation, Xbox, and Nintendo. Exact console model and phy
 
 Roles:
 
-| Role | Access |
-| --- | --- |
-| Visitor | Landing page, sign-in/sign-up, public guidelines and privacy information |
-| Active member | Community content, profiles, collections, connections, conversations they participate in |
-| Administrator | Member capabilities plus invitations, reported material, moderation decisions, and aggregate pilot metrics |
-| Suspended/non-member | No access to private community content; a clear access state and appropriate next action |
+| Role                 | Access                                                                                        |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| Visitor              | Landing page, sign-in/sign-up, public guidelines and privacy information                      |
+| Active member        | Community content, profiles, collections, connections, conversations they participate in      |
+| Administrator        | Member capabilities plus reported material, moderation decisions, and aggregate pilot metrics |
+| Suspended/non-member | No access to private community content; a clear access state and appropriate next action      |
 
 The local app currently contains demo data. Production email authentication and other managed services require configuration. Design realistic live-product states; demo-switching controls belong only to a preview, not the main product experience.
 
@@ -60,13 +60,13 @@ Aim for an intentional gaming publication crossed with a useful community market
 
 Existing reference palette, not mandatory final tokens:
 
-| Role | Reference |
-| --- | --- |
-| Main background | Near-black green, approximately `#0B0E0C` |
-| Raised surfaces | Approximately `#141814` |
-| Main text | Warm cream, approximately `#F0E9DC` |
-| Accent | Muted bronze, approximately `#CBB28C` |
-| Secondary text | Approximately `#A9ADA2`; adjust for contrast |
+| Role              | Reference                                                                      |
+| ----------------- | ------------------------------------------------------------------------------ |
+| Main background   | Near-black green, approximately `#0B0E0C`                                      |
+| Raised surfaces   | Approximately `#141814`                                                        |
+| Main text         | Warm cream, approximately `#F0E9DC`                                            |
+| Accent            | Muted bronze, approximately `#CBB28C`                                          |
+| Secondary text    | Approximately `#A9ADA2`; adjust for contrast                                   |
 | Current typefaces | Italiana for display headings, Outfit for interface text; alternatives welcome |
 
 Retain the atmosphere, but improve readability and hierarchy. Reserve expressive type for moments that benefit from it. Game titles, form labels, and messages need excellent legibility. Do not make every heading oversized or every control a pill.
@@ -123,18 +123,18 @@ The current feed and discovery share a listing component and filters. They can s
 
 **Listing summary component:**
 
-| Content | Requirement |
-| --- | --- |
-| Game | Full title, allowing long names |
-| Media | Actual copy photo when present; honest, well-designed no-photo fallback otherwise |
-| Type | Offer or wanted |
-| Compatibility | Platform family, exact console model/generation, physical format |
-| Condition | Like new, good, fair, or any condition for applicable wanted posts |
-| Location and author | Approximate area, member identity/avatar, post age |
-| Availability | Open, paused, closed; distinguish from offer/wanted |
-| Price | Optional asking price in INR; missing price is not automatically free |
-| Discussion | Short excerpt and comment count/link |
-| Interaction | Clear path into details and owner profile |
+| Content             | Requirement                                                                       |
+| ------------------- | --------------------------------------------------------------------------------- |
+| Game                | Full title, allowing long names                                                   |
+| Media               | Actual copy photo when present; honest, well-designed no-photo fallback otherwise |
+| Type                | Offer or wanted                                                                   |
+| Compatibility       | Platform family, exact console model/generation, physical format                  |
+| Condition           | Like new, good, fair, or any condition for applicable wanted posts                |
+| Location and author | Approximate area, member identity/avatar, post age                                |
+| Availability        | Open, paused, closed; distinguish from offer/wanted                               |
+| Price               | Optional asking price in INR; missing price is not automatically free             |
+| Discussion          | Short excerpt and comment count/link                                              |
+| Interaction         | Clear path into details and owner profile                                         |
 
 Offer a convincing layout with real variation: portrait case photo, landscape photo, missing photo, wanted post, long title, no price, and closed listing. Avoid giant repetitive placeholders. Do not use a three-dot overflow icon for an action that only opens details.
 
@@ -161,20 +161,20 @@ Design unavailable/removed-post state and a return path. Choose a desktop detail
 
 All existing fields must have a home:
 
-| Field | Values / limits |
-| --- | --- |
-| Post type | A game to offer / a game I’m looking for |
-| Game title | Required, up to 100 characters |
-| Platform | PlayStation / Xbox / Nintendo |
-| Console model | Required, up to 40 characters; e.g. PS5, Xbox Series X, Nintendo Switch |
-| Physical format | Disc / Cartridge / Game-key card; show compatible choices clearly |
-| Condition | Like new / Good / Fair / Any condition |
-| Neighbourhood | Required, up to 60 characters; defaults to member’s area |
-| Asking price | Optional INR amount, 0–100,000; no rental pricing units |
-| Description | Required, up to 2,000 characters |
-| Download requirement | Checkbox |
-| Redemption-code dependency | Checkbox |
-| Photo | Optional JPEG, PNG, or WebP upload of the actual copy |
+| Field                      | Values / limits                                                         |
+| -------------------------- | ----------------------------------------------------------------------- |
+| Post type                  | A game to offer / a game I’m looking for                                |
+| Game title                 | Required, up to 100 characters                                          |
+| Platform                   | PlayStation / Xbox / Nintendo                                           |
+| Console model              | Required, up to 40 characters; e.g. PS5, Xbox Series X, Nintendo Switch |
+| Physical format            | Disc / Cartridge / Game-key card; show compatible choices clearly       |
+| Condition                  | Like new / Good / Fair / Any condition                                  |
+| Neighbourhood              | Required, up to 60 characters; defaults to member’s area                |
+| Asking price               | Optional INR amount, 0–100,000; no rental pricing units                 |
+| Description                | Required, up to 2,000 characters                                        |
+| Download requirement       | Checkbox                                                                |
+| Redemption-code dependency | Checkbox                                                                |
+| Photo                      | Optional JPEG, PNG, or WebP upload of the actual copy                   |
 
 Disc-drive requirements are derived from format. The design can make wanted posts less cumbersome without removing the underlying compatibility data. Do not require a catalogue integration or automatic title lookup.
 
@@ -252,19 +252,17 @@ Keep admin tools visually related but separate from the member experience.
 - Report queue: reported entity type, reason, submitted evidence/context, date, open/resolved state.
 - Decision form: required note (up to 1,000 characters), dismiss report / remove content / suspend member, apply action, confirmation, success/error.
 - Moderation history: action, decision note, date, and available attribution.
-- Invitations: email, expiry, redeemed/revoked state, revoke action.
-- Create invitation: recipient email → generate single-use code → copy code shown once. Invitations currently expire after seven days and are bound to that verified email. They are shared manually; do not imply an invitation-email service.
-- Empty queues, expired invitation, copied-code feedback, and admin verification/access errors.
+- Empty queues and admin verification/access errors.
 
 Do not create an unrestricted private-message search or extra analytics panels.
 
 ### J. Authentication and access
 
-Sign in: email → emailed numeric verification code → community. No password or password-reset screen.
+Sign in: email and password → community. Forgot password opens `/reset-password`: email → recovery code → new password → sign in.
 
-Sign up: email, display name, neighbourhood, invitation code, 18+ declaration, and rules/privacy acceptance → email verification → invitation acceptance → community.
+Sign up: email and password (at least 12 characters) → email verification code → display name, neighbourhood, 18+ declaration and rules/privacy acceptance → community. No invitation is required; registration creates only ordinary members.
 
-Supporting states: wrong/expired verification code, resend with one-minute cooldown, change email, invalid/expired/reused invitation, verified email awaiting valid invitation, pending submission, service error, suspended access, and session expiry. Public links return to the landing page or switch sign-in/sign-up.
+Supporting states: wrong/expired verification code, resend with one-minute cooldown, change email, invalid credentials, password recovery, verified email awaiting a profile, pending submission, service error, suspended access, and session expiry. Public links return to the landing page or switch sign-in/sign-up.
 
 An unconfigured demo uses a plainly labelled preview state and a demo-entry link. Do not make this the primary production design.
 
@@ -272,18 +270,18 @@ An unconfigured demo uses a plainly labelled preview state and a demo-entry link
 
 Deliver named, reusable components with variants, not separately drawn copies on every screen:
 
-| Family | Components / variants |
-| --- | --- |
-| Shell | Desktop navigation, mobile navigation, page header, search, user menu, notification indicator |
-| Actions | Primary, secondary, text, icon-only, destructive; default, hover, focus, pressed, disabled, busy |
-| Inputs | Text, email, number, textarea, select, checkbox, multivalue input, upload; helper text, required, invalid, disabled |
-| Game content | Listing summary, detail media, no-photo fallback, platform/format metadata, availability, offer/wanted, shelf item |
-| People | Avatar/initials, member item, identity row, relationship controls |
-| Conversation | Conversation preview, request panel, incoming/outgoing message, composer, listing context, private outcome prompt |
-| Discussion | Comment, single-level reply, edit state, composer, report action |
-| Feedback | Inline error, transient success notice, empty state, skeleton/loading, retry, unavailable/access-denied state |
-| Overlays | Dialog/panel/sheet, menu, confirmation, notification list; open/close/focus behaviour |
-| Administration | Report item, evidence excerpt, decision controls, invitation row/code result, audit entry |
+| Family         | Components / variants                                                                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Shell          | Desktop navigation, mobile navigation, page header, search, user menu, notification indicator                       |
+| Actions        | Primary, secondary, text, icon-only, destructive; default, hover, focus, pressed, disabled, busy                    |
+| Inputs         | Text, email, number, textarea, select, checkbox, multivalue input, upload; helper text, required, invalid, disabled |
+| Game content   | Listing summary, detail media, no-photo fallback, platform/format metadata, availability, offer/wanted, shelf item  |
+| People         | Avatar/initials, member item, identity row, relationship controls                                                   |
+| Conversation   | Conversation preview, request panel, incoming/outgoing message, composer, listing context, private outcome prompt   |
+| Discussion     | Comment, single-level reply, edit state, composer, report action                                                    |
+| Feedback       | Inline error, transient success notice, empty state, skeleton/loading, retry, unavailable/access-denied state       |
+| Overlays       | Dialog/panel/sheet, menu, confirmation, notification list; open/close/focus behaviour                               |
+| Administration | Report item, evidence excerpt, decision controls, audit entry                                                       |
 
 Use text labels as well as colour for important states. Do not use one green dot to mean platform, availability, unread, and online presence. Online presence is not a required feature.
 
@@ -305,13 +303,13 @@ Use fictional but realistic Indian member names and approximate neighbourhoods; 
 
 Suggested examples, solely for design testing:
 
-| Example | Purpose |
-| --- | --- |
-| Red Dead Redemption 2 — PS4 disc, good, ₹1,800 | Offer with actual-copy photo and asking price |
-| The Witcher 3: Wild Hunt — Complete Edition — PS4 disc | Long title; code-dependent extras; no price |
-| The Legend of Zelda: Breath of the Wild — Nintendo Switch cartridge | Wanted post with no physical-copy photo |
-| The Last of Us Part II — PS4 disc, paused | Unavailable-for-now state |
-| Days Gone — PS4 disc, closed | Closed listing with retained discussion |
+| Example                                                             | Purpose                                       |
+| ------------------------------------------------------------------- | --------------------------------------------- |
+| Red Dead Redemption 2 — PS4 disc, good, ₹1,800                      | Offer with actual-copy photo and asking price |
+| The Witcher 3: Wild Hunt — Complete Edition — PS4 disc              | Long title; code-dependent extras; no price   |
+| The Legend of Zelda: Breath of the Wild — Nintendo Switch cartridge | Wanted post with no physical-copy photo       |
+| The Last of Us Part II — PS4 disc, paused                           | Unavailable-for-now state                     |
+| Days Gone — PS4 disc, closed                                        | Closed listing with retained discussion       |
 
 Include one empty profile, one long bio, multiple console tags, a long message, a long unbroken string, and a removed listing referenced in chat. Do not copy timestamp-suffixed automated test data into the final mockups.
 
@@ -327,7 +325,7 @@ Connect these journeys end to end:
 4. Send a non-friend message request → recipient accepts → continue chatting → optionally record private exchange outcome.
 5. Add an owned game and a wishlist item → show that neither automatically creates an offer.
 6. Report a post/message → admin reviews submitted evidence → applies a documented decision.
-7. Sign up with an invitation → verify email → handle an invalid invitation → join successfully.
+7. Create a password account without an invitation → verify email → complete the profile and consent → join successfully.
 8. Open settings → block/unblock example → demonstrate delete-account confirmation without actual deletion.
 
 Include at least one recoverable error and one empty state in the prototype. Prototype destructive actions using fictional data only.
@@ -364,16 +362,16 @@ Do not return only a moodboard, a landing-page redesign, a single attractive fee
 
 These paths are for the person preparing the handoff. The design tool will not automatically have access to local files; attach selected references separately if useful. Treat them as an inventory and mood reference, not a layout to trace.
 
-| Reference | Project-relative path |
-| --- | --- |
-| Landing, desktop/mobile | `artifacts/landing-desktop.png`, `artifacts/landing-mobile.png` |
-| Feed | `artifacts/community-desktop-feed.png`, `artifacts/community-mobile-feed.png` |
-| Members | `artifacts/community-desktop-members.png`, `artifacts/community-mobile-members.png` |
-| Profile and collection | `artifacts/community-desktop-profile.png`, `artifacts/community-mobile-profile.png` |
-| Messages | `artifacts/community-desktop-messages.png`, `artifacts/community-mobile-messages.png` |
-| Admin | `artifacts/community-desktop-admin.png`, `artifacts/community-mobile-admin.png` |
-| Add-game dialog | `artifacts/community-desktop-add-game.png`, `artifacts/community-mobile-add-game.png` |
-| Promotional assets and source records | `public/images/games/`, including `sources.json` |
-| Current local fonts | `public/fonts/` |
+| Reference                             | Project-relative path                                                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------------- |
+| Landing, desktop/mobile               | `artifacts/landing-desktop.png`, `artifacts/landing-mobile.png`                       |
+| Feed                                  | `artifacts/community-desktop-feed.png`, `artifacts/community-mobile-feed.png`         |
+| Members                               | `artifacts/community-desktop-members.png`, `artifacts/community-mobile-members.png`   |
+| Profile and collection                | `artifacts/community-desktop-profile.png`, `artifacts/community-mobile-profile.png`   |
+| Messages                              | `artifacts/community-desktop-messages.png`, `artifacts/community-mobile-messages.png` |
+| Admin                                 | `artifacts/community-desktop-admin.png`, `artifacts/community-mobile-admin.png`       |
+| Add-game dialog                       | `artifacts/community-desktop-add-game.png`, `artifacts/community-mobile-add-game.png` |
+| Promotional assets and source records | `public/images/games/`, including `sources.json`                                      |
+| Current local fonts                   | `public/fonts/`                                                                       |
 
 Implementation context for the eventual developer: Next.js, React, TypeScript, CSS/Tailwind, Lucide icons, and Supabase-backed services. Main UI is in `src/components/community-app.tsx`; authentication is in `src/components/auth-screen.tsx`; the current theme is in `src/app/community-theme.css`. There is no need to select a new framework or redesign the backend to deliver this visual redesign.
