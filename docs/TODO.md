@@ -29,4 +29,4 @@ Website DNS, HTTPS and email delivery are verified. The user approved opening re
 
 - [x] Implement email/password sign-in, invitation-free signup and password recovery, preserving email verification and sole-admin controls.
 - [x] Obtain explicit approval to open production registration and apply migration 006 plus Supabase password/email settings. Approved and applied 31 October 2026; required email verification, 12-character password minimum and recovery templates were read back successfully.
-- [ ] Deploy the password flow and run live disposable-account signup, login, recovery and cleanup checks.
+- [x] Deploy the password flow and run live disposable-account signup, login, recovery and cleanup checks. Verified 31 October 2026 on `https://gamazon.store`: confirmation/recovery emails delivered, password login/recovery and old-password/code-replay rejection passed, new members were denied admin access, and temporary Auth/profile/membership data was deleted.

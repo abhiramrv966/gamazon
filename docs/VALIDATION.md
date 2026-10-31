@@ -1,14 +1,20 @@
 # Implementation verification
 
-## Password authentication and open registration — prepared 31 October 2026
+## Password authentication and open registration — deployed 31 October 2026
 
-The local implementation replaces invitation/email-code login with email/password signup and sign-in. New identities must confirm their email before finishing a profile and adult/rules acceptance. The recovery page verifies an emailed recovery code before setting a password, then signs out so the new password is used at login. Existing code-only identities can set their first password through the same recovery page. Public onboarding always creates the member role; it does not grant ownership.
+The deployed implementation replaces invitation/email-code login with email/password signup and sign-in. New identities must confirm their email before finishing a profile and adult/rules acceptance. The recovery page verifies an emailed recovery code before setting a password, then signs out so the new password is used at login. Existing code-only identities can set their first password through the same recovery page. Public onboarding always creates the member role; it does not grant ownership.
 
 The production build, all 44 unit/database checks and all eight local Auth browser scenarios passed. Database tests cover verified onboarding without invitations, consent/field validation, idempotence, member-role assignment and denial for anonymous, unverified, suspended and deleting accounts. Browser checks cover valid/invalid passwords, confirmation codes, profile completion, retry, session restoration, recovery, code replay rejection and owner/member/suspension access controls. Phone/desktop auth screenshots were visually inspected. These Auth browser checks use the loopback fixture and do not prove production password email transport.
 
 All 13 affected landing, community-layout and admin UI scenarios passed on isolated port 3002 across 320/390/820/1440px layouts, leaving the existing live local server on port 3000 untouched. The first admin check hit a cold development-route timeout and passed when rerun after warming that route.
 
-The user explicitly approved opening registration and deploying on 31 October 2026. Migration 006 was applied over verified TLS and Supabase password/confirmation/recovery settings were read back successfully. The earlier blocked attempt executed no mutation. Deployment and live disposable-account verification are pending. No real user's password or membership was changed.
+The user explicitly approved opening registration and deploying on 31 October 2026. Migration 006 was applied over verified TLS and Supabase password/confirmation/recovery settings were read back successfully. The earlier blocked attempt executed no mutation. Commit `8be5569` reached Ready on the existing Vercel production project and was tested through `https://gamazon.store`. No real user's password or membership was changed.
+
+### Live production password checks
+
+A mobile browser at 390px created a disposable password account through the public signup page, without an invitation. Confirmation and recovery emails reached Resend's documented labeled delivery-test addresses, with the configured subjects and rendered eight-digit codes. The account confirmed its email, completed profile/consent, joined as a member and remained denied admin/metrics access. The run verified bad-password rejection, successful password login, session restoration, phone Settings/sign-out, password recovery, rejection of the old password and rejection of a reused recovery code. Both email events were delivered. The synthetic Auth user, membership and profile were removed and absence checked. This simulates delivery at Resend's test address; the separate real-Gmail delivery check below remains distinct.
+
+Evidence is in ignored `artifacts/live-password-auth-checks.json`, containing no passwords, codes, API keys or sessions. No application changes were needed after the previously passing build, 44 unit/database tests, eight Auth browser cases and 13 related UI scenarios. Owner onboarding/MFA and broader two-member/load/restore checks remain pending.
 
 ## Live Resend email and authentication — 31 October 2026
 
