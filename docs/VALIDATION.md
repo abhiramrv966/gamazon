@@ -1,5 +1,13 @@
 # Implementation verification
 
+## Live Resend email and authentication — 31 October 2026
+
+Resend verified `auth.gamazon.store` and all four GoDaddy DNS records. Independent public DNS checks matched every required value. Supabase custom SMTP uses `Gamazon <login@auth.gamazon.store>` through `smtp.resend.com:465`, with a sending-only key restricted to that domain. Both branded code templates and the production Site URL/redirect settings were read back successfully. OTPs retain eight digits, expire after ten minutes, and have a 60-second per-address cooldown; the project email rate limit is 30 per hour.
+
+A 390px browser run against the hosted `/signin` page sent a real email to the selected recipient, confirmed Resend's `delivered` event, checked the sender and `Your Gamazon code` subject, and verified the rendered code in the app. Incorrect and consumed codes were rejected, the resend cooldown worked, the session survived reload, and sign-out returned session/private API reads to 401. The verified non-member could not access community data. No membership, invitation redemption or admin assignment was performed. Sanitised evidence is in ignored `artifacts/resend-live-auth-checks.json`; it contains no codes, keys or sessions.
+
+SMTP initially rejected the restricted key while sender verification was partial; delivery succeeded once every DNS record verified. Supabase initially used a cached subject, then delivered the configured subject after its template cache refreshed. Existing Auth identity data was retained. Owner MFA, invitation redemption and the live two-member community journey remain pending; no hosted load or backup restore claim follows from this email test.
+
 ## Custom domain and HTTPS — 30 October 2026
 
 Verified GoDaddy's two apex A records and Vercel's valid configuration for `gamazon.store` and `www.gamazon.store`. Issued the missing managed certificate for both names. Both Vercel edge addresses passed TLS certificate and hostname verification; verification was not disabled.
