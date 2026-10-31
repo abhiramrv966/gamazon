@@ -19,12 +19,12 @@ async function signIn(page: import('@playwright/test').Page, email: string, valu
   await page.getByLabel('Password', { exact: true }).fill(value);
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 }
-async function createAccount(page: import('@playwright/test').Page, email: string) {
+async function createAccount(page: import('@playwright/test').Page, email: string, value = password) {
   await page.goto('/signup');
   await expect(page.getByRole('button', { name: 'Create account', exact: true })).toBeEnabled();
   await page.screenshot({ path: `artifacts/password-signup-${page.viewportSize()?.width}.png` });
   await page.getByLabel('Email address', { exact: true }).fill(email);
-  await page.getByLabel('Password', { exact: true }).fill(password);
+  await page.getByLabel('Password', { exact: true }).fill(value);
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.getByLabel('Email verification code')).toBeVisible();
 }
@@ -57,6 +57,7 @@ test('public sign-up verifies email and joins without an invitation', async ({ p
   const user = await member(request, 'none');
   await page.setViewportSize({ width: 390, height: 844 });
   await createAccount(page, user.email);
+  await expect(page.getByText(/If .* needs verification/)).toBeVisible();
   await expect(page.getByLabel('Invitation code')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Send another code in/ })).toBeDisabled();
   await page.getByLabel('Email verification code').fill('000000');
@@ -94,6 +95,31 @@ test('a verified non-member can resume profile setup after reload', async ({ pag
   await expect(page.getByRole('heading', { name: 'Make it yours.' })).toBeVisible();
   await page.getByRole('button', { name: 'Use another email', exact: true }).click();
   await expect(page.getByLabel('Email address')).toBeVisible();
+});
+
+test('repeat signup offers recovery without claiming a code was sent or changing the account', async ({
+  page,
+  request,
+}) => {
+  const user = await member(request);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await createAccount(page, user.email, 'Must-not-replace-password-123');
+  await expect(page.getByText(/If .* needs verification/)).toBeVisible();
+  await expect(page.getByText(/code sent to/)).toHaveCount(0);
+  expect((await page.request.get('/api/v1/session')).status()).toBe(401);
+  const unchanged = await request.post('http://127.0.0.1:54329/auth/v1/token?grant_type=password', {
+    data: { email: user.email, password },
+  });
+  expect(unchanged.ok()).toBe(true);
+  await page.screenshot({ path: 'artifacts/repeat-signup-390.png' });
+  await page.getByRole('link', { name: 'Set or reset your password' }).click();
+  await expect(page).toHaveURL(/\/reset-password$/);
+  await page.getByLabel('Email address', { exact: true }).fill(user.email);
+  await page.getByRole('button', { name: 'Send reset code' }).click();
+  await verify(page);
+  await expect(page.getByLabel('New password', { exact: true })).toBeVisible();
+  await page.goto('/signin');
+  await expect(page).toHaveURL(/\/community$/);
 });
 
 test('password recovery replaces the old password and requires an email code', async ({

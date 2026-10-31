@@ -217,7 +217,11 @@ export default function AuthScreen({
           {suspended
             ? 'Contact the community administrator to discuss your membership.'
             : step === 'code'
-              ? `Enter the verification code sent to ${email}.`
+              ? recovery
+                ? `If an account exists for ${email}, you’ll receive a reset code.`
+                : signup
+                  ? `If ${email} needs verification, you’ll receive a code. If you’ve already verified it, sign in or reset your password below.`
+                  : `Enter the verification code sent to ${email}.`
               : step === 'join'
                 ? 'Your email is verified. Add your name and area to finish joining.'
                 : step === 'password'
@@ -435,9 +439,11 @@ export default function AuthScreen({
             Use another email
           </button>
         )}
-        {!recovery && step === 'email' && (
+        {!recovery && (step === 'email' || (signup && step === 'code')) && (
           <p className="auth-switch">
-            <Link href="/reset-password">Forgot your password?</Link>
+            <Link href="/reset-password">
+              {step === 'code' ? 'Set or reset your password' : 'Forgot your password?'}
+            </Link>
           </p>
         )}
         <p className="auth-switch">

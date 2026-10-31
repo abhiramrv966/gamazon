@@ -108,7 +108,8 @@ const server = createServer(async (request, response) => {
       if (!data.email?.endsWith('.test') || data.password?.length < 12)
         return send(400, { msg: 'Use a fictional email and at least 12 password characters.' });
       let member = users.get(data.email.toLowerCase());
-      if (member?.status === 'active') return send(422, { msg: 'Account already registered.' });
+      if (member?.verified)
+        return send(200, identity({ id: randomUUID(), email: member.email }));
       if (!member) {
         member = {
           id: randomUUID(),
@@ -127,7 +128,7 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === '/auth/v1/recover' || url.pathname === '/auth/v1/resend') {
       const member = users.get(data.email?.toLowerCase());
-      if (member) {
+      if (member && (url.pathname.endsWith('/recover') || !member.verified)) {
         member.codes = 1;
         member.codeType = url.pathname.endsWith('/recover') ? 'recovery' : 'email';
       }

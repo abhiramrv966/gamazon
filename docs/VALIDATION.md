@@ -1,5 +1,11 @@
 # Implementation verification
 
+## Repeat signup email guidance — 31 October 2026
+
+A reported missing signup code was traced to an already verified identity from the earlier code-only login flow. The current Supabase SMTP settings and all Resend domain records remained valid, and the delivery log contained no new signup email for that attempt. Supabase can return a successful-looking signup response for an existing verified account to protect account privacy; that response does not prove email delivery.
+
+The signup code screen now explains when verification applies and offers password setup/recovery directly. Recovery also avoids promising delivery for an unknown address. The local Auth fixture now reproduces the existing-account response without changing its password or issuing a signup code. All nine Auth browser scenarios and TypeScript passed, including the repeated-signup recovery path, original-password preservation and the same neutral guidance for new addresses. The 390px repeat-signup screen was visually checked. No real user's password, membership or owner role was changed, and no new email was sent during diagnosis.
+
 ## Password authentication and open registration — deployed 31 October 2026
 
 The deployed implementation replaces invitation/email-code login with email/password signup and sign-in. New identities must confirm their email before finishing a profile and adult/rules acceptance. The recovery page verifies an emailed recovery code before setting a password, then signs out so the new password is used at login. Existing code-only identities can set their first password through the same recovery page. Public onboarding always creates the member role; it does not grant ownership.
