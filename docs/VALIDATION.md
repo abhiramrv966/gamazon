@@ -1,5 +1,13 @@
 # Implementation verification
 
+## Community spacing and code boxes — 1 November 2026
+
+The feed now has more space between its heading, discovery tabs, filters and results. Platform headings place the title and Create post action below the banner on the same centre line; the logo alone overlaps the artwork. Shared buttons and tabs centre their contents with consistent line height, padding and icon spacing. Cards and empty-state actions have more room in both themes.
+
+Email confirmation and password recovery use eight individually labelled digit boxes, matching the configured Supabase format. Typing advances focus, Backspace and arrow keys support editing, and pasted/autofilled codes distribute across the boxes. Browser validation blocks incomplete submissions. Existing Supabase calls and account permissions are unchanged. The production build, including TypeScript, passed.
+
+All eight existing responsive layout scenarios passed across 320/390/820/1440px; the first 1440px public-page run hit a development compilation timeout and passed on its warmed rerun. All ten Auth scenarios passed across the initial run and two single-worker reruns of slow sign-in redirects, without increasing assertion timeouts. The new 320px code-box check covers typing, editing, non-digits, full-code paste and incomplete submissions. Desktop empty feeds in both themes were visually inspected at 1920px; Create post measured 44px high, 20px below the banner and aligned with the title within 0.01px. These are local browser checks, not physical-phone autofill or fresh email-delivery tests. No real account or community data was changed.
+
 ## Repeat signup email guidance — 31 October 2026
 
 A reported missing signup code was traced to an already verified identity from the earlier code-only login flow. The current Supabase SMTP settings and all Resend domain records remained valid, and the delivery log contained no new signup email for that attempt. Supabase can return a successful-looking signup response for an existing verified account to protect account privacy; that response does not prove email delivery.

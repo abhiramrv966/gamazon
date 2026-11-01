@@ -108,8 +108,7 @@ const server = createServer(async (request, response) => {
       if (!data.email?.endsWith('.test') || data.password?.length < 12)
         return send(400, { msg: 'Use a fictional email and at least 12 password characters.' });
       let member = users.get(data.email.toLowerCase());
-      if (member?.verified)
-        return send(200, identity({ id: randomUUID(), email: member.email }));
+      if (member?.verified) return send(200, identity({ id: randomUUID(), email: member.email }));
       if (!member) {
         member = {
           id: randomUUID(),
@@ -136,7 +135,7 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === '/auth/v1/verify') {
       const member = users.get(data.email?.toLowerCase());
-      if (!member || !member.codes || data.token !== '654321' || data.type !== member.codeType)
+      if (!member || !member.codes || data.token !== '65432109' || data.type !== member.codeType)
         return send(403, { msg: 'That code is invalid or has expired.', code: 'otp_expired' });
       member.verified = true;
       member.codes = 0;

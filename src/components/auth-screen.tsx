@@ -8,6 +8,70 @@ import { browserDb } from '@/lib/browser';
 import { LandingBrand } from './landing-page';
 import './landing.css';
 
+function VerificationCode() {
+  const [digits, setDigits] = useState<string[]>(Array(8).fill(''));
+  const inputs = useRef<(HTMLInputElement | null)[]>([]);
+
+  function enter(value: string, index: number) {
+    const numbers = value.replace(/\D/g, '').slice(0, 8);
+    const start = numbers.length === 8 ? 0 : index;
+    setDigits((current) => {
+      const next = [...current];
+      if (!numbers) next[index] = '';
+      else
+        [...numbers].forEach((digit, offset) => {
+          if (start + offset < 8) next[start + offset] = digit;
+        });
+      return next;
+    });
+    if (numbers) inputs.current[Math.min(start + numbers.length, 7)]?.focus();
+  }
+
+  return (
+    <fieldset className="auth-code">
+      <legend>Email verification code</legend>
+      <input type="hidden" name="code" value={digits.join('')} />
+      <div className="auth-code-digits">
+        {digits.map((digit, index) => (
+          <input
+            key={index}
+            ref={(element) => {
+              inputs.current[index] = element;
+            }}
+            aria-label={`Digit ${index + 1} of 8`}
+            value={digit}
+            required
+            inputMode="numeric"
+            pattern="[0-9]"
+            // Allow a complete code from paste or mobile autofill, then distribute it.
+            maxLength={8}
+            autoComplete={index === 0 ? 'one-time-code' : 'off'}
+            autoFocus={index === 0}
+            onFocus={(event) => event.currentTarget.select()}
+            onChange={(event) => enter(event.target.value, index)}
+            onPaste={(event) => {
+              event.preventDefault();
+              enter(event.clipboardData.getData('text'), index);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault();
+                inputs.current[
+                  Math.max(0, Math.min(7, index + (event.key === 'ArrowLeft' ? -1 : 1)))
+                ]?.focus();
+              } else if (event.key === 'Backspace' && !digit && index > 0) {
+                event.preventDefault();
+                enter('', index - 1);
+                inputs.current[index - 1]?.focus();
+              }
+            }}
+          />
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 export default function AuthScreen({
   mode,
   configured,
@@ -283,21 +347,7 @@ export default function AuthScreen({
                   )}
                 </>
               ) : step === 'code' ? (
-                <label>
-                  Email verification code
-                  <input
-                    key="code"
-                    name="code"
-                    required
-                    autoComplete="one-time-code"
-                    inputMode="numeric"
-                    pattern="[0-9]{6,10}"
-                    minLength={6}
-                    maxLength={10}
-                    placeholder="Enter your code"
-                    autoFocus
-                  />
-                </label>
+                <VerificationCode />
               ) : step === 'password' ? (
                 <label>
                   New password

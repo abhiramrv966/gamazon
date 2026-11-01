@@ -19,17 +19,21 @@ async function signIn(page: import('@playwright/test').Page, email: string, valu
   await page.getByLabel('Password', { exact: true }).fill(value);
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 }
-async function createAccount(page: import('@playwright/test').Page, email: string, value = password) {
+async function createAccount(
+  page: import('@playwright/test').Page,
+  email: string,
+  value = password,
+) {
   await page.goto('/signup');
   await expect(page.getByRole('button', { name: 'Create account', exact: true })).toBeEnabled();
   await page.screenshot({ path: `artifacts/password-signup-${page.viewportSize()?.width}.png` });
   await page.getByLabel('Email address', { exact: true }).fill(email);
   await page.getByLabel('Password', { exact: true }).fill(value);
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
-  await expect(page.getByLabel('Email verification code')).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Email verification code' })).toBeVisible();
 }
 async function verify(page: import('@playwright/test').Page) {
-  await page.getByLabel('Email verification code').fill('654321');
+  await page.getByLabel('Digit 1 of 8', { exact: true }).fill('65432109');
   await page.getByRole('button', { name: 'Verify email', exact: true }).click();
 }
 test('password sign-in rejects bad credentials, restores sessions and signs out', async ({
@@ -60,7 +64,7 @@ test('public sign-up verifies email and joins without an invitation', async ({ p
   await expect(page.getByText(/If .* needs verification/)).toBeVisible();
   await expect(page.getByLabel('Invitation code')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Send another code in/ })).toBeDisabled();
-  await page.getByLabel('Email verification code').fill('000000');
+  await page.getByLabel('Digit 1 of 8', { exact: true }).fill('00000000');
   await page.getByRole('button', { name: 'Verify email', exact: true }).click();
   await expect(page.locator('.auth-error')).toContainText('invalid');
   await verify(page);
@@ -95,6 +99,54 @@ test('a verified non-member can resume profile setup after reload', async ({ pag
   await expect(page.getByRole('heading', { name: 'Make it yours.' })).toBeVisible();
   await page.getByRole('button', { name: 'Use another email', exact: true }).click();
   await expect(page.getByLabel('Email address')).toBeVisible();
+});
+
+test('code boxes support typing, editing, paste and incomplete-code validation on phones', async ({
+  page,
+  request,
+  context,
+}) => {
+  const user = await member(request, 'none');
+  await page.setViewportSize({ width: 320, height: 780 });
+  await createAccount(page, user.email);
+  const digits = page.getByRole('group', { name: 'Email verification code' }).getByRole('textbox');
+  await expect(digits).toHaveCount(8);
+  await expect(digits.nth(0)).toBeFocused();
+  await page.keyboard.type('65');
+  await expect(digits.nth(0)).toHaveValue('6');
+  await expect(digits.nth(1)).toHaveValue('5');
+  await expect(digits.nth(2)).toBeFocused();
+  await page.keyboard.press('Backspace');
+  await expect(digits.nth(1)).toHaveValue('');
+  await expect(digits.nth(1)).toBeFocused();
+  await page.keyboard.press('ArrowLeft');
+  await expect(digits.nth(0)).toBeFocused();
+  await page.keyboard.type('9');
+  await expect(digits.nth(0)).toHaveValue('9');
+  await page.keyboard.press('ArrowRight');
+  await expect(digits.nth(2)).toBeFocused();
+  await page.keyboard.type('x');
+  await expect(digits.nth(2)).toHaveValue('');
+  let verificationRequests = 0;
+  await page.route('**/auth/v1/verify', async (route) => {
+    verificationRequests++;
+    await route.continue();
+  });
+  await page.getByRole('button', { name: 'Verify email', exact: true }).click();
+  await expect(digits.nth(1)).toBeFocused();
+  expect(verificationRequests).toBe(0);
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.evaluate(() => navigator.clipboard.writeText('65 43-21 09'));
+  await digits.nth(3).focus();
+  await page.keyboard.press('Control+V');
+  for (const [index, digit] of [...'65432109'].entries())
+    await expect(digits.nth(index)).toHaveValue(digit);
+  await expect(digits.nth(7)).toBeFocused();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: 'artifacts/auth-code-boxes-320.png' });
+  await page.getByRole('button', { name: 'Verify email', exact: true }).click();
+  await expect(page.getByLabel('Display name')).toBeVisible();
+  expect(verificationRequests).toBe(1);
 });
 
 test('repeat signup offers recovery without claiming a code was sent or changing the account', async ({
@@ -144,7 +196,7 @@ test('password recovery replaces the old password and requires an email code', a
   await signIn(page, user.email, 'A-new-fixture-password-456');
   await expect(page).toHaveURL(/\/community$/);
   const replay = await request.post('http://127.0.0.1:54329/auth/v1/verify', {
-    data: { email: user.email, token: '654321', type: 'recovery' },
+    data: { email: user.email, token: '65432109', type: 'recovery' },
   });
   expect(replay.ok()).toBe(false);
 });
@@ -178,7 +230,7 @@ test('email-delivery failure stays on signup and can be retried', async ({ page,
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await expect(page.locator('.auth-error')).toContainText('temporarily unavailable');
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
-  await expect(page.getByLabel('Email verification code')).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Email verification code' })).toBeVisible();
 });
 
 test('the admin route checks verified identity and membership on the server', async ({

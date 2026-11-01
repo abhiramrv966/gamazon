@@ -301,7 +301,7 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
 }
 .gz-workspace {
   margin-left: 248px;
-  padding: 20px 24px 80px;
+  padding: 28px 32px 80px;
   min-width: 0;
 }
 .gz-workspace > :not(.gz-context-host) {
@@ -310,7 +310,7 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   margin-right: auto;
 }
 .gz-board {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 .gz-board-banner {
   height: 112px;
@@ -328,11 +328,10 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
 }
 .gz-board-heading {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 12px 16px;
-  margin-top: -34px;
-  padding: 0 16px;
+  gap: 20px;
+  padding: 20px 8px 4px;
   position: relative;
 }
 .gz-board-heading > .gz-platform-mark {
@@ -340,11 +339,17 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   height: 78px;
   font-size: 22px;
   border: 4px solid var(--paper);
+  margin-top: -44px;
+  align-self: flex-start;
 }
 .gz-board-heading > div {
   flex: 1;
-  min-width: 180px;
-  padding-bottom: 2px;
+  min-width: 0;
+}
+.community-ui .gz-board-heading > .gz-button {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px 20px;
 }
 .gz-board-heading h1 {
   font: 500 36px/1.15 var(--font-sans);
@@ -387,20 +392,20 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
 .gz-columns {
   display: grid;
   grid-template-columns: minmax(0, 760px) minmax(260px, 340px);
-  gap: 24px;
+  gap: 28px;
   align-items: start;
 }
 .gz-feed-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   min-width: 0;
 }
 .gz-feed-toolbar {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 12px 16px;
   padding: 0 4px;
 }
 .gz-tabs {
@@ -415,12 +420,17 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   background: var(--white);
 }
 .community-ui .gz-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 38px;
   padding: 0 16px;
   border-radius: 19px;
   color: var(--muted);
   font-size: 14.5px;
   font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
   white-space: nowrap;
 }
 .community-ui .gz-tabs .selected {
@@ -432,7 +442,7 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   margin-left: 4px;
 }
 .community-ui .gz-feed-toolbar .gz-tabs button {
-  height: 34px;
+  height: 38px;
   padding: 0 14px;
   font-size: 14px;
   border-radius: 8px;
@@ -444,7 +454,7 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   display: flex;
   align-items: center;
   margin-left: auto;
-  gap: 2px;
+  gap: 4px;
 }
 .gz-choice-menu {
   position: relative;
@@ -453,8 +463,8 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-height: 36px;
-  padding: 0 8px 0 12px;
+  min-height: 40px;
+  padding: 8px 10px;
   border-radius: 8px;
   font-size: 14px;
   color: var(--secondary);
@@ -513,8 +523,8 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 0 4px 4px;
+  gap: 8px;
+  padding: 0 4px 8px;
   font-size: 13px;
   color: var(--subtle);
 }
@@ -695,23 +705,29 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
 .gz-thread-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
   align-items: center;
 }
 .community-ui .gz-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
   min-height: 40px;
-  padding: 0 16px;
+  padding: 9px 18px;
   border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
   white-space: nowrap;
   background: transparent;
   color: var(--ink);
+}
+.community-ui .gz-button > svg {
+  display: block;
+  flex-shrink: 0;
 }
 .community-ui .gz-button:hover {
   background: var(--hover);
@@ -835,13 +851,13 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   min-width: 0;
 }
 .gz-surface {
-  padding: 16px;
+  padding: 20px;
   border-radius: 14px;
   background: var(--white);
   min-width: 0;
 }
 .gz-surface h2 {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .gz-surface p + p {
   margin-top: 10px;
@@ -2014,16 +2030,20 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   line-height: 1.6;
 }
 .community-ui .empty {
-  padding: 36px 24px;
+  padding: 44px 28px;
   background: var(--white);
   border-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 14px;
   color: var(--subtle);
   min-height: 0;
+}
+.community-ui .empty > .gz-actions {
+  justify-content: center;
+  margin-top: 6px;
 }
 .community-ui .empty h3 {
   font-size: 17px;
@@ -2602,12 +2622,13 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
     font-size: 8px;
   }
   .gz-feed-column {
-    gap: 8px;
+    gap: 12px;
   }
   .gz-feed-toolbar {
     padding: 0 10px;
     justify-content: space-between;
     flex-wrap: nowrap;
+    gap: 8px;
   }
   .gz-feed-toolbar > .gz-tabs {
     flex-shrink: 1;
@@ -2630,7 +2651,7 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
     display: none !important;
   }
   .gz-post {
-    padding: 12px 16px 14px;
+    padding: 16px;
     border-radius: 0;
   }
   .gz-post-byline {
@@ -3130,12 +3151,6 @@ body:has(.community-ui, .login-page, .loading, .policy-page) {
   color: var(--on-accent);
 }
 
-html[data-community-theme='light'] .gz-board-heading > div {
-  padding-top: 34px;
-}
-html[data-community-theme='light'] .gz-board-heading > .gz-platform-mark {
-  align-self: flex-start;
-}
 .gz-post-title {
   display: flex;
   align-items: center;
@@ -3152,9 +3167,6 @@ html[data-community-theme='light'] .gz-board-heading > .gz-platform-mark {
 .gz-board-simple > .gz-platform-mark {
   display: none;
 }
-html[data-community-theme='light'] .gz-board-heading.gz-board-simple > div {
-  padding-top: 0;
-}
 .gz-board-simple h1 {
   font-size: 28px;
   font-weight: 600;
@@ -3165,10 +3177,15 @@ html[data-community-theme='light'] .gz-board-heading.gz-board-simple > div {
   padding: 0 4px 6px;
 }
 .gz-discovery-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 16px;
   min-height: 40px;
   border-radius: 8px;
   font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
   color: var(--muted);
 }
 .community-ui .gz-discovery-tabs .selected {
